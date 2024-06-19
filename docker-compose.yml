@@ -1,0 +1,6 @@
+﻿services:
+  stockify.api:
+    image: stockify.api
+    build:
+      context: .
+      dockerfile: Stockify.API/Dockerfile
