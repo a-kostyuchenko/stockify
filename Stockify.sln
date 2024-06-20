@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.API", "src\API\Sto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Common.Domain", "src\Common\Stockify.Common.Domain\Stockify.Common.Domain.csproj", "{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Common.Application", "src\Common\Stockify.Common.Application\Stockify.Common.Application.csproj", "{E79C54EA-2111-4502-8912-B6E1A25D5805}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E79C54EA-2111-4502-8912-B6E1A25D5805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E79C54EA-2111-4502-8912-B6E1A25D5805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E79C54EA-2111-4502-8912-B6E1A25D5805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E79C54EA-2111-4502-8912-B6E1A25D5805}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{79B0C265-DF2D-4330-9899-F31666C5EE81} = {7FA6DDDF-6B67-4972-96D7-9DFB60305BAF}
@@ -42,5 +48,6 @@ Global
 		{9EF2E3A3-0BC7-4B85-AB75-DF67C26C5CFF} = {7FA6DDDF-6B67-4972-96D7-9DFB60305BAF}
 		{164C1404-2555-4F47-8A1D-BE04A6D96535} = {79B0C265-DF2D-4330-9899-F31666C5EE81}
 		{9B486709-18FD-4CBD-BB11-AB5EABB2E10F} = {D48B8939-6023-4061-83CA-77CE8E5BC12C}
+		{E79C54EA-2111-4502-8912-B6E1A25D5805} = {D48B8939-6023-4061-83CA-77CE8E5BC12C}
 	EndGlobalSection
 EndGlobal
