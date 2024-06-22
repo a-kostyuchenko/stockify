@@ -11,7 +11,7 @@ namespace Stockify.Common.Infrastructure;
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddInfrastructure(
-        IServiceCollection services,
+        this IServiceCollection services,
         string databaseConnection)
     {
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();

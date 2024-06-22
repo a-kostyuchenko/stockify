@@ -25,6 +25,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Common.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Common.Infrastructure", "src\Common\Stockify.Common.Infrastructure\Stockify.Common.Infrastructure.csproj", "{A029F03A-B114-4CFC-BB2C-F5E19F165945}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{2F6E5BEE-AE53-4FAF-AF2D-9A02ADD31C25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Users.Domain", "src\Modules\Users\Stockify.Modules.Users.Domain\Stockify.Modules.Users.Domain.csproj", "{1425A404-7C4F-497D-8BCA-16883FB0F3DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Users.Application", "src\Modules\Users\Stockify.Modules.Users.Application\Stockify.Modules.Users.Application.csproj", "{3B12B3D4-AACC-43BD-B904-64CF4DFC4B39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Users.Infrastructure", "src\Modules\Users\Stockify.Modules.Users.Infrastructure\Stockify.Modules.Users.Infrastructure.csproj", "{735D16F2-9F44-41C1-A554-FE08F75C84AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +55,18 @@ Global
 		{A029F03A-B114-4CFC-BB2C-F5E19F165945}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A029F03A-B114-4CFC-BB2C-F5E19F165945}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A029F03A-B114-4CFC-BB2C-F5E19F165945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1425A404-7C4F-497D-8BCA-16883FB0F3DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1425A404-7C4F-497D-8BCA-16883FB0F3DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1425A404-7C4F-497D-8BCA-16883FB0F3DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1425A404-7C4F-497D-8BCA-16883FB0F3DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B12B3D4-AACC-43BD-B904-64CF4DFC4B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B12B3D4-AACC-43BD-B904-64CF4DFC4B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B12B3D4-AACC-43BD-B904-64CF4DFC4B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B12B3D4-AACC-43BD-B904-64CF4DFC4B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{735D16F2-9F44-41C1-A554-FE08F75C84AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{735D16F2-9F44-41C1-A554-FE08F75C84AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{735D16F2-9F44-41C1-A554-FE08F75C84AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{735D16F2-9F44-41C1-A554-FE08F75C84AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{79B0C265-DF2D-4330-9899-F31666C5EE81} = {7FA6DDDF-6B67-4972-96D7-9DFB60305BAF}
@@ -56,5 +76,9 @@ Global
 		{9B486709-18FD-4CBD-BB11-AB5EABB2E10F} = {D48B8939-6023-4061-83CA-77CE8E5BC12C}
 		{E79C54EA-2111-4502-8912-B6E1A25D5805} = {D48B8939-6023-4061-83CA-77CE8E5BC12C}
 		{A029F03A-B114-4CFC-BB2C-F5E19F165945} = {D48B8939-6023-4061-83CA-77CE8E5BC12C}
+		{2F6E5BEE-AE53-4FAF-AF2D-9A02ADD31C25} = {9EF2E3A3-0BC7-4B85-AB75-DF67C26C5CFF}
+		{1425A404-7C4F-497D-8BCA-16883FB0F3DA} = {2F6E5BEE-AE53-4FAF-AF2D-9A02ADD31C25}
+		{3B12B3D4-AACC-43BD-B904-64CF4DFC4B39} = {2F6E5BEE-AE53-4FAF-AF2D-9A02ADD31C25}
+		{735D16F2-9F44-41C1-A554-FE08F75C84AE} = {2F6E5BEE-AE53-4FAF-AF2D-9A02ADD31C25}
 	EndGlobalSection
 EndGlobal
