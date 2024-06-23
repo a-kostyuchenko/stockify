@@ -2,13 +2,8 @@
 
     <PropertyGroup>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>86d754a5-4da9-4b57-b01d-111e9c1045af</UserSecretsId>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
@@ -23,6 +18,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Modules\Users\Stockify.Modules.Users.Infrastructure\Stockify.Modules.Users.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

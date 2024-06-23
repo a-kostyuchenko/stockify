@@ -1,4 +1,4 @@
-namespace Stockify.Modules.Users.Domain.Users;
+namespace Stockify.Modules.Users.Domain.Roles;
 
 public sealed class Permission
 {

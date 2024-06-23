@@ -6,9 +6,11 @@
     build:
       context: .
       dockerfile: src/API/Stockify.API/Dockerfile
+    depends_on:
+      - stockify.database
     ports:
-      - 5000:8080
-      - 5001:8081
+      - 5050:8080
+      - 5051:8081
         
   stockify.seq:
     image: datalust/seq:latest
@@ -18,3 +20,15 @@
     ports:
       - 5341:5341
       - 8081:80
+        
+  stockify.database:
+    image: postgres:latest
+    container_name: Stockify.Database
+    environment:
+      - POSTGRES_DB=stockify
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
