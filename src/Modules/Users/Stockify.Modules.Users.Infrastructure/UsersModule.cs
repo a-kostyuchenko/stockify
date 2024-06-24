@@ -3,8 +3,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stockify.Common.Infrastructure.Configuration;
+using Stockify.Modules.Users.Application.Abstractions;
+using Stockify.Modules.Users.Domain.Users;
 using Stockify.Modules.Users.Infrastructure.Database;
 using Stockify.Modules.Users.Infrastructure.Database.Constants;
+using Stockify.Modules.Users.Infrastructure.Database.Repositories;
 
 namespace Stockify.Modules.Users.Infrastructure;
 
@@ -22,5 +25,9 @@ public static class UsersModule
                 npgsqlOptions => npgsqlOptions
                     .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
                 .UseSnakeCaseNamingConvention());
+
+        services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
     }
 }
