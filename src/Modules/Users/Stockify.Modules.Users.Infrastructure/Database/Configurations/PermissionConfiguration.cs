@@ -24,6 +24,8 @@ internal sealed class PermissionConfiguration : IEntityTypeConfiguration<Permiss
             .UsingEntity(joinBuilder =>
             {
                 joinBuilder.ToTable("role_permissions");
+                
+                joinBuilder.Property("PermissionsCode").HasColumnName("permission_code");
 
                 joinBuilder.HasData(
                     CreateRolePermissions(Role.Administrator, Permission.AccessEverything));
