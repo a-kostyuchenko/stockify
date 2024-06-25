@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
 using Stockify.Common.Application.Clock;
 using Stockify.Common.Application.Data;
+using Stockify.Common.Infrastructure.Authentication;
 using Stockify.Common.Infrastructure.Clock;
 using Stockify.Common.Infrastructure.Data;
 
@@ -14,6 +15,8 @@ public static class InfrastructureConfiguration
         this IServiceCollection services,
         string databaseConnection)
     {
+        services.AddAuthenticationInternal();
+        
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
         
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnection).Build();
