@@ -12,8 +12,8 @@ using Stockify.Modules.Users.Infrastructure.Database;
 namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(UsersDbContext))]
-    [Migration("20240623122106_Initial")]
-    partial class Initial
+    [Migration("20240625071728_CreateDatabase")]
+    partial class CreateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
                 {
                     b.Property<string>("PermissionsCode")
                         .HasColumnType("character varying(100)")
-                        .HasColumnName("permissions_code");
+                        .HasColumnName("permission_code");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("integer")
@@ -60,7 +60,7 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
 
                     b.Property<Guid>("UsersId")
                         .HasColumnType("uuid")
-                        .HasColumnName("users_id");
+                        .HasColumnName("user_id");
 
                     b.HasKey("RolesId", "UsersId")
                         .HasName("pk_user_roles");

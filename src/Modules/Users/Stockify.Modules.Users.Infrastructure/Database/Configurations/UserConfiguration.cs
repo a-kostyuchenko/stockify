@@ -23,5 +23,17 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Email).HasMaxLength(300);
 
         builder.HasIndex(u => u.Email).IsUnique();
+        
+        builder
+            .HasMany(x => x.Roles)
+            .WithMany(x => x.Users)
+            .UsingEntity(joinBuilder =>
+            {
+                joinBuilder.ToTable("user_roles");
+
+                joinBuilder.Property("RolesId").HasColumnName("role_id");
+
+                joinBuilder.Property("UsersId").HasColumnName("user_id");
+            });
     }
 }

@@ -15,15 +15,6 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 
         builder.Property(r => r.Name).HasMaxLength(100);
 
-        builder.HasMany(r => r.Users)
-            .WithMany(u => u.Roles)
-            .UsingEntity(joinBuilder =>
-            {
-                joinBuilder.ToTable("user_roles");
-                
-                joinBuilder.Property("RolesId").HasColumnName("role_id");
-            });
-
         builder.HasData(
             Role.User,
             Role.Manager,

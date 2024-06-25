@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,15 +64,15 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
                 schema: "users",
                 columns: table => new
                 {
-                    permissions_code = table.Column<string>(type: "character varying(100)", nullable: false),
+                    permission_code = table.Column<string>(type: "character varying(100)", nullable: false),
                     role_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_role_permissions", x => new { x.permissions_code, x.role_id });
+                    table.PrimaryKey("pk_role_permissions", x => new { x.permission_code, x.role_id });
                     table.ForeignKey(
                         name: "fk_role_permissions_permissions_permissions_code",
-                        column: x => x.permissions_code,
+                        column: x => x.permission_code,
                         principalSchema: "users",
                         principalTable: "permissions",
                         principalColumn: "code",
@@ -92,11 +92,11 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
                 columns: table => new
                 {
                     role_id = table.Column<int>(type: "integer", nullable: false),
-                    users_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_user_roles", x => new { x.role_id, x.users_id });
+                    table.PrimaryKey("pk_user_roles", x => new { x.role_id, x.user_id });
                     table.ForeignKey(
                         name: "fk_user_roles_roles_roles_id",
                         column: x => x.role_id,
@@ -106,7 +106,7 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "fk_user_roles_users_users_id",
-                        column: x => x.users_id,
+                        column: x => x.user_id,
                         principalSchema: "users",
                         principalTable: "users",
                         principalColumn: "id",
@@ -137,7 +137,7 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
             migrationBuilder.InsertData(
                 schema: "users",
                 table: "role_permissions",
-                columns: new[] { "permissions_code", "role_id" },
+                columns: new[] { "permission_code", "role_id" },
                 values: new object[] { "administrator:full_access", 3 });
 
             migrationBuilder.CreateIndex(
@@ -150,7 +150,7 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
                 name: "ix_user_roles_users_id",
                 schema: "users",
                 table: "user_roles",
-                column: "users_id");
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_users_email",

@@ -57,7 +57,7 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
 
                     b.Property<Guid>("UsersId")
                         .HasColumnType("uuid")
-                        .HasColumnName("users_id");
+                        .HasColumnName("user_id");
 
                     b.HasKey("RolesId", "UsersId")
                         .HasName("pk_user_roles");
