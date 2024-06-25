@@ -1,3 +1,5 @@
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Stockify.API.Extensions;
 using Stockify.API.Infrastructure;
@@ -23,6 +25,12 @@ string databaseConnection = builder.Configuration.GetConnectionStringOrThrow("Da
 
 builder.Services.AddInfrastructure(databaseConnection);
 
+Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
+
+builder.Services.AddHealthChecks()
+    .AddNpgSql(databaseConnection)
+    .AddKeyCloak(keyCloakHealthUrl);
+
 builder.Services.AddUsersModule(builder.Configuration);
     
 WebApplication app = builder.Build();
@@ -31,6 +39,11 @@ if (app.Environment.IsDevelopment())
 {
     app.ApplyMigrations();
 }
+
+app.MapHealthChecks("health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.UseSerilogRequestLogging();
 
