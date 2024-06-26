@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Stockify.API.Extensions;
 using Stockify.API.Infrastructure;
+using Stockify.API.OpenApi;
 using Stockify.Common.Application;
 using Stockify.Common.Infrastructure;
 using Stockify.Common.Infrastructure.Configuration;
@@ -16,6 +17,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerDocumentation();
 
 builder.Services.AddApplication([
     Stockify.Modules.Users.Application.AssemblyReference.Assembly
@@ -37,6 +39,9 @@ WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    
     app.ApplyMigrations();
 }
 
