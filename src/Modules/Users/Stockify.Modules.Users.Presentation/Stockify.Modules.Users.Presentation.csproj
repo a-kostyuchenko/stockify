@@ -10,7 +10,6 @@
       <ProjectReference Include="..\..\..\Common\Stockify.Common.Infrastructure\Stockify.Common.Infrastructure.csproj" />
       <ProjectReference Include="..\..\..\Common\Stockify.Common.Presentation\Stockify.Common.Presentation.csproj" />
       <ProjectReference Include="..\Stockify.Modules.Users.Application\Stockify.Modules.Users.Application.csproj" />
-      <ProjectReference Include="..\Stockify.Modules.Users.Presentation\Stockify.Modules.Users.Presentation.csproj" />
     </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stockify.Common.Infrastructure.Configuration;
+using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Users.Application.Abstractions;
 using Stockify.Modules.Users.Domain.Users;
 using Stockify.Modules.Users.Infrastructure.Database;
@@ -16,6 +17,8 @@ public static class UsersModule
     public static void AddUsersModule(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddInfrastructure(configuration);
+
+        services.AddEndpoints(Presentation.AssemblyReference.Assembly);
     }
     
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
