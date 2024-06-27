@@ -46,6 +46,8 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnection)
     .AddKeyCloak(keyCloakHealthUrl);
 
+builder.Configuration.AddModuleConfiguration(["users"]);
+
 builder.Services.AddUsersModule(builder.Configuration);
     
 WebApplication app = builder.Build();

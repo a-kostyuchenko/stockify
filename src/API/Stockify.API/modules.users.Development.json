@@ -1,0 +1,11 @@
+{
+  "Users": {
+    "KeyCloak": {
+      "AdminUrl": "http://stockify.identity:8080/admin/realms/stockify/",
+      "TokenUrl": "http://stockify.identity:8080/realms/stockify/protocol/openid-connect/token",
+      "ConfidentialClientId": "stockify-confidential-client",
+      "ConfidentialClientSecret": "qWMJOAWA3xboPFfGWsH9Qje6Z5RtKAro",
+      "PublicClientId": "stockify-public-client"
+    }
+  }
+}
