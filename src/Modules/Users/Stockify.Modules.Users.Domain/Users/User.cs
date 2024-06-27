@@ -17,16 +17,19 @@ public class User : Entity<UserId>
     public string FirstName { get; private set; }
 
     public string LastName { get; private set; }
+
+    public string IdentityId { get; private set; }
     
     public IReadOnlyCollection<Role> Roles => _roles.ToList();
     
-    public static User Create(string email, string firstName, string lastName)
+    public static User Create(string email, string firstName, string lastName, string identityId)
     {
         var user = new User
         {
             Email = email,
             FirstName = firstName,
             LastName = lastName,
+            IdentityId = identityId
         };
 
         user._roles.Add(Role.User);

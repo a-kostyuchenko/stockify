@@ -1,4 +1,4 @@
-namespace Stockify.Modules.Users.Application.Abstractions;
+namespace Stockify.Modules.Users.Application.Abstractions.Data;
 
 public interface IUnitOfWork
 {
