@@ -3,12 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Stockify.Common.Application.Authorization;
 using Stockify.Common.Infrastructure.Configuration;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Users.Application.Abstractions;
 using Stockify.Modules.Users.Application.Abstractions.Data;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
 using Stockify.Modules.Users.Domain.Users;
+using Stockify.Modules.Users.Infrastructure.Authorization;
 using Stockify.Modules.Users.Infrastructure.Database;
 using Stockify.Modules.Users.Infrastructure.Database.Constants;
 using Stockify.Modules.Users.Infrastructure.Database.Repositories;
@@ -27,6 +29,8 @@ public static class UsersModule
     
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IPermissionService, PermissionService>();
+        
         services.Configure<KeyCloakOptions>(configuration.GetSection(KeyCloakOptions.ConfigurationSection));
 
         services.AddTransient<KeyCloakAuthDelegatingHandler>();
@@ -42,7 +46,7 @@ public static class UsersModule
 
         services.AddTransient<IIdentityProviderService, IdentityProviderService>();
         
-        services.AddDbContext<UsersDbContext>((sp, options) => 
+        services.AddDbContext<UsersDbContext>((_, options) => 
             options.UseNpgsql(configuration.GetConnectionStringOrThrow("Database"),
                 npgsqlOptions => npgsqlOptions
                     .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
