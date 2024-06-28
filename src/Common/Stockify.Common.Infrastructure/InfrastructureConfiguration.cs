@@ -4,6 +4,7 @@ using Npgsql;
 using Stockify.Common.Application.Clock;
 using Stockify.Common.Application.Data;
 using Stockify.Common.Infrastructure.Authentication;
+using Stockify.Common.Infrastructure.Authorization;
 using Stockify.Common.Infrastructure.Clock;
 using Stockify.Common.Infrastructure.Data;
 
@@ -16,6 +17,8 @@ public static class InfrastructureConfiguration
         string databaseConnection)
     {
         services.AddAuthenticationInternal();
+
+        services.AddAuthorizationInternal();
         
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
         
