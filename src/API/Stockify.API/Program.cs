@@ -37,8 +37,9 @@ builder.Services.AddApplication([
 ]);
 
 string databaseConnection = builder.Configuration.GetConnectionStringOrThrow("Database");
+string redisConnection = builder.Configuration.GetConnectionStringOrThrow("Cache");
 
-builder.Services.AddInfrastructure(databaseConnection);
+builder.Services.AddInfrastructure(databaseConnection, redisConnection);
 
 Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
 

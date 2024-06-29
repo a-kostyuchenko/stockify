@@ -46,3 +46,10 @@
       - ./.files:/opt/keycloak/data/import
     ports:
       - 18080:8080
+        
+  stockify.redis:
+    image: redis:latest
+    container_name: Stockify.Redis
+    restart: always
+    ports:
+      - 6379:6379
