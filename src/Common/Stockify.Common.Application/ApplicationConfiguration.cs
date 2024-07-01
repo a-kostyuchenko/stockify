@@ -18,6 +18,7 @@ public static class ApplicationConfiguration
             configuration.AddOpenBehavior(typeof(ExceptionHandlingBehavior<,>));
             configuration.AddOpenBehavior(typeof(RequestLoggingBehavior<,>));
             configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            configuration.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
         });
 
         services.AddValidatorsFromAssemblies(assemblies, includeInternalTypes: true);
