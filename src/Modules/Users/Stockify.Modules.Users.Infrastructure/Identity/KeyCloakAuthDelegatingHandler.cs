@@ -1,7 +1,7 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
+using Stockify.Modules.Users.Infrastructure.Authentication;
 
 namespace Stockify.Modules.Users.Infrastructure.Identity;
 
@@ -17,7 +17,7 @@ internal sealed class KeyCloakAuthDelegatingHandler(IOptions<KeyCloakOptions> op
         HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
-        AuthorizationToken token = await GetAuthorizationToken(cancellationToken);
+        AccessTokens token = await GetAuthorizationToken(cancellationToken);
 
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
         
@@ -28,7 +28,7 @@ internal sealed class KeyCloakAuthDelegatingHandler(IOptions<KeyCloakOptions> op
         return httpResponseMessage;
     }
 
-    private async Task<AuthorizationToken> GetAuthorizationToken(CancellationToken cancellationToken)
+    private async Task<AccessTokens> GetAuthorizationToken(CancellationToken cancellationToken)
     {
         var authRequestParameters = new KeyValuePair<string, string>[]
         {
@@ -50,7 +50,7 @@ internal sealed class KeyCloakAuthDelegatingHandler(IOptions<KeyCloakOptions> op
 
         authorizationResponse.EnsureSuccessStatusCode();
 
-        return await authorizationResponse.Content.ReadFromJsonAsync<AuthorizationToken>(cancellationToken);
+        return await authorizationResponse.Content.ReadFromJsonAsync<AccessTokens>(cancellationToken);
     }
 }
 

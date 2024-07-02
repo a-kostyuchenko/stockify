@@ -1,27 +1,27 @@
 using Stockify.Common.Application.Messaging;
 using Stockify.Common.Domain;
-using Stockify.Modules.Users.Application.Authentication;
+using Stockify.Modules.Users.Application.Abstractions.Identity;
 using Stockify.Modules.Users.Domain.Users;
 
 namespace Stockify.Modules.Users.Application.Users.Commands.Login;
 
-internal sealed class LoginUserCommandHandler(IJwtProvider jwtProvider) 
-    : ICommandHandler<LoginUserCommand, AccessToken>
+internal sealed class LoginUserCommandHandler(IIdentityProviderService identityProviderService) 
+    : ICommandHandler<LoginUserCommand, TokenResponse>
 {
-    public async Task<Result<AccessToken>> Handle(
+    public async Task<Result<TokenResponse>> Handle(
         LoginUserCommand request,
         CancellationToken cancellationToken)
     {
-        Result<string> result = await jwtProvider.GetAccessTokenAsync(
+        Result<TokenResponse> result = await identityProviderService.GetAccessTokensAsync(
             request.Email,
             request.Password,
             cancellationToken);
 
         if (result.IsFailure)
         {
-            return Result.Failure<AccessToken>(UserErrors.InvalidCredentials);
+            return Result.Failure<TokenResponse>(UserErrors.InvalidCredentials);
         }
 
-        return new AccessToken(result.Value);
+        return result.Value;
     }
 }

@@ -6,10 +6,8 @@ using Microsoft.Extensions.Options;
 using Stockify.Common.Application.Authorization;
 using Stockify.Common.Infrastructure.Configuration;
 using Stockify.Common.Presentation.Endpoints;
-using Stockify.Modules.Users.Application.Abstractions;
 using Stockify.Modules.Users.Application.Abstractions.Data;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
-using Stockify.Modules.Users.Application.Authentication;
 using Stockify.Modules.Users.Domain.Users;
 using Stockify.Modules.Users.Infrastructure.Authentication;
 using Stockify.Modules.Users.Infrastructure.Authorization;
@@ -46,7 +44,7 @@ public static class UsersModule
         })
         .AddHttpMessageHandler<KeyCloakAuthDelegatingHandler>();
         
-        services.AddHttpClient<IJwtProvider, JwtProvider>((serviceProvider, httpClient) =>
+        services.AddHttpClient<JwtProvider>((serviceProvider, httpClient) =>
         {
             KeyCloakOptions keycloakOptions = 
                 serviceProvider.GetRequiredService<IOptions<KeyCloakOptions>>().Value;

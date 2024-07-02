@@ -2,11 +2,13 @@ using System.Net;
 using Microsoft.Extensions.Logging;
 using Stockify.Common.Domain;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
+using Stockify.Modules.Users.Infrastructure.Authentication;
 
 namespace Stockify.Modules.Users.Infrastructure.Identity;
 
 internal sealed class IdentityProviderService(
     KeyCloakClient keyCloakClient,
+    JwtProvider jwtProvider,
     ILogger<IdentityProviderService> logger) : IIdentityProviderService
 {
     private const string PasswordCredentialType = "password";
@@ -37,6 +39,56 @@ internal sealed class IdentityProviderService(
             logger.LogError(exception, "User registration failed");
 
             return Result.Failure<string>(IdentityProviderErrors.EmailIsNotUnique);
+        }
+    }
+
+    public async Task<Result<TokenResponse>> GetAccessTokensAsync(
+        string email,
+        string password,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            Result<AccessTokens> result = await jwtProvider.GetAccessTokenAsync(
+                email,
+                password,
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return Result.Failure<TokenResponse>(result.Error);
+            }
+
+            return result.Value.CreateTokenResponse();
+
+        }
+        catch (HttpRequestException)
+        {
+            return Result.Failure<TokenResponse>(IdentityProviderErrors.AuthenticationFailed);
+        }
+    }
+
+    public async Task<Result<TokenResponse>> RefreshTokenAsync(
+        string refreshToken,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            Result<AccessTokens> result = await jwtProvider.RefreshTokenAsync(
+                refreshToken,
+                cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return Result.Failure<TokenResponse>(result.Error);
+            }
+
+            return result.Value.CreateTokenResponse();
+
+        }
+        catch (HttpRequestException)
+        {
+            return Result.Failure<TokenResponse>(IdentityProviderErrors.TokenRefreshFailed);
         }
     }
 }
