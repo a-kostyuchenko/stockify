@@ -17,7 +17,7 @@ internal sealed class KeyCloakAuthDelegatingHandler(IOptions<KeyCloakOptions> op
         HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
-        AuthToken token = await GetAuthorizationToken(cancellationToken);
+        AuthorizationToken token = await GetAuthorizationToken(cancellationToken);
 
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
         
@@ -28,7 +28,7 @@ internal sealed class KeyCloakAuthDelegatingHandler(IOptions<KeyCloakOptions> op
         return httpResponseMessage;
     }
 
-    private async Task<AuthToken> GetAuthorizationToken(CancellationToken cancellationToken)
+    private async Task<AuthorizationToken> GetAuthorizationToken(CancellationToken cancellationToken)
     {
         var authRequestParameters = new KeyValuePair<string, string>[]
         {
@@ -50,13 +50,7 @@ internal sealed class KeyCloakAuthDelegatingHandler(IOptions<KeyCloakOptions> op
 
         authorizationResponse.EnsureSuccessStatusCode();
 
-        return await authorizationResponse.Content.ReadFromJsonAsync<AuthToken>(cancellationToken);
-    }
-
-    private sealed record AuthToken
-    {
-        [JsonPropertyName("access_token")]
-        public string AccessToken { get; init; }
+        return await authorizationResponse.Content.ReadFromJsonAsync<AuthorizationToken>(cancellationToken);
     }
 }
 

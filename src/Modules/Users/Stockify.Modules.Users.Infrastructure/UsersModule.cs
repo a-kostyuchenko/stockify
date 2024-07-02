@@ -9,7 +9,9 @@ using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Users.Application.Abstractions;
 using Stockify.Modules.Users.Application.Abstractions.Data;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
+using Stockify.Modules.Users.Application.Authentication;
 using Stockify.Modules.Users.Domain.Users;
+using Stockify.Modules.Users.Infrastructure.Authentication;
 using Stockify.Modules.Users.Infrastructure.Authorization;
 using Stockify.Modules.Users.Infrastructure.Database;
 using Stockify.Modules.Users.Infrastructure.Database.Constants;
@@ -43,6 +45,14 @@ public static class UsersModule
             httpClient.BaseAddress = new Uri(keyCloakOptions.AdminUrl);
         })
         .AddHttpMessageHandler<KeyCloakAuthDelegatingHandler>();
+        
+        services.AddHttpClient<IJwtProvider, JwtProvider>((serviceProvider, httpClient) =>
+        {
+            KeyCloakOptions keycloakOptions = 
+                serviceProvider.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
+
+            httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
+        });
 
         services.AddTransient<IIdentityProviderService, IdentityProviderService>();
         
