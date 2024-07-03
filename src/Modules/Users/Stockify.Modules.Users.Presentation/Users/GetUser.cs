@@ -21,6 +21,9 @@ internal sealed class GetUser : IEndpoint
             Result<UserResponse> result = await sender.Send(query);
 
             return result.Match(Results.Ok, ApiResults.Problem);
-        });
+        })
+        .RequireAuthorization(Permissions.AccessUsers)
+        .WithTags(Tags.Users)
+        .WithName(nameof(GetUser));
     }
 }

@@ -23,8 +23,12 @@ internal sealed class RegisterUser : IEndpoint
 
             Result<Guid> result = await sender.Send(command);
 
-            return result.Match(userId => Results.Created($"users/{userId}", userId), ApiResults.Problem);
-        });
+            return result.Match(
+                userId => Results.Created(nameof(GetUser), userId),
+                ApiResults.Problem);
+        })
+        .AllowAnonymous()
+        .WithTags(Tags.Users);
     }
     
     internal sealed record Request

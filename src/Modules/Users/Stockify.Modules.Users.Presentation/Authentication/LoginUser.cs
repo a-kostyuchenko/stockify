@@ -21,7 +21,9 @@ internal sealed class LoginUser : IEndpoint
             Result<TokenResponse> result = await sender.Send(command);
 
             return result.Match(Results.Ok, ApiResults.Problem);
-        });
+        })
+        .AllowAnonymous()
+        .WithTags(Tags.Authentication);
     }
 
     internal sealed record Request

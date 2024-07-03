@@ -21,7 +21,8 @@ internal sealed class RefreshToken : IEndpoint
             Result<TokenResponse> result = await sender.Send(command);
 
             return result.Match(Results.Ok, ApiResults.Problem);
-        });
+        })
+        .WithTags(Tags.Authentication);
     }
     
     internal sealed record Request
