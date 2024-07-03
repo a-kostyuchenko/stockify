@@ -7,7 +7,7 @@ using Stockify.Common.Presentation.Endpoints;
 using Stockify.Common.Presentation.Results;
 using Stockify.Modules.Users.Application.Users.Commands.Register;
 
-namespace Stockify.Modules.Users.Presentation.Endpoints;
+namespace Stockify.Modules.Users.Presentation.Users;
 
 internal sealed class RegisterUser : IEndpoint
 {

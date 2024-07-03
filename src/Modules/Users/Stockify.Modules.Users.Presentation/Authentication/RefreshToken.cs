@@ -8,13 +8,13 @@ using Stockify.Common.Presentation.Results;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
 using Stockify.Modules.Users.Application.Users.Commands.RefreshToken;
 
-namespace Stockify.Modules.Users.Presentation.Endpoints;
+namespace Stockify.Modules.Users.Presentation.Authentication;
 
 internal sealed class RefreshToken : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("users/refresh-token", async (Request request, ISender sender) =>
+        app.MapPost("authentication/refresh-token", async (Request request, ISender sender) =>
         {
             var command = new RefreshTokenCommand(request.RefreshToken);
 

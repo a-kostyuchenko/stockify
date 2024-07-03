@@ -8,13 +8,13 @@ using Stockify.Common.Presentation.Results;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
 using Stockify.Modules.Users.Application.Users.Commands.Login;
 
-namespace Stockify.Modules.Users.Presentation.Endpoints;
+namespace Stockify.Modules.Users.Presentation.Authentication;
 
 internal sealed class LoginUser : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("users/login", async (Request request, ISender sender) =>
+        app.MapPost("authentication/login", async (Request request, ISender sender) =>
         {
             var command = new LoginUserCommand(request.Email, request.Password);
 

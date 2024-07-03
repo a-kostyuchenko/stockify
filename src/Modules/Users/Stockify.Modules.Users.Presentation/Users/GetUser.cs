@@ -8,7 +8,7 @@ using Stockify.Common.Presentation.Results;
 using Stockify.Modules.Users.Application.Users.Queries.GetById;
 using Stockify.Modules.Users.Domain.Users;
 
-namespace Stockify.Modules.Users.Presentation.Endpoints;
+namespace Stockify.Modules.Users.Presentation.Users;
 
 internal sealed class GetUser : IEndpoint
 {
