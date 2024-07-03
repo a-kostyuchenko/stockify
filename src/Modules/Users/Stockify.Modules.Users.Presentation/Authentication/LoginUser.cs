@@ -14,7 +14,7 @@ internal sealed class LoginUser : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("authentication/login", async (Request request, ISender sender) =>
+        app.MapPost(Routes.Authentication.Login, async (Request request, ISender sender) =>
         {
             var command = new LoginUserCommand(request.Email, request.Password);
 

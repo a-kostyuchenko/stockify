@@ -13,7 +13,7 @@ internal sealed class RegisterUser : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("users/register", async (Request request, ISender sender) =>
+        app.MapPost(Routes.Users.Register, async (Request request, ISender sender) =>
         {
             var command = new RegisterUserCommand(
                 request.Email,
