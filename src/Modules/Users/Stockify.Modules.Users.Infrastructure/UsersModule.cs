@@ -42,7 +42,8 @@ public static class UsersModule
 
             httpClient.BaseAddress = new Uri(keyCloakOptions.AdminUrl);
         })
-        .AddHttpMessageHandler<KeyCloakAuthDelegatingHandler>();
+        .AddHttpMessageHandler<KeyCloakAuthDelegatingHandler>()
+        .AddStandardResilienceHandler();
         
         services.AddHttpClient<JwtProvider>((serviceProvider, httpClient) =>
         {
@@ -50,7 +51,8 @@ public static class UsersModule
                 serviceProvider.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
 
             httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
-        });
+        })
+        .AddStandardResilienceHandler();
 
         services.AddTransient<IIdentityProviderService, IdentityProviderService>();
         
