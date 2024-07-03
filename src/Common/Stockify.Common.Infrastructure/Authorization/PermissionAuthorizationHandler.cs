@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Stockify.Common.Application.Authorization;
 using Stockify.Common.Infrastructure.Authentication;
 
 namespace Stockify.Common.Infrastructure.Authorization;
@@ -11,7 +12,8 @@ internal sealed class PermissionAuthorizationHandler : AuthorizationHandler<Perm
     {
         HashSet<string> permissions = context.User.GetPermissions();
 
-        if (permissions.Contains(requirement.Permission))
+        if (permissions.Any(p => p == requirement.Permission ||
+                                 p == IPermissionService.AccessEverything))
         {
             context.Succeed(requirement);
         }

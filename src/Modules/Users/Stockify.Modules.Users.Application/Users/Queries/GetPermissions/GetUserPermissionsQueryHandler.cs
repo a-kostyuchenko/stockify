@@ -24,7 +24,7 @@ internal sealed class GetUserPermissionsQueryHandler(IDbConnectionFactory dbConn
                  rp.permission_code AS {nameof(UserPermission.Permission)}
              FROM users.users u
              JOIN users.user_roles ur ON ur.user_id = u.id
-             JOIN users.role_permissions rp ON rp.role_name = ur.role_name
+             JOIN users.role_permissions rp ON rp.role_id = ur.role_id
              WHERE u.identity_id = @IdentityId
              """;
 
