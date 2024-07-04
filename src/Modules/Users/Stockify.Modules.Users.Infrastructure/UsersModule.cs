@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Stockify.Common.Application.Authorization;
 using Stockify.Common.Infrastructure.Configuration;
+using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Users.Application.Abstractions.Data;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
@@ -56,10 +57,11 @@ public static class UsersModule
 
         services.AddTransient<IIdentityProviderService, IdentityProviderService>();
         
-        services.AddDbContext<UsersDbContext>((_, options) => 
+        services.AddDbContext<UsersDbContext>((sp, options) => 
             options.UseNpgsql(configuration.GetConnectionStringOrThrow("Database"),
                 npgsqlOptions => npgsqlOptions
                     .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
+                .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
                 .UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUserRepository, UserRepository>();

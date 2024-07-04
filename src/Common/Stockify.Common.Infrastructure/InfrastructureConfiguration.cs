@@ -10,6 +10,7 @@ using Stockify.Common.Infrastructure.Authorization;
 using Stockify.Common.Infrastructure.Caching;
 using Stockify.Common.Infrastructure.Clock;
 using Stockify.Common.Infrastructure.Data;
+using Stockify.Common.Infrastructure.Outbox;
 
 namespace Stockify.Common.Infrastructure;
 
@@ -25,6 +26,8 @@ public static class InfrastructureConfiguration
         services.AddAuthorizationInternal();
         
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+        
+        services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
         
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnection).Build();
         services.TryAddSingleton(npgsqlDataSource);
