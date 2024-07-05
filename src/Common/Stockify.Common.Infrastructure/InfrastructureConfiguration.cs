@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
@@ -5,6 +6,7 @@ using StackExchange.Redis;
 using Stockify.Common.Application.Caching;
 using Stockify.Common.Application.Clock;
 using Stockify.Common.Application.Data;
+using Stockify.Common.Application.EventBus;
 using Stockify.Common.Infrastructure.Authentication;
 using Stockify.Common.Infrastructure.Authorization;
 using Stockify.Common.Infrastructure.Caching;
@@ -18,6 +20,7 @@ public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
+        Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
         string databaseConnection,
         string redisConnection)
     {
@@ -47,6 +50,22 @@ public static class InfrastructureConfiguration
         }
 
         services.TryAddSingleton<ICacheService, CacheService>();
+
+        services.AddMassTransit(configuration =>
+        {
+            foreach (Action<IRegistrationConfigurator> configureConsumer in moduleConfigureConsumers)
+            {
+                configureConsumer(configuration);
+            }
+            configuration.SetKebabCaseEndpointNameFormatter();
+            
+            configuration.UsingInMemory((context, cfg) =>
+            {
+                cfg.ConfigureEndpoints(context);
+            });
+        });
+        
+        services.TryAddScoped<IEventBus, EventBus.EventBus>();
 
         return services;
     }
