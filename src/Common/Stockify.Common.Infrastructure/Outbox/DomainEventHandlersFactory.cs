@@ -15,7 +15,7 @@ public static class DomainEventHandlersFactory
         Assembly assembly)
     {
         Type[] domainEventHandlerTypes = HandlersDictionary.GetOrAdd(
-            $"{assembly.GetName().Name}{type.Name}",
+            $"{assembly.GetName().Name}-{type.Name}",
             _ =>
             {
                 return assembly.GetTypes()
