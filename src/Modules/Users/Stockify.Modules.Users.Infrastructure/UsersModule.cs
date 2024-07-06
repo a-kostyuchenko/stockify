@@ -2,8 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Stockify.Common.Application.Authorization;
+using Stockify.Common.Application.Messaging;
 using Stockify.Common.Infrastructure.Configuration;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
@@ -16,6 +18,7 @@ using Stockify.Modules.Users.Infrastructure.Database;
 using Stockify.Modules.Users.Infrastructure.Database.Constants;
 using Stockify.Modules.Users.Infrastructure.Database.Repositories;
 using Stockify.Modules.Users.Infrastructure.Identity;
+using Stockify.Modules.Users.Infrastructure.Outbox;
 
 namespace Stockify.Modules.Users.Infrastructure;
 
@@ -24,6 +27,8 @@ public static class UsersModule
     public static void AddUsersModule(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddInfrastructure(configuration);
+        
+        services.AddDomainEventHandlers();
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
     }
@@ -67,5 +72,30 @@ public static class UsersModule
         services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
+
+        services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
+    }
+
+    private static void AddDomainEventHandlers(this IServiceCollection services)
+    {
+        Type[] domainEventHandlers = Application.AssemblyReference.Assembly
+            .GetTypes()
+            .Where(type => type.IsAssignableTo(typeof(IDomainEventHandler)))
+            .ToArray();
+
+        foreach (Type domainEventHandler in domainEventHandlers)
+        {
+            services.TryAddScoped(domainEventHandler);
+
+            Type domainEvent = domainEventHandler
+                .GetInterfaces()
+                .Single(i => i.IsGenericType)
+                .GetGenericArguments()
+                .Single();
+
+            Type idempotentHandler = typeof(IdempotentDomainEventHandler<>).MakeGenericType(domainEvent);
+
+            services.Decorate(domainEventHandler, idempotentHandler);
+        }
     }
 }
