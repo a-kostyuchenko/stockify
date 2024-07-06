@@ -1,3 +1,4 @@
+using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
@@ -6,16 +7,15 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Stockify.API.OpenApi;
 
-internal sealed class SwaggerGenOptionsSetup : IConfigureOptions<SwaggerGenOptions>
+internal sealed class SwaggerGenOptionsSetup(IApiVersionDescriptionProvider descriptionProvider) 
+    : IConfigureOptions<SwaggerGenOptions>
 {
     public void Configure(SwaggerGenOptions options)
     {
-        options.SwaggerDoc("v1", new OpenApiInfo
+        foreach (ApiVersionDescription description in descriptionProvider.ApiVersionDescriptions)
         {
-            Title = "Stockify API",
-            Version = "v1",
-            Description = "Stockify API"
-        });
+            options.SwaggerDoc(description.GroupName, CreateVersionInfo(description));
+        }
 
         options.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
         
@@ -45,5 +45,22 @@ internal sealed class SwaggerGenOptionsSetup : IConfigureOptions<SwaggerGenOptio
                     Array.Empty<string>()
                 }
             });
+    }
+
+    private static OpenApiInfo CreateVersionInfo(ApiVersionDescription description)
+    {
+        var openApiInfo = new OpenApiInfo
+        {
+            Title = $"Stockify.API v{description.ApiVersion}",
+            Version = description.ApiVersion.ToString(),
+            Description = "Stockify API built using the modular monolith architecture."
+        };
+
+        if (description.IsDeprecated)
+        {
+            openApiInfo.Description += " This API version has been deprecated.";
+        }
+
+        return openApiInfo;
     }
 }
