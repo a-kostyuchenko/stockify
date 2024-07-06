@@ -1,7 +1,7 @@
 namespace Stockify.Common.Application.EventBus;
 
 public abstract class IntegrationEventHandler<TIntegrationEvent> : IIntegrationEventHandler<TIntegrationEvent>
-    where TIntegrationEvent : IntegrationEvent
+    where TIntegrationEvent : IIntegrationEvent
 {
     public abstract Task Handle(
         TIntegrationEvent integrationEvent,

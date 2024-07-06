@@ -1,6 +1,6 @@
 namespace Stockify.Modules.Users.Infrastructure.Outbox;
 
-public interface IProcessOutboxMessagesJob
+public interface IOutboxProcessor
 {
     Task ProcessAsync();
 }

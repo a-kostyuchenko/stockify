@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Stockify.Common.Application.Authorization;
+using Stockify.Common.Application.EventBus;
 using Stockify.Common.Application.Messaging;
 using Stockify.Common.Infrastructure.Configuration;
 using Stockify.Common.Infrastructure.Outbox;
@@ -18,6 +19,7 @@ using Stockify.Modules.Users.Infrastructure.Database;
 using Stockify.Modules.Users.Infrastructure.Database.Constants;
 using Stockify.Modules.Users.Infrastructure.Database.Repositories;
 using Stockify.Modules.Users.Infrastructure.Identity;
+using Stockify.Modules.Users.Infrastructure.Inbox;
 using Stockify.Modules.Users.Infrastructure.Outbox;
 
 namespace Stockify.Modules.Users.Infrastructure;
@@ -29,6 +31,8 @@ public static class UsersModule
         services.AddInfrastructure(configuration);
         
         services.AddDomainEventHandlers();
+        
+        services.AddIntegrationEventHandlers();
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
     }
@@ -74,6 +78,8 @@ public static class UsersModule
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
 
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
+        
+        services.Configure<InboxOptions>(configuration.GetSection(InboxOptions.ConfigurationSection));
     }
 
     private static void AddDomainEventHandlers(this IServiceCollection services)
@@ -96,6 +102,30 @@ public static class UsersModule
             Type idempotentHandler = typeof(IdempotentDomainEventHandler<>).MakeGenericType(domainEvent);
 
             services.Decorate(domainEventHandler, idempotentHandler);
+        }
+    }
+    
+    private static void AddIntegrationEventHandlers(this IServiceCollection services)
+    {
+        Type[] integrationEventHandlers = Presentation.AssemblyReference.Assembly
+            .GetTypes()
+            .Where(t => t.IsAssignableTo(typeof(IIntegrationEventHandler)))
+            .ToArray();
+
+        foreach (Type integrationEventHandler in integrationEventHandlers)
+        {
+            services.TryAddScoped(integrationEventHandler);
+
+            Type integrationEvent = integrationEventHandler
+                .GetInterfaces()
+                .Single(i => i.IsGenericType)
+                .GetGenericArguments()
+                .Single();
+
+            Type idempotentHandler =
+                typeof(IdempotentIntegrationEventHandler<>).MakeGenericType(integrationEvent);
+
+            services.Decorate(integrationEventHandler, idempotentHandler);
         }
     }
 }

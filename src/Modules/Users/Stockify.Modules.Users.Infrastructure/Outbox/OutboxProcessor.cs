@@ -14,12 +14,12 @@ using Stockify.Common.Infrastructure.Serialization;
 
 namespace Stockify.Modules.Users.Infrastructure.Outbox;
 
-internal sealed class ProcessOutboxMessagesJob(
+internal sealed class OutboxProcessor(
     IDbConnectionFactory dbConnectionFactory,
     IServiceScopeFactory serviceScopeFactory,
     IDateTimeProvider dateTimeProvider,
     IOptions<OutboxOptions> outboxOptions,
-    ILogger<ProcessOutboxMessagesJob> logger) : IProcessOutboxMessagesJob
+    ILogger<OutboxProcessor> logger) : IOutboxProcessor
 {
     private const string ModuleName = "Users";
     
