@@ -8,8 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\Stockify.Common.Application\Stockify.Common.Application.csproj" />
-      <ProjectReference Include="..\Stockify.Modules.Users.Domain\Stockify.Modules.Users.Domain.csproj" />
-      <ProjectReference Include="..\Stockify.Modules.Users.IntegrationEvents\Stockify.Modules.Users.IntegrationEvents.csproj" />
+      <ProjectReference Include="..\..\..\Common\Stockify.Common.Domain\Stockify.Common.Domain.csproj" />
     </ItemGroup>
 
 </Project>
