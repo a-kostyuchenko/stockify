@@ -6,6 +6,10 @@
       "ConfidentialClientId": "",
       "ConfidentialClientSecret": "",
       "PublicClientId": ""
+    },
+    "Outbox": {
+      "BatchSize": 0,
+      "Schedule": ""
     }
   }
 }

@@ -6,6 +6,14 @@
       "ConfidentialClientId": "stockify-confidential-client",
       "ConfidentialClientSecret": "qWMJOAWA3xboPFfGWsH9Qje6Z5RtKAro",
       "PublicClientId": "stockify-public-client"
+    },
+    "Outbox": {
+      "BatchSize": 20,
+      "Schedule": "0/15 * * * * *"
+    },
+    "Inbox": {
+      "BatchSize": 20,
+      "Schedule": "0/15 * * * * *"
     }
   }
 }

@@ -80,6 +80,9 @@ public static class UsersModule
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
         
         services.Configure<InboxOptions>(configuration.GetSection(InboxOptions.ConfigurationSection));
+        
+        services.AddScoped<IOutboxProcessor, OutboxProcessor>();
+        services.AddScoped<IInboxProcessor, InboxProcessor>();
     }
 
     private static void AddDomainEventHandlers(this IServiceCollection services)

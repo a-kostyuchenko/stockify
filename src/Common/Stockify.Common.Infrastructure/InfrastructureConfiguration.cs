@@ -1,3 +1,5 @@
+using Hangfire;
+using Hangfire.PostgreSql;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -66,6 +68,12 @@ public static class InfrastructureConfiguration
         });
         
         services.TryAddScoped<IEventBus, EventBus.EventBus>();
+
+        services.AddHangfire(config => config.UsePostgreSqlStorage(
+            options => options.UseNpgsqlConnection(databaseConnection)));
+
+        services.AddHangfireServer(options =>
+            options.SchedulePollingInterval = TimeSpan.FromSeconds(1));
 
         return services;
     }

@@ -68,6 +68,10 @@ internal sealed class OutboxProcessor(
             
             await UpdateOutboxMessageAsync(connection, transaction, outboxMessage, exception);
         }
+        
+        await transaction.CommitAsync();
+
+        logger.LogInformation("{Module} - Completed processing outbox messages", ModuleName);
     }
     
     private async Task<IReadOnlyList<OutboxMessageResponse>> GetOutboxMessagesAsync(
@@ -83,7 +87,7 @@ internal sealed class OutboxProcessor(
              WHERE processed_on_utc IS NULL
              ORDER BY occurred_on_utc
              LIMIT {outboxOptions.Value.BatchSize}
-             FOR UPDATE
+             FOR UPDATE SKIP LOCKED 
              """;
 
         IEnumerable<OutboxMessageResponse> outboxMessages = await connection.QueryAsync<OutboxMessageResponse>(
