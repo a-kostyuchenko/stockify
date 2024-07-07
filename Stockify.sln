@@ -1,8 +1,9 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{064F960A-8AEF-4BAC-A5B5-790BE108C881}"
 	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
@@ -17,29 +18,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{9EF2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{19414345-B845-4197-BCB9-2AEE5CA411A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.API", "src\API\Stockify.API\Stockify.API.csproj", "{164C1404-2555-4F47-8A1D-BE04A6D96535}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.API", "src\API\Stockify.API\Stockify.API.csproj", "{164C1404-2555-4F47-8A1D-BE04A6D96535}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Common.Domain", "src\Common\Stockify.Common.Domain\Stockify.Common.Domain.csproj", "{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Common.Domain", "src\Common\Stockify.Common.Domain\Stockify.Common.Domain.csproj", "{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Common.Application", "src\Common\Stockify.Common.Application\Stockify.Common.Application.csproj", "{E79C54EA-2111-4502-8912-B6E1A25D5805}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Common.Application", "src\Common\Stockify.Common.Application\Stockify.Common.Application.csproj", "{E79C54EA-2111-4502-8912-B6E1A25D5805}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Common.Infrastructure", "src\Common\Stockify.Common.Infrastructure\Stockify.Common.Infrastructure.csproj", "{A029F03A-B114-4CFC-BB2C-F5E19F165945}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Common.Infrastructure", "src\Common\Stockify.Common.Infrastructure\Stockify.Common.Infrastructure.csproj", "{A029F03A-B114-4CFC-BB2C-F5E19F165945}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{2F6E5BEE-AE53-4FAF-AF2D-9A02ADD31C25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Users.Domain", "src\Modules\Users\Stockify.Modules.Users.Domain\Stockify.Modules.Users.Domain.csproj", "{1425A404-7C4F-497D-8BCA-16883FB0F3DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Modules.Users.Domain", "src\Modules\Users\Stockify.Modules.Users.Domain\Stockify.Modules.Users.Domain.csproj", "{1425A404-7C4F-497D-8BCA-16883FB0F3DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Users.Application", "src\Modules\Users\Stockify.Modules.Users.Application\Stockify.Modules.Users.Application.csproj", "{3B12B3D4-AACC-43BD-B904-64CF4DFC4B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Modules.Users.Application", "src\Modules\Users\Stockify.Modules.Users.Application\Stockify.Modules.Users.Application.csproj", "{3B12B3D4-AACC-43BD-B904-64CF4DFC4B39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Users.Infrastructure", "src\Modules\Users\Stockify.Modules.Users.Infrastructure\Stockify.Modules.Users.Infrastructure.csproj", "{735D16F2-9F44-41C1-A554-FE08F75C84AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Modules.Users.Infrastructure", "src\Modules\Users\Stockify.Modules.Users.Infrastructure\Stockify.Modules.Users.Infrastructure.csproj", "{735D16F2-9F44-41C1-A554-FE08F75C84AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Common.Presentation", "src\Common\Stockify.Common.Presentation\Stockify.Common.Presentation.csproj", "{9DC201CD-94F1-46FD-9A6A-733E57B0A3EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Common.Presentation", "src\Common\Stockify.Common.Presentation\Stockify.Common.Presentation.csproj", "{9DC201CD-94F1-46FD-9A6A-733E57B0A3EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Users.Presentation", "src\Modules\Users\Stockify.Modules.Users.Presentation\Stockify.Modules.Users.Presentation.csproj", "{0E8F02A9-78A2-4B2C-B480-8DE21075FFA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Modules.Users.Presentation", "src\Modules\Users\Stockify.Modules.Users.Presentation\Stockify.Modules.Users.Presentation.csproj", "{0E8F02A9-78A2-4B2C-B480-8DE21075FFA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Users.IntegrationEvents", "src\Modules\Users\Stockify.Modules.Users.IntegrationEvents\Stockify.Modules.Users.IntegrationEvents.csproj", "{DD8AB109-ACFC-4BF1-B2BD-C6AE48BB8879}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stockify.Modules.Users.IntegrationEvents", "src\Modules\Users\Stockify.Modules.Users.IntegrationEvents\Stockify.Modules.Users.IntegrationEvents.csproj", "{DD8AB109-ACFC-4BF1-B2BD-C6AE48BB8879}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{23E7D90F-67C2-46CE-A01A-6C6EB88E613C}"
 EndProject
 Global
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9A29C85-3576-4A6E-A5C4-F62DDBAF2E72}
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -49,6 +55,10 @@ Global
 		{164C1404-2555-4F47-8A1D-BE04A6D96535}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{164C1404-2555-4F47-8A1D-BE04A6D96535}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{164C1404-2555-4F47-8A1D-BE04A6D96535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E7D90F-67C2-46CE-A01A-6C6EB88E613C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E7D90F-67C2-46CE-A01A-6C6EB88E613C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E7D90F-67C2-46CE-A01A-6C6EB88E613C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E7D90F-67C2-46CE-A01A-6C6EB88E613C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B486709-18FD-4CBD-BB11-AB5EABB2E10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -101,5 +111,8 @@ Global
 		{9DC201CD-94F1-46FD-9A6A-733E57B0A3EE} = {D48B8939-6023-4061-83CA-77CE8E5BC12C}
 		{0E8F02A9-78A2-4B2C-B480-8DE21075FFA2} = {2F6E5BEE-AE53-4FAF-AF2D-9A02ADD31C25}
 		{DD8AB109-ACFC-4BF1-B2BD-C6AE48BB8879} = {2F6E5BEE-AE53-4FAF-AF2D-9A02ADD31C25}
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,4 @@
-﻿services:
+services:
   
   stockify.api:
     image: ${DOCKER_REGISTRY-}stockify
