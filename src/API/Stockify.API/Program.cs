@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Stockify.API.Extensions;
 using Stockify.API.Infrastructure;
+using Stockify.API.Middleware;
 using Stockify.API.OpenApi;
 using Stockify.API.OpenTelemetry;
 using Stockify.Common.Application;
@@ -81,6 +82,8 @@ app.MapHealthChecks("health", new HealthCheckOptions
 });
 
 app.UseBackgroundJobs();
+
+app.UseLogContextTraceLogging();
 
 app.UseSerilogRequestLogging();
 

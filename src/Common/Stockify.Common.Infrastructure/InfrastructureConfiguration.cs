@@ -78,7 +78,8 @@ public static class InfrastructureConfiguration
         services.AddHangfireServer(options =>
             options.SchedulePollingInterval = TimeSpan.FromSeconds(1));
 
-        services.AddOpenTelemetry()
+        services
+            .AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddService(serviceName))
             .WithTracing(tracing =>
             {

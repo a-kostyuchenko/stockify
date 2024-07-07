@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
@@ -16,24 +17,33 @@ internal sealed class RequestLoggingBehavior<TRequest, TResponse>(
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
+        string moduleName = GetModuleName(typeof(TRequest).FullName!);
         string requestName = typeof(TRequest).Name;
         
-        logger.LogInformation("Processing request {RequestName}", requestName);
+        Activity.Current?.SetTag("request.module", moduleName);
+        Activity.Current?.SetTag("request.name", requestName);
 
-        TResponse result = await next();
+        using (LogContext.PushProperty("Module", moduleName))
+        {
+            logger.LogInformation("Processing request {RequestName}", requestName);
 
-        if (result.IsSuccess)
-        {
-            logger.LogInformation("Completed request {RequestName}", requestName);
-        }
-        else
-        {
-            using (LogContext.PushProperty("Error", result.Error, true))
+            TResponse result = await next();
+
+            if (result.IsSuccess)
             {
-                logger.LogError("Completed request {RequestName} with error", request);
+                logger.LogInformation("Completed request {RequestName}", requestName);
             }
-        }
+            else
+            {
+                using (LogContext.PushProperty("Error", result.Error, true))
+                {
+                    logger.LogError("Completed request {RequestName} with error", requestName);
+                }
+            }
 
-        return result;
+            return result;
+        }
     }
+
+    private static string GetModuleName(string requestName) => requestName.Split(".")[2];
 }

@@ -53,3 +53,11 @@
     restart: always
     ports:
       - 6379:6379
+
+  stockify.jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: Stockify.Jaeger
+    ports:
+      - 4317:4317
+      - 4318:4318
+      - 16686:16686
