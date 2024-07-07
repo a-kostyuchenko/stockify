@@ -6,6 +6,7 @@ using Serilog;
 using Stockify.API.Extensions;
 using Stockify.API.Infrastructure;
 using Stockify.API.OpenApi;
+using Stockify.API.OpenTelemetry;
 using Stockify.Common.Application;
 using Stockify.Common.Infrastructure;
 using Stockify.Common.Infrastructure.Configuration;
@@ -40,6 +41,7 @@ string databaseConnection = builder.Configuration.GetConnectionStringOrThrow("Da
 string redisConnection = builder.Configuration.GetConnectionStringOrThrow("Cache");
 
 builder.Services.AddInfrastructure(
+    DiagnosticConfig.ServiceName,
     [],
     databaseConnection,
     redisConnection);

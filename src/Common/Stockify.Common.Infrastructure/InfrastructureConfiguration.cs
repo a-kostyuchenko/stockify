@@ -4,6 +4,8 @@ using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using StackExchange.Redis;
 using Stockify.Common.Application.Caching;
 using Stockify.Common.Application.Clock;
@@ -22,6 +24,7 @@ public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
+        string serviceName,
         Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
         string databaseConnection,
         string redisConnection)
@@ -74,6 +77,22 @@ public static class InfrastructureConfiguration
 
         services.AddHangfireServer(options =>
             options.SchedulePollingInterval = TimeSpan.FromSeconds(1));
+
+        services.AddOpenTelemetry()
+            .ConfigureResource(resource => resource.AddService(serviceName))
+            .WithTracing(tracing =>
+            {
+                tracing
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddEntityFrameworkCoreInstrumentation()
+                    .AddRedisInstrumentation()
+                    .AddHangfireInstrumentation()
+                    .AddNpgsql()
+                    .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName);
+
+                tracing.AddOtlpExporter();
+            });
 
         return services;
     }
