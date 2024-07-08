@@ -16,6 +16,7 @@ using Stockify.Common.Infrastructure.Authorization;
 using Stockify.Common.Infrastructure.Caching;
 using Stockify.Common.Infrastructure.Clock;
 using Stockify.Common.Infrastructure.Data;
+using Stockify.Common.Infrastructure.EventBus;
 using Stockify.Common.Infrastructure.Outbox;
 
 namespace Stockify.Common.Infrastructure;
@@ -27,7 +28,8 @@ public static class InfrastructureConfiguration
         string serviceName,
         Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
         string databaseConnection,
-        string redisConnection)
+        string redisConnection,
+        QueueSettings queueSettings)
     {
         services.AddAuthenticationInternal();
 
@@ -64,8 +66,14 @@ public static class InfrastructureConfiguration
             }
             configuration.SetKebabCaseEndpointNameFormatter();
             
-            configuration.UsingInMemory((context, cfg) =>
+            configuration.UsingRabbitMq((context, cfg) =>
             {
+                cfg.Host(new Uri(queueSettings.Host), host =>
+                {
+                    host.Username(queueSettings.Username);
+                    host.Password(queueSettings.Password);
+                });
+                
                 cfg.ConfigureEndpoints(context);
             });
         });

@@ -11,6 +11,7 @@ using Stockify.API.OpenTelemetry;
 using Stockify.Common.Application;
 using Stockify.Common.Infrastructure;
 using Stockify.Common.Infrastructure.Configuration;
+using Stockify.Common.Infrastructure.EventBus;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Users.Infrastructure;
 
@@ -40,12 +41,17 @@ builder.Services.AddApplication([
 
 string databaseConnection = builder.Configuration.GetConnectionStringOrThrow("Database");
 string redisConnection = builder.Configuration.GetConnectionStringOrThrow("Cache");
+var queueSettings = new QueueSettings(
+    builder.Configuration.GetConnectionStringOrThrow("Queue"),
+    builder.Configuration.GetValueOrThrow<string>("Queue:Username")!,
+    builder.Configuration.GetValueOrThrow<string>("Queue:Password")!);
 
 builder.Services.AddInfrastructure(
     DiagnosticConfig.ServiceName,
     [],
     databaseConnection,
-    redisConnection);
+    redisConnection,
+    queueSettings);
 
 Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
 
