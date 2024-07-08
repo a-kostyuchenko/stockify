@@ -57,7 +57,9 @@ Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnection)
-    .AddKeyCloak(keyCloakHealthUrl);
+    .AddKeyCloak(keyCloakHealthUrl)
+    .AddRedis(redisConnection)
+    .AddRabbitMQ(rabbitConnectionString: queueSettings.Host);
 
 builder.Configuration.AddModuleConfiguration(["users"]);
 
