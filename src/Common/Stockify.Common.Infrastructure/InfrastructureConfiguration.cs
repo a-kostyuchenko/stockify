@@ -3,6 +3,7 @@ using Hangfire.PostgreSql;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using Npgsql;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -29,7 +30,7 @@ public static class InfrastructureConfiguration
         Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
         string databaseConnection,
         string redisConnection,
-        QueueSettings queueSettings)
+        string queueConnection)
     {
         services.AddAuthenticationInternal();
 
@@ -68,10 +69,13 @@ public static class InfrastructureConfiguration
             
             configuration.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host(new Uri(queueSettings.Host), host =>
+
+                IOptions<QueueOptions> queueOptions = context.GetRequiredService<IOptions<QueueOptions>>();
+                
+                cfg.Host(new Uri(queueConnection), host =>
                 {
-                    host.Username(queueSettings.Username);
-                    host.Password(queueSettings.Password);
+                    host.Username(queueOptions.Value.Username);
+                    host.Password(queueOptions.Value.Password);
                 });
                 
                 cfg.ConfigureEndpoints(context);

@@ -8,7 +8,6 @@ services:
       dockerfile: src/API/Stockify.API/Dockerfile
     depends_on:
       - stockify.database
-      - stockify.queue
     ports:
       - 5050:8080
       - 5051:8081

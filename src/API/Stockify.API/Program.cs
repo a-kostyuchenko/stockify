@@ -41,17 +41,14 @@ builder.Services.AddApplication([
 
 string databaseConnection = builder.Configuration.GetConnectionStringOrThrow("Database");
 string redisConnection = builder.Configuration.GetConnectionStringOrThrow("Cache");
-var queueSettings = new QueueSettings(
-    builder.Configuration.GetConnectionStringOrThrow("Queue"),
-    builder.Configuration.GetValueOrThrow<string>("Queue:Username")!,
-    builder.Configuration.GetValueOrThrow<string>("Queue:Password")!);
+string queueConnection = builder.Configuration.GetConnectionStringOrThrow("Queue");
 
 builder.Services.AddInfrastructure(
     DiagnosticConfig.ServiceName,
     [],
     databaseConnection,
     redisConnection,
-    queueSettings);
+    queueConnection);
 
 Uri keyCloakHealthUrl = builder.Configuration.GetKeyCloakHealthUrl();
 
@@ -59,7 +56,7 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnection)
     .AddKeyCloak(keyCloakHealthUrl)
     .AddRedis(redisConnection)
-    .AddRabbitMQ(rabbitConnectionString: queueSettings.Host);
+    .AddRabbitMQ(rabbitConnectionString: queueConnection);
 
 builder.Configuration.AddModuleConfiguration(["users"]);
 
