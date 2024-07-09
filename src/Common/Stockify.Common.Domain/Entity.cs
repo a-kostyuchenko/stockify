@@ -8,7 +8,7 @@ public abstract class Entity<TEntityId> : IEntity
     protected Entity(TEntityId id) : this() => 
         Id = id ?? throw new ArgumentNullException(nameof(id));
 
-    protected Entity()
+    private Entity()
     {
     }
     
