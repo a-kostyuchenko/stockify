@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Stockify.Modules.Users.Application.Abstractions;
 using Stockify.Modules.Users.Application.Abstractions.Data;
 using Stockify.Modules.Users.Domain.Users;
 using Stockify.Modules.Users.Infrastructure.Database.Constants;

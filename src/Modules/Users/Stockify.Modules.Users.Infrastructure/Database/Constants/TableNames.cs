@@ -1,8 +1,8 @@
 namespace Stockify.Modules.Users.Infrastructure.Database.Constants;
 
-public static class TableNames
+internal static class TableNames
 {
-    public const string Users = "users";
-    public const string Roles = "roles";
-    public const string Permissions = "permissions";
+    internal const string Users = "users";
+    internal const string Roles = "roles";
+    internal const string Permissions = "permissions";
 }

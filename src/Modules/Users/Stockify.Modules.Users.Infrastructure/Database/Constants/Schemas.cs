@@ -1,6 +1,6 @@
 namespace Stockify.Modules.Users.Infrastructure.Database.Constants;
 
-public static class Schemas
+internal static class Schemas
 {
-    public const string Users = "users";
+    internal const string Users = "users";
 }
