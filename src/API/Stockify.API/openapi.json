@@ -1,0 +1,7310 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Meetings API",
+    "description": "Meetings API",
+    "version": "v1"
+  },
+  "paths": {
+    "/authentication/users/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/workplaces/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginWorkplaceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/users/refresh-token": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authentication/meetings/join": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinMeetingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conversations": {
+      "get": {
+        "tags": [
+          "Conversations"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "participantId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DateTimeConversationResponseCursorPaginationResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Conversations"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConversationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/conversations/{conversationId}/messages": {
+      "get": {
+        "tags": [
+          "Conversations"
+        ],
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DateTimeMessageResponseCursorPaginationResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Conversations"
+        ],
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/conversations/{conversationId}": {
+      "delete": {
+        "tags": [
+          "Conversations"
+        ],
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/counting-types": {
+      "post": {
+        "tags": [
+          "CountingTypes"
+        ],
+        "summary": "Обрабатывает запрос на создание нового типа подсчета.",
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "<see cref=\"T:Application.Features.CountingTypes.Commands.Create.CreateCountingTypeRequest\">Запрос</see>, содержащий детали нового типа подсчета.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCountingTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CountingTypes"
+        ],
+        "summary": "Обрабатывает запрос на получение типов подсчета.",
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/counting-types/{countingTypeId}": {
+      "delete": {
+        "tags": [
+          "CountingTypes"
+        ],
+        "summary": "Обрабатывает запрос на удаление типа подсчета.",
+        "parameters": [
+          {
+            "name": "countingTypeId",
+            "in": "path",
+            "description": "Идентификатор типа подсчета.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CountingTypes"
+        ],
+        "summary": "Обрабатывает запрос на получение типа подсчета по идентификатору.",
+        "parameters": [
+          {
+            "name": "countingTypeId",
+            "in": "path",
+            "description": "Идентификатор типа подсчета.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountingTypeResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CountingTypes"
+        ],
+        "summary": "Обрабатывает запрос на обновление типа подсчета.",
+        "parameters": [
+          {
+            "name": "countingTypeId",
+            "in": "path",
+            "description": "Идентификатор типа подсчета.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "<see cref=\"T:Application.Features.CountingTypes.Commands.Update.UpdateCountingTypeRequest\">Запрос</see>, содержащий детали обновления.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCountingTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDocumentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/{documentId}": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDocumentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "documentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/documents/batch": {
+      "put": {
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateBatchDocumentRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/document-types": {
+      "get": {
+        "tags": [
+          "DocumentTypes"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentTypes"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDocumentTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/document-types/{documentTypeId}": {
+      "get": {
+        "tags": [
+          "DocumentTypes"
+        ],
+        "parameters": [
+          {
+            "name": "documentTypeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentTypeResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentTypes"
+        ],
+        "parameters": [
+          {
+            "name": "documentTypeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDocumentTypeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DocumentTypes"
+        ],
+        "parameters": [
+          {
+            "name": "documentTypeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/files/{fileId}": {
+      "get": {
+        "tags": [
+          "Files"
+        ],
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Files"
+        ],
+        "parameters": [
+          {
+            "name": "fileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/files": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/files/batch": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "collection"
+                ],
+                "type": "object",
+                "properties": {
+                  "collection": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "collection": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGroupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGroupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Groups"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/halls/admin": {
+      "get": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/halls/cabinet": {
+      "get": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/halls/{hallId}": {
+      "get": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "hallId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HallResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "hallId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHallRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "hallId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/halls/{hallId}/workplaces": {
+      "get": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "hallId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "searchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 777
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkplaceResponsePagedList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "hallId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkplaceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/halls": {
+      "post": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateHallRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/halls/{hallId}/workplaces/{workplaceId}": {
+      "put": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "hallId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "workplaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWorkplaceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Halls"
+        ],
+        "parameters": [
+          {
+            "name": "hallId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "workplaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/job-titles": {
+      "get": {
+        "tags": [
+          "JobTitles"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "JobTitles"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateJobTitleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/job-titles/{jobTitleId}": {
+      "get": {
+        "tags": [
+          "JobTitles"
+        ],
+        "parameters": [
+          {
+            "name": "jobTitleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobTitleResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "JobTitles"
+        ],
+        "parameters": [
+          {
+            "name": "jobTitleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateJobTitleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "JobTitles"
+        ],
+        "parameters": [
+          {
+            "name": "jobTitleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/languages": {
+      "get": {
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Languages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLanguageRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meeting-roles": {
+      "get": {
+        "tags": [
+          "MeetingRoles"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "MeetingRoles"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMeetingRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meeting-roles/{roleId}": {
+      "get": {
+        "tags": [
+          "MeetingRoles"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingRoleResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MeetingRoles"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMeetingRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MeetingRoles"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meeting-roles/permissions": {
+      "get": {
+        "tags": [
+          "MeetingRoles"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StringMeetingPermissionResponseItemsResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meetings": {
+      "get": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMeetingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}": {
+      "get": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMeetingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/questions": {
+      "get": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 777
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionResponsePagedList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddQuestionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/questions/{questionId}": {
+      "get": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuestionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/participants": {
+      "get": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "allowVote",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "searchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 777
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantResponsePagedList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddParticipantRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/participants/workplaces/{workplaceId}": {
+      "get": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "workplaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/speakers": {
+      "get": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SpeakerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSpeakerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/workplace-setups": {
+      "get": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkplaceSetupResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSetupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSetupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/group-participants": {
+      "post": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddGroupParticipantsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/copy": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CopyMeetingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/cancel": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/reset": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/open": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/start": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/questions/{questionId}/reorder": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderQuestionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/questions/{questionId}/start": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/questions/{questionId}/finish": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/participants/{participantId}": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "participantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateParticipantRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "participantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/speakers/{speakerId}": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "speakerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSpeakerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "speakerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/speakers/{speakerId}/start": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "speakerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/speakers/{speakerId}/finish": {
+      "put": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "speakerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/workplace-setups/{setupId}": {
+      "delete": {
+        "tags": [
+          "Meetings"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "setupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meeting-statistics/{meetingId}": {
+      "get": {
+        "tags": [
+          "MeetingStatistics"
+        ],
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetingStatistics"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/roles/{roleId}": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/roles/permissions": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StringPermissionResponseItemsResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/time-zones": {
+      "get": {
+        "tags": [
+          "TimeZones"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeZoneResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/time-zones/id": {
+      "get": {
+        "tags": [
+          "TimeZones"
+        ],
+        "parameters": [
+          {
+            "name": "timeZoneId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeZoneResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{userId}/change-password": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{userId}/generate-password": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/forgot-password": {
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/votings": {
+      "get": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVotingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/votings/{votingId}": {
+      "get": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VotingResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVotingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/votings/{votingId}/summary": {
+      "get": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VotingSummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/votings/{votingId}/votes": {
+      "get": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VoteResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddVoteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/votings/batch": {
+      "put": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateBatchVotingsRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/votings/{votingId}/start": {
+      "put": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/votings/{votingId}/complete": {
+      "put": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/votings/{votingId}/reset": {
+      "put": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/votings/{votingId}/votes/{voteId}": {
+      "delete": {
+        "tags": [
+          "Votings"
+        ],
+        "parameters": [
+          {
+            "name": "votingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "voteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/test/connection": {
+      "get": {
+        "tags": [
+          "Web.API"
+        ],
+        "parameters": [
+          {
+            "name": "group",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Defines content language",
+            "schema": {
+              "enum": [
+                "ru",
+                "en",
+                "kz"
+              ],
+              "default": "ru"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddGroupParticipantsRequest": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "meetingRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "allowVote": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddParticipantRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workplaceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "meetingRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "allowVote": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddQuestionRequest": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "$ref": "#/components/schemas/TextContentRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddSetupRequest": {
+        "type": "object",
+        "properties": {
+          "workplaceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "setups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateSetupRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddSpeakerRequest": {
+        "type": "object",
+        "properties": {
+          "participantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "presentationId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddVoteRequest": {
+        "type": "object",
+        "properties": {
+          "participantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "option": {
+            "$ref": "#/components/schemas/VotingOptions"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AddWorkplaceRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "workplaceType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "pinCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChangePasswordRequest": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ConversationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CopyMeetingRequest": {
+        "type": "object",
+        "properties": {
+          "copyFromId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CountingTypeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Уникальный идентификатор типа подсчета.",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Название типа подсчета.",
+            "nullable": true
+          },
+          "acceptanceAt": {
+            "type": "integer",
+            "description": "Процент положительных голосов от общего количества голосующих,\r\nнеобходимых для принятия положительного решения по голосованию.",
+            "format": "int32"
+          },
+          "votesCount": {
+            "type": "integer",
+            "description": "Количество положительных голосов сверх указанного процента,\r\nнеобходимых для принятия положительного решения по голосованию.",
+            "format": "int32"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Значение, указывающее, архивирован ли тип подсчета."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Представляет ответ на запрос типа подсчета."
+      },
+      "CreateConversationRequest": {
+        "type": "object",
+        "properties": {
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "receiverId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateCountingTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Название типа подсчета.",
+            "nullable": true
+          },
+          "acceptanceAt": {
+            "type": "integer",
+            "description": "Процент положительных голосов от общего количества голосующих,\r\nнеобходимых для принятия положительного решения по голосованию.",
+            "format": "int32"
+          },
+          "votesCount": {
+            "type": "integer",
+            "description": "Количество положительных голосов сверх указанного процента,\r\nнеобходимых для принятия положительного решения по голосованию.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Представляет запрос на создание нового типа подсчета."
+      },
+      "CreateDocumentRequest": {
+        "type": "object",
+        "properties": {
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "attachmentId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "roleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateDocumentTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateGroupRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateHallRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "backgroundId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateJobTitleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/TextContentRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateLanguageRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateMeetingRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/TextContentRequest"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "alternativeLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "hallId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "chairmanId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quorum": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "screensaverId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "timeZoneId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateMeetingRoleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissionIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateRoleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissionIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSetupRequest": {
+        "type": "object",
+        "properties": {
+          "display": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateUserRequest": {
+        "type": "object",
+        "properties": {
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "photoId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "jobTitleId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "roleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateVotingRequest": {
+        "type": "object",
+        "properties": {
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "content": {
+            "$ref": "#/components/schemas/TextContentRequest"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "options": {
+            "$ref": "#/components/schemas/VotingOptions"
+          },
+          "countingTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DateTimeConversationResponseCursorPaginationResponse": {
+        "type": "object",
+        "properties": {
+          "cursor": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConversationResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DateTimeMessageResponseCursorPaginationResponse": {
+        "type": "object",
+        "properties": {
+          "cursor": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessageResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "documentType": {
+            "$ref": "#/components/schemas/DocumentTypeResponse"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeetingRoleResponse"
+            },
+            "nullable": true
+          },
+          "attachment": {
+            "$ref": "#/components/schemas/FileResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentTypeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FileResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForgotPasswordRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HallResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "workplaceCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "background": {
+            "$ref": "#/components/schemas/FileResponse"
+          },
+          "workplaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkplaceResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobTitleResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/TextContentResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "JoinMeetingRequest": {
+        "type": "object",
+        "properties": {
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "participantId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoadResult": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { },
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          "groupCount": {
+            "type": "integer",
+            "format": "int32",
+            "default": -1
+          },
+          "summary": {
+            "type": "array",
+            "items": { },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginWorkplaceRequest": {
+        "type": "object",
+        "properties": {
+          "hallId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workplaceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pinCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeetingPermissionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeetingResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/TextContentResponse"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "alternativeLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "hallId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "hall": {
+            "$ref": "#/components/schemas/HallResponse"
+          },
+          "chairmanId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "quorum": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "screensaver": {
+            "$ref": "#/components/schemas/FileResponse"
+          },
+          "screensaverId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "timeZoneId": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeZone": {
+            "$ref": "#/components/schemas/TimeZoneResponse"
+          },
+          "connectedParticipantsCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeetingRoleResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeetingPermissionResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeetingStatistics": {
+        "type": "object",
+        "properties": {
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "startsAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "startedBy": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "votings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VotingModel"
+            },
+            "nullable": true
+          },
+          "reviewedQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MessageResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/ParticipantResponse"
+          },
+          "senderId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "conversationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sentAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParticipantResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserResponse"
+          },
+          "workplaceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "workplace": {
+            "$ref": "#/components/schemas/WorkplaceResponse"
+          },
+          "meetingRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "meetingRole": {
+            "$ref": "#/components/schemas/MeetingRoleResponse"
+          },
+          "allowVote": {
+            "type": "boolean"
+          },
+          "connected": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParticipantResponsePagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParticipantResponse"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "PermissionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionModel": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "$ref": "#/components/schemas/TextContentResponse"
+          },
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentResponse"
+            },
+            "nullable": true
+          },
+          "speakers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpeakerResponse"
+            },
+            "nullable": true
+          },
+          "votings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VotingResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionResponsePagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionResponse"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "RefreshTokenRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReorderQuestionsRequest": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SendMessageRequest": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SetupRequest": {
+        "type": "object",
+        "properties": {
+          "setupId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "display": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SpeakerResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "participantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "participant": {
+            "$ref": "#/components/schemas/ParticipantResponse"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "presentationId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringMeetingPermissionResponseItemsResponse": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeetingPermissionResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringPermissionResponseItemsResponse": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TextContentRequest": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TranslationRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TextContentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TranslationResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeZoneResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TokenResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshTokenExpiresOnUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TranslationRequest": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TranslationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBatchDocumentRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "documentTypeId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBatchVotingsRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateCountingTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Название типа подсчета.",
+            "nullable": true
+          },
+          "acceptanceAt": {
+            "type": "integer",
+            "description": "Процент положительных голосов от общего количества голосующих,\r\nнеобходимых для принятия положительного решения по голосованию.",
+            "format": "int32"
+          },
+          "votesCount": {
+            "type": "integer",
+            "description": "Количество положительных голосов сверх указанного процента,\r\nнеобходимых для принятия положительного решения по голосованию.",
+            "format": "int32"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Указывает, архивирован ли тип подсчета."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Представляет запрос на обновление существующего типа подсчета."
+      },
+      "UpdateDocumentRequest": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "attachmentId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateDocumentTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateGroupRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "userIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateHallRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "backgroundId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateJobTitleRequest": {
+        "type": "object",
+        "properties": {
+          "jobTitleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/TextContentRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateMeetingRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/TextContentRequest"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "alternativeLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "hallId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "chairmanId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quorum": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "screensaverId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "timeZoneId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateMeetingRoleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissionIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateParticipantRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workplaceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "meetingRoleId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "allowVote": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateQuestionRequest": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "$ref": "#/components/schemas/TextContentRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRoleRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissionIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSetupRequest": {
+        "type": "object",
+        "properties": {
+          "setups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SetupRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateSpeakerRequest": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "presentationId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "photoId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "jobTitleId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "roleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateVotingRequest": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "options": {
+            "$ref": "#/components/schemas/VotingOptions"
+          },
+          "countingTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "content": {
+            "$ref": "#/components/schemas/TextContentRequest"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateWorkplaceRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "pinCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "photo": {
+            "$ref": "#/components/schemas/FileResponse"
+          },
+          "jobTitle": {
+            "$ref": "#/components/schemas/JobTitleResponse"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VoteModel": {
+        "type": "object",
+        "properties": {
+          "voteId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "votingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "participantId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VoteResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "votingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "participantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "option": {
+            "$ref": "#/components/schemas/VotingOptions"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VotingModel": {
+        "type": "object",
+        "properties": {
+          "votingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "approvedVotes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoteModel"
+            },
+            "nullable": true
+          },
+          "rejectedVotes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoteModel"
+            },
+            "nullable": true
+          },
+          "abstainedVotes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoteModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VotingOptions": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          7
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "VotingResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "content": {
+            "$ref": "#/components/schemas/TextContentResponse"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "options": {
+            "$ref": "#/components/schemas/VotingOptions"
+          },
+          "countingTypeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "countingType": {
+            "$ref": "#/components/schemas/CountingTypeResponse"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "showSummary": {
+            "type": "boolean"
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DocumentResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VotingSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VotingSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "votingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/VotingSummary"
+          },
+          "approveCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rejectCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "abstainCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "absentCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "didNotVoteCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkplaceResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "pinCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "x": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkplaceResponsePagedList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkplaceResponse"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "WorkplaceSetupResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "meetingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workplaceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "display": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authentication using the Bearer scheme.",
+        "scheme": "Bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
