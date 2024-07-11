@@ -8,11 +8,11 @@ public abstract class Entity<TEntityId> : IEntity
     protected Entity(TEntityId id) : this() => 
         Id = id ?? throw new ArgumentNullException(nameof(id));
 
-    private Entity()
+    protected Entity()
     {
     }
     
-    public TEntityId Id { get; private init; }
+    public TEntityId Id { get; protected init; }
 
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.ToList();
     
