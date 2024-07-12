@@ -5,7 +5,7 @@ using Stockify.Modules.Risks.Infrastructure.Database.Constants;
 
 namespace Stockify.Modules.Risks.Infrastructure.Database;
 
-internal sealed class RisksDbContext : DbContext, IUnitOfWork
+public sealed class RisksDbContext(DbContextOptions<RisksDbContext> options) : DbContext(options), IUnitOfWork
 {
     public DbSet<Individual> Individuals { get; set; }
     

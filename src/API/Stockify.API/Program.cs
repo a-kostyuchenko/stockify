@@ -13,6 +13,7 @@ using Stockify.Common.Infrastructure;
 using Stockify.Common.Infrastructure.Configuration;
 using Stockify.Common.Infrastructure.EventBus;
 using Stockify.Common.Presentation.Endpoints;
+using Stockify.Modules.Risks.Infrastructure;
 using Stockify.Modules.Users.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -36,7 +37,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocumentation();
 
 builder.Services.AddApplication([
-    Stockify.Modules.Users.Application.AssemblyReference.Assembly
+    Stockify.Modules.Users.Application.AssemblyReference.Assembly,
+    Stockify.Modules.Risks.Application.AssemblyReference.Assembly
 ]);
 
 string databaseConnection = builder.Configuration.GetConnectionStringOrThrow("Database");
@@ -45,7 +47,7 @@ string queueConnection = builder.Configuration.GetConnectionStringOrThrow("Queue
 
 builder.Services.AddInfrastructure(
     DiagnosticConfig.ServiceName,
-    [],
+    [RisksModule.ConfigureConsumers],
     databaseConnection,
     redisConnection,
     queueConnection);
@@ -58,9 +60,10 @@ builder.Services.AddHealthChecks()
     .AddRedis(redisConnection)
     .AddRabbitMQ(rabbitConnectionString: queueConnection);
 
-builder.Configuration.AddModuleConfiguration(["users"]);
+builder.Configuration.AddModuleConfiguration(["users", "risks"]);
 
 builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddRisksModule(builder.Configuration);
     
 WebApplication app = builder.Build();
 

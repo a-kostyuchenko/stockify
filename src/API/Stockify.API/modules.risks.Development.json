@@ -1,0 +1,12 @@
+{
+  "Risks": {
+    "Outbox": {
+      "BatchSize": 20,
+      "Schedule": "0/15 * * * * *"
+    },
+    "Inbox": {
+      "BatchSize": 20,
+      "Schedule": "0/15 * * * * *"
+    }
+  }
+}

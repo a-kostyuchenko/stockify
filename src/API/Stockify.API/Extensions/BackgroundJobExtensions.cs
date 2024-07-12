@@ -10,15 +10,26 @@ public static class BackgroundJobExtensions
     {
         IRecurringJobManager jobClient = app.Services.GetRequiredService<IRecurringJobManager>();
         
-        jobClient.AddOrUpdate<IOutboxProcessor>(
+        jobClient.AddOrUpdate<Stockify.Modules.Users.Infrastructure.Outbox.IOutboxProcessor>(
             "users-outbox-processor", 
             processor => processor.ProcessAsync(),
             app.Configuration["Users:Outbox:Schedule"]);
         
-        jobClient.AddOrUpdate<IInboxProcessor>(
+        jobClient.AddOrUpdate<Stockify.Modules.Users.Infrastructure.Inbox.IInboxProcessor>(
             "users-inbox-processor", 
             processor => processor.ProcessAsync(),
             app.Configuration["Users:Inbox:Schedule"]);
+        
+        
+        jobClient.AddOrUpdate<Stockify.Modules.Risks.Infrastructure.Outbox.IOutboxProcessor>(
+            "risks-outbox-processor", 
+            processor => processor.ProcessAsync(),
+            app.Configuration["Risks:Outbox:Schedule"]);
+        
+        jobClient.AddOrUpdate<Stockify.Modules.Risks.Infrastructure.Inbox.IInboxProcessor>(
+            "risks-inbox-processor", 
+            processor => processor.ProcessAsync(),
+            app.Configuration["Risks:Inbox:Schedule"]);
         
         return app;
     }
