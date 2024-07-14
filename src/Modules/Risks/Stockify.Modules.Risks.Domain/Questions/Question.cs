@@ -4,6 +4,8 @@ namespace Stockify.Modules.Risks.Domain.Questions;
 
 public class Question : Entity<QuestionId>
 {
+    public const int MinAnswersCount = 2;
+
     private Question() : base(QuestionId.New())
     {
     }
