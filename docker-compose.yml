@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: src/API/Stockify.API/Dockerfile
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://stockify.jaeger:4317
     depends_on:
       - stockify.database
     ports:
