@@ -11,7 +11,6 @@ using Stockify.API.OpenTelemetry;
 using Stockify.Common.Application;
 using Stockify.Common.Infrastructure;
 using Stockify.Common.Infrastructure.Configuration;
-using Stockify.Common.Infrastructure.EventBus;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Risks.Infrastructure;
 using Stockify.Modules.Users.Infrastructure;

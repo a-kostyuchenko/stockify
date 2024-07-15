@@ -11,8 +11,4 @@
       <ProjectReference Include="..\Stockify.Modules.Risks.Domain\Stockify.Modules.Risks.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Questions\Queries\" />
-    </ItemGroup>
-
 </Project>

@@ -4,10 +4,11 @@ internal static class Routes
 {
     internal static class Questions
     {
-        internal const string BaseUri = "questions";
-        internal const string ResourceId = "questionId";
+        private const string BaseUri = "questions";
+        private const string ResourceId = "questionId";
         
+        internal const string GetQuestion = $"{BaseUri}/{{{ResourceId}:guid}}";
         internal const string Create = $"{BaseUri}";
-        internal const string AddAnswer = $"{BaseUri}/{{{ResourceId}:guid}}";
+        internal const string AddAnswer = $"{BaseUri}/{{{ResourceId}:guid}}/answers";
     }
 }

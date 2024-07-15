@@ -1,6 +1,5 @@
 using Stockify.Common.Application.Messaging;
 using Stockify.Common.Domain;
-using Stockify.Modules.Users.Application.Abstractions;
 using Stockify.Modules.Users.Application.Abstractions.Data;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
 using Stockify.Modules.Users.Domain.Users;

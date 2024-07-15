@@ -20,7 +20,7 @@ internal sealed class CreateQuestion : IEndpoint
             Result<Guid> result = await sender.Send(command);
 
             return result.Match(
-                questionId => Results.CreatedAtRoute("", questionId),
+                questionId => Results.CreatedAtRoute(nameof(GetQuestion), new { questionId }, questionId),
                 ApiResults.Problem);
         })
         .WithTags(Tags.Questions)

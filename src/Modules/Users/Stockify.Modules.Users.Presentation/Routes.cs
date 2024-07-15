@@ -4,8 +4,9 @@ internal static class Routes
 {
     internal static class Users
     {
-        internal const string BaseUri = "users";
-        internal const string ResourceId = "userId";
+        private const string BaseUri = "users";
+        private const string ResourceId = "userId";
+        
         internal const string GetUser = $"{BaseUri}/{{{ResourceId}:guid}}";
         internal const string GetProfile = $"{BaseUri}/profile";
         internal const string Register = $"{BaseUri}/register";
@@ -13,7 +14,8 @@ internal static class Routes
     
     internal static class Authentication
     {
-        internal const string BaseUri = "authentication";
+        private const string BaseUri = "authentication";
+        
         internal const string Login = $"{BaseUri}/login";
         internal const string RefreshToken = $"{BaseUri}/refresh-token";
     }

@@ -1,6 +1,4 @@
 using Hangfire;
-using Stockify.Modules.Users.Infrastructure.Inbox;
-using Stockify.Modules.Users.Infrastructure.Outbox;
 
 namespace Stockify.API.Extensions;
 

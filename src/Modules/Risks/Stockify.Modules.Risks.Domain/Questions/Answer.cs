@@ -4,7 +4,7 @@ namespace Stockify.Modules.Risks.Domain.Questions;
 
 public class Answer : Entity<AnswerId>
 {
-    private Answer()
+    private Answer() : base(AnswerId.New())
     {
     }
     
