@@ -17,6 +17,7 @@ internal sealed class QuestionRepository(RisksDbContext dbContext) : IQuestionRe
         const int buffer = 50;
         
         List<Question> questions = await dbContext.Questions
+            .Where(q => q.Answers.Count >= Question.MinAnswersCount)
             .Include(q => q.Answers)
             .OrderBy(_ => Guid.NewGuid())
             .Take(questionsCount + buffer)

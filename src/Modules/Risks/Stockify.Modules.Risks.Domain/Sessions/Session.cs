@@ -1,6 +1,7 @@
 using Stockify.Common.Domain;
 using Stockify.Modules.Risks.Domain.Individuals;
 using Stockify.Modules.Risks.Domain.Questions;
+using Stockify.Modules.Risks.Domain.Sessions.Events;
 
 namespace Stockify.Modules.Risks.Domain.Sessions;
 
@@ -10,8 +11,8 @@ public class Session : Entity<SessionId>
     {
     }
     
-    public const int MaxQuestionsCount = 20;
-    public const int MinQuestionsCount = 5;
+    public const int MaxQuestionsCount = 100;
+    public const int MinQuestionsCount = 20;
 
     private readonly HashSet<Question> _questions = [];
 
@@ -46,6 +47,31 @@ public class Session : Entity<SessionId>
         
         _questions.Add(question);
         
+        return Result.Success();
+    }
+    
+    public Result Start(DateTime utcNow)
+    {
+        if (Status != SessionStatus.Draft)
+        {
+            return Result.Failure(SessionErrors.InvalidStatus);
+        }
+
+        if (Status == SessionStatus.Active)
+        {
+            return Result.Failure(SessionErrors.AlreadyStarted);
+        }
+
+        if (_questions.Count < MinQuestionsCount)
+        {
+            return Result.Failure(SessionErrors.NotEnoughQuestions);
+        }
+
+        StartedAtUtc = utcNow;
+        Status = SessionStatus.Active;
+        
+        Raise(new SessionStartedDomainEvent(Id));
+
         return Result.Success();
     }
 }
