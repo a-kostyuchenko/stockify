@@ -24,7 +24,7 @@ internal sealed class RegisterUser : IEndpoint
             Result<Guid> result = await sender.Send(command);
 
             return result.Match(
-                userId => Results.CreatedAtRoute(nameof(GetUser), userId),
+                userId => Results.CreatedAtRoute(nameof(GetUser), new { userId }, userId),
                 ApiResults.Problem);
         })
         .AllowAnonymous()
