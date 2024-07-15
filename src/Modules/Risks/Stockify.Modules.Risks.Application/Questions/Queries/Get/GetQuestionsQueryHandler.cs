@@ -16,7 +16,7 @@ internal sealed class GetQuestionsQueryHandler(IDbConnectionFactory dbConnection
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
         var parameters = new GetQuestionsParameters(
-            request.SearchTerm,
+            $"%{request.SearchTerm}%",
             request.PageSize,
             (request.Page - 1) * request.PageSize);
         
