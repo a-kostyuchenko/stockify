@@ -14,7 +14,7 @@ internal sealed class GetQuestion : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(Routes.Questions.GetQuestion, async (Guid questionId, ISender sender) =>
+        app.MapGet(Routes.Questions.GetById, async (Guid questionId, ISender sender) =>
         {
             var query = new GetQuestionByIdQuery(QuestionId.FromValue(questionId));
 

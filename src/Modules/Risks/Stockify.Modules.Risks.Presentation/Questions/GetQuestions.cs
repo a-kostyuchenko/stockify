@@ -13,7 +13,7 @@ internal sealed class GetQuestions : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(Routes.Questions.GetQuestions, async (
+        app.MapGet(Routes.Questions.Get, async (
             ISender sender,
             string? searchTerm,
             int page = 1,

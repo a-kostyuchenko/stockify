@@ -7,9 +7,20 @@ internal static class Routes
         private const string BaseUri = "questions";
         private const string ResourceId = "questionId";
         
-        internal const string GetQuestions = $"{BaseUri}";
-        internal const string GetQuestion = $"{BaseUri}/{{{ResourceId}:guid}}";
+        internal const string Get = $"{BaseUri}";
+        internal const string GetById = $"{BaseUri}/{{{ResourceId}:guid}}";
         internal const string Create = $"{BaseUri}";
         internal const string AddAnswer = $"{BaseUri}/{{{ResourceId}:guid}}/answers";
+    }
+    
+    internal static class Sessions
+    {
+        private const string BaseUri = "sessions";
+        private const string ResourceId = "sessionId";
+        
+        internal const string Get = $"{BaseUri}";
+        internal const string GetById = $"{BaseUri}/{{{ResourceId}:guid}}";
+        internal const string Create = $"{BaseUri}";
+        internal const string Start = $"{BaseUri}/{{{ResourceId}:guid}}/start";
     }
 }
