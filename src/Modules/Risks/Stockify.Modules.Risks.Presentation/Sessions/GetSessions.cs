@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Stockify.Common.Domain;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Common.Presentation.Results;
+using Stockify.Modules.Risks.Application.Abstractions.Authentication;
 using Stockify.Modules.Risks.Application.Sessions.Queries.Get;
 
 namespace Stockify.Modules.Risks.Presentation.Sessions;
@@ -15,12 +16,20 @@ internal sealed class GetSessions : IEndpoint
     {
         app.MapGet(Routes.Sessions.Get, async (
             ISender sender,
+            IIndividualContext individualContext,
             string? status,
             DateTime? startedAtUtc,
+            DateTime? completedAtUtc,
             int page = 1,
             int pageSize = 15) =>
         {
-            var query = new GetSessionsQuery(status, startedAtUtc, page, pageSize);
+            var query = new GetSessionsQuery(
+                individualContext.IndividualId,
+                status,
+                startedAtUtc,
+                completedAtUtc,
+                page,
+                pageSize);
             
             Result<GetSessionsResponse> result = await sender.Send(query);
 

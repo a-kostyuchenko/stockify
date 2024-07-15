@@ -3,14 +3,11 @@ using Dapper;
 using Stockify.Common.Application.Data;
 using Stockify.Common.Application.Messaging;
 using Stockify.Common.Domain;
-using Stockify.Modules.Risks.Application.Abstractions.Authentication;
 using Stockify.Modules.Risks.Application.Sessions.Queries.GetById;
 
 namespace Stockify.Modules.Risks.Application.Sessions.Queries.Get;
 
-internal sealed class GetSessionsQueryHandler(
-    IDbConnectionFactory dbConnectionFactory,
-    IIndividualContext individualContext) : IQueryHandler<GetSessionsQuery, GetSessionsResponse>
+internal sealed class GetSessionsQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetSessionsQuery, GetSessionsResponse>
 {
     public async Task<Result<GetSessionsResponse>> Handle(
         GetSessionsQuery request,
@@ -19,9 +16,10 @@ internal sealed class GetSessionsQueryHandler(
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
         
         var parameters = new GetSessionsParameters(
-            individualContext.IndividualId.Value,
+            request.IndividualId.Value,
             request.Status,
             request.StartedAtUtc,
+            request.CompletedAtUtc,
             request.PageSize,
             (request.Page - 1) * request.PageSize);
         
@@ -59,12 +57,14 @@ internal sealed class GetSessionsQueryHandler(
                  id AS {nameof(SessionResponse.Id)},
                  individual_id AS {nameof(SessionResponse.IndividualId)},
                  status AS {nameof(SessionResponse.Status)},
-                 started_at_utc AS {nameof(SessionResponse.StartedAtUtc)}
+                 started_at_utc AS {nameof(SessionResponse.StartedAtUtc)},
+                 completed_at_utc AS {nameof(SessionResponse.CompletedAtUtc)}
              FROM risks.sessions
              WHERE
                  individual_id = @IndividualId AND
                  (@Status IS NULL OR status = @Status) AND
-                 (@StartedAtUtc::timestamp IS NULL OR started_at_utc >= @StartedAtUtc::timestamp)
+                 (@StartedAtUtc::timestamp IS NULL OR started_at_utc >= @StartedAtUtc::timestamp) AND
+                 (@CompletedAtUtc::timestamp IS NULL OR completed_at_utc >= @CompletedAtUtc::timestamp)
              ORDER BY started_at_utc
              OFFSET @Skip
              LIMIT @Take

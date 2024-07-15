@@ -18,6 +18,7 @@ public class Session : Entity<SessionId>
 
     public IndividualId IndividualId { get; private set; }
     public DateTime? StartedAtUtc { get; private set; }
+    public DateTime? CompletedAtUtc { get; private set; }
     public SessionStatus Status { get; private set; }
     
     public IReadOnlyCollection<Question> Questions => _questions.ToList();
@@ -29,6 +30,8 @@ public class Session : Entity<SessionId>
             IndividualId = individualId,
             Status = SessionStatus.Draft
         };
+        
+        session.Raise(new SessionCreatedDomainEvent(session.Id));
 
         return session;
     }
@@ -71,6 +74,21 @@ public class Session : Entity<SessionId>
         Status = SessionStatus.Active;
         
         Raise(new SessionStartedDomainEvent(Id));
+
+        return Result.Success();
+    }
+    
+    public Result Complete(DateTime utcNow)
+    {
+        if (Status != SessionStatus.Active)
+        {
+            return Result.Failure(SessionErrors.InvalidStatus);
+        }
+
+        Status = SessionStatus.Completed;
+        CompletedAtUtc = utcNow;
+        
+        Raise(new SessionCompletedDomainEvent(Id));
 
         return Result.Success();
     }

@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +6,6 @@ using Stockify.Common.Domain;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Common.Presentation.Results;
 using Stockify.Modules.Risks.Application.Sessions.Queries.GetById;
-using Stockify.Modules.Risks.Domain.Individuals;
 using Stockify.Modules.Risks.Domain.Sessions;
 
 namespace Stockify.Modules.Risks.Presentation.Sessions;
