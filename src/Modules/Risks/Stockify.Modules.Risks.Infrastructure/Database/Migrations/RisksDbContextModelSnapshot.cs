@@ -268,46 +268,6 @@ namespace Stockify.Modules.Risks.Infrastructure.Database.Migrations
                     b.ToTable("sessions", "risks");
                 });
 
-            modelBuilder.Entity("Stockify.Modules.Risks.Domain.Sessions.Submission", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<Guid>("AnswerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("answer_id");
-
-                    b.Property<int>("Points")
-                        .HasColumnType("integer")
-                        .HasColumnName("points");
-
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("question_id");
-
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("session_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_submissions");
-
-                    b.HasIndex("AnswerId")
-                        .HasDatabaseName("ix_submissions_answer_id");
-
-                    b.HasIndex("QuestionId")
-                        .HasDatabaseName("ix_submissions_question_id");
-
-                    b.HasIndex("SessionId")
-                        .HasDatabaseName("ix_submissions_session_id");
-
-                    b.ToTable("submissions", "risks", t =>
-                        {
-                            t.HasCheckConstraint("CK_Points_NotNegative", "points >= 0");
-                        });
-                });
-
             modelBuilder.Entity("QuestionSession", b =>
                 {
                     b.HasOne("Stockify.Modules.Risks.Domain.Questions.Question", null)
@@ -343,40 +303,71 @@ namespace Stockify.Modules.Risks.Infrastructure.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_sessions_individuals_individual_id");
-                });
 
-            modelBuilder.Entity("Stockify.Modules.Risks.Domain.Sessions.Submission", b =>
-                {
-                    b.HasOne("Stockify.Modules.Risks.Domain.Questions.Answer", null)
-                        .WithMany()
-                        .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_submissions_answers_answer_id");
+                    b.OwnsMany("Stockify.Modules.Risks.Domain.Sessions.Submission", "Submissions", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
 
-                    b.HasOne("Stockify.Modules.Risks.Domain.Questions.Question", null)
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_submissions_questions_question_id");
+                            b1.Property<Guid>("AnswerId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("answer_id");
 
-                    b.HasOne("Stockify.Modules.Risks.Domain.Sessions.Session", null)
-                        .WithMany("Submissions")
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_submissions_sessions_session_id");
+                            b1.Property<int>("Points")
+                                .HasColumnType("integer")
+                                .HasColumnName("points");
+
+                            b1.Property<Guid>("QuestionId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("question_id");
+
+                            b1.Property<Guid>("SessionId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("session_id");
+
+                            b1.HasKey("Id")
+                                .HasName("pk_submissions");
+
+                            b1.HasIndex("AnswerId")
+                                .HasDatabaseName("ix_submissions_answer_id");
+
+                            b1.HasIndex("QuestionId")
+                                .HasDatabaseName("ix_submissions_question_id");
+
+                            b1.HasIndex("SessionId")
+                                .HasDatabaseName("ix_submissions_session_id");
+
+                            b1.ToTable("submissions", "risks", t =>
+                                {
+                                    t.HasCheckConstraint("CK_Points_NotNegative", "points >= 0");
+                                });
+
+                            b1.HasOne("Stockify.Modules.Risks.Domain.Questions.Answer", null)
+                                .WithMany()
+                                .HasForeignKey("AnswerId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired()
+                                .HasConstraintName("fk_submissions_answers_answer_id");
+
+                            b1.HasOne("Stockify.Modules.Risks.Domain.Questions.Question", null)
+                                .WithMany()
+                                .HasForeignKey("QuestionId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired()
+                                .HasConstraintName("fk_submissions_questions_question_id");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SessionId")
+                                .HasConstraintName("fk_submissions_sessions_session_id");
+                        });
+
+                    b.Navigation("Submissions");
                 });
 
             modelBuilder.Entity("Stockify.Modules.Risks.Domain.Questions.Question", b =>
                 {
                     b.Navigation("Answers");
-                });
-
-            modelBuilder.Entity("Stockify.Modules.Risks.Domain.Sessions.Session", b =>
-                {
-                    b.Navigation("Submissions");
                 });
 #pragma warning restore 612, 618
         }

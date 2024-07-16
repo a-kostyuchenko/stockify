@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Stockify.Modules.Risks.Domain.Individuals;
+using Stockify.Modules.Risks.Domain.Questions;
 using Stockify.Modules.Risks.Domain.Sessions;
 using Stockify.Modules.Risks.Infrastructure.Database.Constants;
 
@@ -35,9 +36,37 @@ internal sealed class SessionConfiguration : IEntityTypeConfiguration<Session>
             .HasForeignKey(s => s.IndividualId)
             .IsRequired();
 
-        builder.HasMany(s => s.Submissions)
-            .WithOne()
-            .HasForeignKey(s => s.SessionId)
-            .IsRequired();
+        builder.OwnsMany(s => s.Submissions, submissionBuilder =>
+        {
+            submissionBuilder.WithOwner()
+                .HasForeignKey(s => s.SessionId);
+            
+            submissionBuilder.ToTable(
+                TableNames.Submissions,
+                tableBuilder =>
+                {
+                    tableBuilder.HasCheckConstraint(
+                        "CK_Points_NotNegative",
+                        sql: "points >= 0");
+                });
+
+            submissionBuilder.HasKey(s => s.Id);
+        
+            submissionBuilder.Property(s => s.Id)
+                .HasConversion(
+                    id => id.Value,
+                    value => SubmissionId.FromValue(value)
+                );
+
+            submissionBuilder.HasOne<Question>()
+                .WithMany()
+                .HasForeignKey(s => s.QuestionId)
+                .IsRequired();
+
+            submissionBuilder.HasOne<Answer>()
+                .WithMany()
+                .HasForeignKey(s => s.AnswerId)
+                .IsRequired();
+        });
     }
 }

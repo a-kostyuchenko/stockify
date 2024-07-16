@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Stockify.Modules.Risks.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSubmissionEntity : Migration
+    public partial class AddSubmissionOwnedEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
