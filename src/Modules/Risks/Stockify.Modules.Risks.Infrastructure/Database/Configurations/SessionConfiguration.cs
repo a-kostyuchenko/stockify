@@ -34,5 +34,10 @@ internal sealed class SessionConfiguration : IEntityTypeConfiguration<Session>
             .WithMany()
             .HasForeignKey(s => s.IndividualId)
             .IsRequired();
+
+        builder.HasMany(s => s.Submissions)
+            .WithOne()
+            .HasForeignKey(s => s.SessionId)
+            .IsRequired();
     }
 }

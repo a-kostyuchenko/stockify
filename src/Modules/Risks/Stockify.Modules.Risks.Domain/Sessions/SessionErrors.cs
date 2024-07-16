@@ -27,4 +27,12 @@ public static class SessionErrors
     public static readonly Error AlreadyStarted = Error.Problem(
         "Session.AlreadyStarted",
         "Session has already been started");
+
+    public static readonly Error MismatchedQuestion = Error.Problem(
+        "Session.MismatchedQuestion",
+        "Question does not belong to session");
+    
+    public static readonly Error IncompleteSubmissions = Error.Problem(
+        "Session.IncompleteSubmissions",
+        "Not all questions in the session have a submitted answer");
 }

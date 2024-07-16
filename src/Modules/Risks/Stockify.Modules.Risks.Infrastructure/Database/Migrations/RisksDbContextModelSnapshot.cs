@@ -255,6 +255,10 @@ namespace Stockify.Modules.Risks.Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("status");
 
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("integer")
+                        .HasColumnName("total_points");
+
                     b.HasKey("Id")
                         .HasName("pk_sessions");
 
@@ -262,6 +266,46 @@ namespace Stockify.Modules.Risks.Infrastructure.Database.Migrations
                         .HasDatabaseName("ix_sessions_individual_id");
 
                     b.ToTable("sessions", "risks");
+                });
+
+            modelBuilder.Entity("Stockify.Modules.Risks.Domain.Sessions.Submission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("AnswerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("answer_id");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("integer")
+                        .HasColumnName("points");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("question_id");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("session_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_submissions");
+
+                    b.HasIndex("AnswerId")
+                        .HasDatabaseName("ix_submissions_answer_id");
+
+                    b.HasIndex("QuestionId")
+                        .HasDatabaseName("ix_submissions_question_id");
+
+                    b.HasIndex("SessionId")
+                        .HasDatabaseName("ix_submissions_session_id");
+
+                    b.ToTable("submissions", "risks", t =>
+                        {
+                            t.HasCheckConstraint("CK_Points_NotNegative", "points >= 0");
+                        });
                 });
 
             modelBuilder.Entity("QuestionSession", b =>
@@ -301,9 +345,38 @@ namespace Stockify.Modules.Risks.Infrastructure.Database.Migrations
                         .HasConstraintName("fk_sessions_individuals_individual_id");
                 });
 
+            modelBuilder.Entity("Stockify.Modules.Risks.Domain.Sessions.Submission", b =>
+                {
+                    b.HasOne("Stockify.Modules.Risks.Domain.Questions.Answer", null)
+                        .WithMany()
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_submissions_answers_answer_id");
+
+                    b.HasOne("Stockify.Modules.Risks.Domain.Questions.Question", null)
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_submissions_questions_question_id");
+
+                    b.HasOne("Stockify.Modules.Risks.Domain.Sessions.Session", null)
+                        .WithMany("Submissions")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_submissions_sessions_session_id");
+                });
+
             modelBuilder.Entity("Stockify.Modules.Risks.Domain.Questions.Question", b =>
                 {
                     b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("Stockify.Modules.Risks.Domain.Sessions.Session", b =>
+                {
+                    b.Navigation("Submissions");
                 });
 #pragma warning restore 612, 618
         }
