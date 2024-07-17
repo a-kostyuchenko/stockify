@@ -18,7 +18,7 @@ internal sealed class GetUserProfile : IEndpoint
     {
         app.MapGet(Routes.Users.GetProfile, async (ISender sender, ClaimsPrincipal claimsPrincipal) =>
         {
-            var query = new GetUserByIdQuery(UserId.FromValue(claimsPrincipal.GetUserId()));
+            var query = new GetUserByIdQuery(UserId.From(claimsPrincipal.GetUserId()));
 
             Result<UserResponse> result = await sender.Send(query);
             

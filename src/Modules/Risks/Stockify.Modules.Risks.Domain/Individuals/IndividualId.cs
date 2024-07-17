@@ -10,6 +10,6 @@ public record struct IndividualId(Guid Value) : IEntityId<IndividualId>
     public static IndividualId New() => 
         new(Guid.NewGuid());
 
-    public static IndividualId FromValue(Guid value) => 
+    public static IndividualId From(Guid value) => 
         new(value);
 }

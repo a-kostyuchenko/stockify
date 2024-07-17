@@ -23,7 +23,7 @@ internal sealed class AnswerConfiguration : IEntityTypeConfiguration<Answer>
         builder.Property(a => a.Id)
             .HasConversion(
                 id => id.Value,
-                value => AnswerId.FromValue(value)
+                value => AnswerId.From(value)
             );
 
         builder.Property(a => a.Content).HasMaxLength(500);

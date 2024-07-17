@@ -16,7 +16,7 @@ internal sealed class GetUser : IEndpoint
     {
         app.MapGet(Routes.Users.GetUser, async (Guid userId, ISender sender) =>
         {
-            var query = new GetUserByIdQuery(UserId.FromValue(userId));
+            var query = new GetUserByIdQuery(UserId.From(userId));
 
             Result<UserResponse> result = await sender.Send(query);
 

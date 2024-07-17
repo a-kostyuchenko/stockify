@@ -16,7 +16,7 @@ internal sealed class CompleteSession : IEndpoint
     {
         app.MapPut(Routes.Sessions.Complete, async (Guid sessionId, ISender sender) =>
         {
-            var command = new CompleteSessionCommand(SessionId.FromValue(sessionId));
+            var command = new CompleteSessionCommand(SessionId.From(sessionId));
 
             Result result = await sender.Send(command);
 

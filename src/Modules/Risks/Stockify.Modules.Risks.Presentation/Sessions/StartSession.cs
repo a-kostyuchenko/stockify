@@ -16,7 +16,7 @@ internal sealed class StartSession : IEndpoint
     {
         app.MapPut(Routes.Sessions.Start, async (Guid sessionId, ISender sender) =>
         {
-            var command = new StartSessionCommand(SessionId.FromValue(sessionId));
+            var command = new StartSessionCommand(SessionId.From(sessionId));
 
             Result result = await sender.Send(command);
 

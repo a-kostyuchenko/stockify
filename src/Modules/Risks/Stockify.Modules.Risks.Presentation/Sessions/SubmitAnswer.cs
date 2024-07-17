@@ -18,9 +18,9 @@ internal sealed class SubmitAnswer : IEndpoint
         app.MapPut(Routes.Sessions.SubmitAnswer, async (Guid sessionId, Request request, ISender sender) =>
         {
             var command = new SubmitAnswerCommand(
-                SessionId.FromValue(sessionId),
-                QuestionId.FromValue(request.QuestionId),
-                AnswerId.FromValue(request.AnswerId));
+                SessionId.From(sessionId),
+                QuestionId.From(request.QuestionId),
+                AnswerId.From(request.AnswerId));
 
             Result result = await sender.Send(command);
 

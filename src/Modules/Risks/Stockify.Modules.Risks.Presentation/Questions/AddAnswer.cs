@@ -20,7 +20,7 @@ internal sealed class AddAnswer : IEndpoint
             ISender sender) =>
         {
             var command = new AddAnswerCommand(
-                QuestionId.FromValue(questionId),
+                QuestionId.From(questionId),
                 request.Content,
                 request.Points);
 

@@ -8,5 +8,5 @@ public record struct AnswerId(Guid Value) : IEntityId<AnswerId>
     
     public static AnswerId New() => new(Guid.NewGuid());
 
-    public static AnswerId FromValue(Guid value) => new(value);
+    public static AnswerId From(Guid value) => new(value);
 }

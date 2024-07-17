@@ -18,7 +18,7 @@ internal sealed class SessionConfiguration : IEntityTypeConfiguration<Session>
         builder.Property(s => s.Id)
             .HasConversion(
                 sessionId => sessionId.Value,
-                value => SessionId.FromValue(value));
+                value => SessionId.From(value));
 
         builder.Property(s => s.Status)
             .IsRequired()
@@ -55,7 +55,7 @@ internal sealed class SessionConfiguration : IEntityTypeConfiguration<Session>
             submissionBuilder.Property(s => s.Id)
                 .HasConversion(
                     id => id.Value,
-                    value => SubmissionId.FromValue(value)
+                    value => SubmissionId.From(value)
                 );
 
             submissionBuilder.HasOne<Question>()

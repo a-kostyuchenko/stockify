@@ -30,5 +30,5 @@ public record struct SubmissionId(Guid Value) : IEntityId<SubmissionId>
 {
     public static SubmissionId Empty => new(Guid.Empty);
     public static SubmissionId New() => new(Guid.NewGuid());
-    public static SubmissionId FromValue(Guid value) => new(value);
+    public static SubmissionId From(Guid value) => new(value);
 }

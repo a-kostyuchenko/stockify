@@ -16,7 +16,7 @@ internal sealed class QuestionConfiguration : IEntityTypeConfiguration<Question>
         builder.Property(q => q.Id)
             .HasConversion(
                 id => id.Value,
-                value => QuestionId.FromValue(value)
+                value => QuestionId.From(value)
             );
 
         builder.Property(q => q.Content).HasMaxLength(500);

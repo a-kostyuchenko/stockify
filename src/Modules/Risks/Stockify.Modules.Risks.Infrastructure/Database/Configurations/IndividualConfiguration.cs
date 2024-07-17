@@ -14,7 +14,7 @@ internal sealed class IndividualConfiguration : IEntityTypeConfiguration<Individ
         builder.HasKey(i => i.Id);
         
         builder.Property(i => i.Id)
-            .HasConversion(individualId => individualId.Value, value => IndividualId.FromValue(value));
+            .HasConversion(individualId => individualId.Value, value => IndividualId.From(value));
         
         builder.Property(u => u.FirstName).HasMaxLength(200);
 

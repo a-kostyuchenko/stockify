@@ -18,7 +18,7 @@ internal sealed class GetSession : IEndpoint
             ISender sender,
             Guid sessionId) =>
         {
-            var query = new GetSessionByIdQuery(SessionId.FromValue(sessionId));
+            var query = new GetSessionByIdQuery(SessionId.From(sessionId));
 
             Result<SessionResponse> result = await sender.Send(query);
 

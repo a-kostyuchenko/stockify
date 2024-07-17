@@ -8,7 +8,7 @@ namespace Stockify.Modules.Risks.Infrastructure.Authentication;
 
 internal sealed class IndividualContext(IHttpContextAccessor httpContextAccessor) : IIndividualContext
 {
-    public IndividualId IndividualId => IndividualId.FromValue(
+    public IndividualId IndividualId => IndividualId.From(
         httpContextAccessor.HttpContext?.User.GetUserId() ??
         throw new StockifyException("User identifier is unavailable"));
 }
