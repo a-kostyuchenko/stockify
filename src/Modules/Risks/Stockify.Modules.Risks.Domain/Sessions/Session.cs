@@ -81,21 +81,25 @@ public class Session : Entity<SessionId>
         return Result.Success();
     }
     
-    public Result SubmitAnswer(Question question, Answer answer)
+    public Result SubmitAnswer(QuestionId questionId, AnswerId answerId)
     {
         if (Status != SessionStatus.Active)
         {
             return Result.Failure(SessionErrors.InvalidStatus);
         }
 
-        if (!_questions.Contains(question))
-        {
-            return Result.Failure(SessionErrors.MismatchedQuestion);
-        }
+        Question? question = _questions.FirstOrDefault(q => q.Id == questionId);
 
-        if (answer.QuestionId != question.Id)
+        if (question is null)
         {
-            return Result.Failure(AnswerErrors.MismatchedQuestion);
+            return Result.Failure(QuestionErrors.NotFound);
+        }
+        
+        Answer? answer = question.Answers.FirstOrDefault(a => a.Id == answerId);
+        
+        if (answer is null)
+        {
+            return Result.Failure(AnswerErrors.NotFound);
         }
 
         var submission = Submission.Submit(this, question, answer);
