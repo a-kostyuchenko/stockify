@@ -1,4 +1,5 @@
 using FluentValidation;
+using Stockify.Modules.Risks.Domain.Questions;
 
 namespace Stockify.Modules.Risks.Application.Questions.Commands.AddAnswer;
 
@@ -8,6 +9,9 @@ internal sealed class AddAnswerCommandValidator : AbstractValidator<AddAnswerCom
     {
         RuleFor(a => a.QuestionId)
             .NotEmpty();
+        
+        RuleFor(a => a.QuestionId)
+            .NotEqual(QuestionId.Empty);
         
         RuleFor(a => a.Content)
             .NotEmpty()
