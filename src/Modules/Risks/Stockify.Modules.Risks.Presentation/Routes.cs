@@ -22,5 +22,7 @@ internal static class Routes
         internal const string GetById = $"{BaseUri}/{{{ResourceId}:guid}}";
         internal const string Create = $"{BaseUri}";
         internal const string Start = $"{BaseUri}/{{{ResourceId}:guid}}/start";
+        internal const string SubmitAnswer = $"{BaseUri}/{{{ResourceId}:guid}}/submit-answer";
+        internal const string Complete = $"{BaseUri}/{{{ResourceId}:guid}}/complete";
     }
 }
