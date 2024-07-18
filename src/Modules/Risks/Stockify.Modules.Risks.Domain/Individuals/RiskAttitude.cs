@@ -28,5 +28,9 @@ public sealed record RiskAttitude
         };
     }
     
+    // Provide formula for calculating coefficient
+    public static decimal CalculateCoefficient(int totalPoints, int maxPoints) => 
+        (decimal)totalPoints / maxPoints * 5;
+
     public static RiskAttitude Unspecified => new() { Coefficient = 0 };
 }

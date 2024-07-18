@@ -22,6 +22,7 @@ public class Session : Entity<SessionId>
     public DateTime? CompletedAtUtc { get; private set; }
     public SessionStatus Status { get; private set; }
     public int TotalPoints { get; private set; }
+    public int MaxPoints { get; private set; }
     
     public IReadOnlyCollection<Question> Questions => _questions.ToList();
     public IReadOnlyCollection<Submission> Submissions => _submissions.ToList();
@@ -50,6 +51,11 @@ public class Session : Entity<SessionId>
         {
             return Result.Failure(QuestionErrors.NotEnoughAnswers);
         }
+
+        if (Status != SessionStatus.Draft)
+        {
+            return Result.Failure(SessionErrors.InvalidStatus);
+        }
         
         _questions.Add(question);
         
@@ -75,6 +81,7 @@ public class Session : Entity<SessionId>
 
         StartedAtUtc = utcNow;
         Status = SessionStatus.Active;
+        MaxPoints = _questions.Select(q => q.Answers.Max(a => a.Points)).Sum();
         
         Raise(new SessionStartedDomainEvent(Id));
 
