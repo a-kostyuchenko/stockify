@@ -23,5 +23,12 @@ internal sealed class IndividualConfiguration : IEntityTypeConfiguration<Individ
         builder.Property(u => u.Email).HasMaxLength(300);
 
         builder.HasIndex(u => u.Email).IsUnique();
+
+        builder.ComplexProperty(i => i.Attitude, attitudeBuilder =>
+        {
+            attitudeBuilder.Property(a => a.Coefficient)
+                .HasColumnName("risk_coefficient")
+                .HasPrecision(18, 4);
+        });
     }
 }
