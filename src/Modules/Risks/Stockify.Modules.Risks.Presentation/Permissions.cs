@@ -6,5 +6,6 @@ internal static class Permissions
     internal const string ModifyQuestions = "questions:modify";
     
     internal const string GetSessions = "sessions:read";
+    internal const string GetSessionQuestions = "sessions:access_questions";
     internal const string ModifySessions = "sessions:modify";
 }
