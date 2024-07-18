@@ -21,6 +21,8 @@ internal sealed class StartSession : IEndpoint
             Result result = await sender.Send(command);
 
             return result.Match(Results.NoContent, ApiResults.Problem);
-        });
+        })
+        .RequireAuthorization(Permissions.ModifySessions)
+        .WithTags(Tags.Sessions);
     }
 }

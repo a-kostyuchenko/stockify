@@ -25,7 +25,9 @@ internal sealed class SubmitAnswer : IEndpoint
             Result result = await sender.Send(command);
 
             return result.Match(Results.Created, ApiResults.Problem);
-        });
+        })
+        .RequireAuthorization(Permissions.ModifySessions)
+        .WithTags(Tags.Sessions);
     }
 
     internal sealed record Request
