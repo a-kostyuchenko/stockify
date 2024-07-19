@@ -1,4 +1,5 @@
 using Stockify.Common.Domain;
+using Stockify.Modules.Risks.Domain.Individuals.Events;
 using Stockify.Modules.Risks.Domain.Sessions;
 
 namespace Stockify.Modules.Risks.Domain.Individuals;
@@ -41,6 +42,8 @@ public class Individual : Entity<IndividualId>
         }
 
         Attitude = result.Value;
+        
+        Raise(new RiskAttitudeEstimatedDomainEvent(Id));
 
         return Result.Success();
     }
