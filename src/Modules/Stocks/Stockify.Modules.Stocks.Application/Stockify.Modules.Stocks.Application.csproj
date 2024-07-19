@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\Stockify.Common.Application\Stockify.Common.Application.csproj" />
+      <ProjectReference Include="..\Stockify.Modules.Stocks.Domain\Stockify.Modules.Stocks.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
