@@ -1,4 +1,5 @@
 using Stockify.Common.Domain;
+using Stockify.Modules.Risks.Domain.Sessions;
 
 namespace Stockify.Modules.Risks.Domain.Individuals;
 
@@ -25,9 +26,14 @@ public class Individual : Entity<IndividualId>
         };
     }
     
-    public Result EstimateRiskAttitude(decimal coefficient)
+    public Result EstimateRiskAttitude(Session session)
     {
-        Result<RiskAttitude> result = RiskAttitude.Estimate(coefficient);
+        if (session.IndividualId != Id)
+        {
+            return Result.Failure(SessionErrors.IndividualMismatch);
+        }
+        
+        Result<RiskAttitude> result = RiskAttitude.Estimate(session.TotalPoints, session.MaxPoints);
 
         if (result.IsFailure)
         {

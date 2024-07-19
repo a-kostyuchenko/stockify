@@ -35,4 +35,8 @@ public static class SessionErrors
     public static readonly Error IncompleteSubmissions = Error.Problem(
         "Session.IncompleteSubmissions",
         "Not all questions in the session have a submitted answer");
+
+    public static readonly Error IndividualMismatch = Error.Problem(
+        "Session.IndividualMismatch",
+        "Session does not belong to the individual");
 }

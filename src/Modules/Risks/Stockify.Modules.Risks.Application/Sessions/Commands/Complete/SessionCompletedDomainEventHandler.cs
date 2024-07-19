@@ -1,5 +1,6 @@
 using Stockify.Common.Application.Exceptions;
 using Stockify.Common.Application.Messaging;
+using Stockify.Common.Domain;
 using Stockify.Modules.Risks.Application.Abstractions.Data;
 using Stockify.Modules.Risks.Domain.Individuals;
 using Stockify.Modules.Risks.Domain.Sessions;
@@ -30,9 +31,12 @@ internal sealed class SessionCompletedDomainEventHandler(
             throw new StockifyException(nameof(SessionCompletedDomainEvent), IndividualErrors.NotFound);
         }
         
-        decimal coefficient = RiskAttitude.CalculateCoefficient(session.TotalPoints, session.MaxPoints);
-        
-        individual.EstimateRiskAttitude(coefficient);
+        Result result = individual.EstimateRiskAttitude(session);
+
+        if (result.IsFailure)
+        {
+            throw new StockifyException(nameof(SessionCompletedDomainEvent), result.Error);
+        }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
