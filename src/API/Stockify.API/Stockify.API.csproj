@@ -24,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Modules\Risks\Stockify.Modules.Risks.Infrastructure\Stockify.Modules.Risks.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Modules\Stocks\Stockify.Modules.Stocks.Infrastructure\Stockify.Modules.Stocks.Infrastructure.csproj" />
       <ProjectReference Include="..\..\Modules\Users\Stockify.Modules.Users.Infrastructure\Stockify.Modules.Users.Infrastructure.csproj" />
     </ItemGroup>
 

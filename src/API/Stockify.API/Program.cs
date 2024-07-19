@@ -13,6 +13,7 @@ using Stockify.Common.Infrastructure;
 using Stockify.Common.Infrastructure.Configuration;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Risks.Infrastructure;
+using Stockify.Modules.Stocks.Infrastructure;
 using Stockify.Modules.Users.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -37,7 +38,8 @@ builder.Services.AddSwaggerDocumentation();
 
 builder.Services.AddApplication([
     Stockify.Modules.Users.Application.AssemblyReference.Assembly,
-    Stockify.Modules.Risks.Application.AssemblyReference.Assembly
+    Stockify.Modules.Risks.Application.AssemblyReference.Assembly,
+    Stockify.Modules.Stocks.Application.AssemblyReference.Assembly
 ]);
 
 string databaseConnection = builder.Configuration.GetConnectionStringOrThrow("Database");
@@ -59,10 +61,11 @@ builder.Services.AddHealthChecks()
     .AddRedis(redisConnection)
     .AddRabbitMQ(rabbitConnectionString: queueConnection);
 
-builder.Configuration.AddModuleConfiguration(["users", "risks"]);
+builder.Configuration.AddModuleConfiguration(["users", "risks", "stocks"]);
 
 builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddRisksModule(builder.Configuration);
+builder.Services.AddStocksModule(builder.Configuration);
     
 WebApplication app = builder.Build();
 

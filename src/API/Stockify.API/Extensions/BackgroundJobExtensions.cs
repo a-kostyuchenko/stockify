@@ -29,6 +29,16 @@ public static class BackgroundJobExtensions
             processor => processor.ProcessAsync(),
             app.Configuration["Risks:Inbox:Schedule"]);
         
+        jobClient.AddOrUpdate<Stockify.Modules.Stocks.Infrastructure.Outbox.IOutboxProcessor>(
+            "stocks-outbox-processor", 
+            processor => processor.ProcessAsync(),
+            app.Configuration["Stocks:Outbox:Schedule"]);
+        
+        jobClient.AddOrUpdate<Stockify.Modules.Stocks.Infrastructure.Inbox.IInboxProcessor>(
+            "stocks-inbox-processor", 
+            processor => processor.ProcessAsync(),
+            app.Configuration["Stocks:Inbox:Schedule"]);
+        
         return app;
     }
 }
