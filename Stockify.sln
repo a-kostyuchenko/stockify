@@ -58,6 +58,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Risks.Pres
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Risks.IntegrationEvents", "src\Modules\Risks\Stockify.Modules.Risks.IntegrationEvents\Stockify.Modules.Risks.IntegrationEvents.csproj", "{4F1361B6-0B04-4FB8-8D32-D8517151FF7C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stocks", "Stocks", "{D727D4F1-7A14-420C-981D-D48E0F605B1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Stocks.Domain", "src\Modules\Stocks\Stockify.Modules.Stocks.Domain\Stockify.Modules.Stocks.Domain.csproj", "{69953022-1ED5-442C-98CF-F94AE14D466F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Stocks.Application", "src\Modules\Stocks\Stockify.Modules.Stocks.Application\Stockify.Modules.Stocks.Application.csproj", "{BB51A443-533D-449A-AA6E-5FA72EF3B79F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Stocks.Infrastructure", "src\Modules\Stocks\Stockify.Modules.Stocks.Infrastructure\Stockify.Modules.Stocks.Infrastructure.csproj", "{A80F3CEB-15C8-4905-AB79-1E6008A63DFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Stocks.Presentation", "src\Modules\Stocks\Stockify.Modules.Stocks.Presentation\Stockify.Modules.Stocks.Presentation.csproj", "{13BA1F87-B292-4815-A082-2C3EC314EA8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Stocks.IntegrationEvents", "src\Modules\Stocks\Stockify.Modules.Stocks.IntegrationEvents\Stockify.Modules.Stocks.IntegrationEvents.csproj", "{9F6D8107-68C5-40DB-8446-98935632D6B8}"
+EndProject
 Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9A29C85-3576-4A6E-A5C4-F62DDBAF2E72}
@@ -135,6 +147,26 @@ Global
 		{4F1361B6-0B04-4FB8-8D32-D8517151FF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F1361B6-0B04-4FB8-8D32-D8517151FF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F1361B6-0B04-4FB8-8D32-D8517151FF7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69953022-1ED5-442C-98CF-F94AE14D466F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69953022-1ED5-442C-98CF-F94AE14D466F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69953022-1ED5-442C-98CF-F94AE14D466F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69953022-1ED5-442C-98CF-F94AE14D466F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB51A443-533D-449A-AA6E-5FA72EF3B79F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB51A443-533D-449A-AA6E-5FA72EF3B79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB51A443-533D-449A-AA6E-5FA72EF3B79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB51A443-533D-449A-AA6E-5FA72EF3B79F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A80F3CEB-15C8-4905-AB79-1E6008A63DFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A80F3CEB-15C8-4905-AB79-1E6008A63DFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A80F3CEB-15C8-4905-AB79-1E6008A63DFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A80F3CEB-15C8-4905-AB79-1E6008A63DFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13BA1F87-B292-4815-A082-2C3EC314EA8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13BA1F87-B292-4815-A082-2C3EC314EA8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13BA1F87-B292-4815-A082-2C3EC314EA8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13BA1F87-B292-4815-A082-2C3EC314EA8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F6D8107-68C5-40DB-8446-98935632D6B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F6D8107-68C5-40DB-8446-98935632D6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F6D8107-68C5-40DB-8446-98935632D6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F6D8107-68C5-40DB-8446-98935632D6B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{79B0C265-DF2D-4330-9899-F31666C5EE81} = {7FA6DDDF-6B67-4972-96D7-9DFB60305BAF}
@@ -159,6 +191,12 @@ Global
 		{29F9787D-FA00-48D7-AD15-85EFBFCAC823} = {534DDA39-F4E4-42CD-A9B1-C65177497F96}
 		{8D091368-1E12-4AB3-9C6B-B26A5CB00FDE} = {534DDA39-F4E4-42CD-A9B1-C65177497F96}
 		{4F1361B6-0B04-4FB8-8D32-D8517151FF7C} = {534DDA39-F4E4-42CD-A9B1-C65177497F96}
+		{D727D4F1-7A14-420C-981D-D48E0F605B1B} = {9EF2E3A3-0BC7-4B85-AB75-DF67C26C5CFF}
+		{69953022-1ED5-442C-98CF-F94AE14D466F} = {D727D4F1-7A14-420C-981D-D48E0F605B1B}
+		{BB51A443-533D-449A-AA6E-5FA72EF3B79F} = {D727D4F1-7A14-420C-981D-D48E0F605B1B}
+		{A80F3CEB-15C8-4905-AB79-1E6008A63DFF} = {D727D4F1-7A14-420C-981D-D48E0F605B1B}
+		{13BA1F87-B292-4815-A082-2C3EC314EA8E} = {D727D4F1-7A14-420C-981D-D48E0F605B1B}
+		{9F6D8107-68C5-40DB-8446-98935632D6B8} = {D727D4F1-7A14-420C-981D-D48E0F605B1B}
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
