@@ -1,3 +1,15 @@
 {
-  "Stocks": {}
+  "Stocks": {
+    "Outbox": {
+      "BatchSize": 20,
+      "Schedule": "0/15 * * * * *"
+    },
+    "Inbox": {
+      "BatchSize": 20,
+      "Schedule": "0/15 * * * * *"
+    },
+    "Alphavantage": {
+      "BaseUrl": "https://www.alphavantage.co/query"
+    }
+  }
 }

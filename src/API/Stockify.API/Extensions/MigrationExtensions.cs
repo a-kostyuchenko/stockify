@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Stockify.Modules.Risks.Infrastructure.Database;
+using Stockify.Modules.Stocks.Infrastructure.Database;
 using Stockify.Modules.Users.Infrastructure.Database;
 
 namespace Stockify.API.Extensions;
@@ -12,6 +13,7 @@ public static class MigrationExtensions
 
         ApplyMigration<UsersDbContext>(scope);
         ApplyMigration<RisksDbContext>(scope);
+        ApplyMigration<StocksDbContext>(scope);
     }
     
     private static void ApplyMigration<TDbContext>(IServiceScope scope)
