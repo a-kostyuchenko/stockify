@@ -39,11 +39,11 @@ public static class UsersModule
     
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IPermissionService, PermissionService>();
+        services.TryAddScoped<IPermissionService, PermissionService>();
         
         services.Configure<KeyCloakOptions>(configuration.GetSection(KeyCloakOptions.ConfigurationSection));
 
-        services.AddTransient<KeyCloakAuthDelegatingHandler>();
+        services.TryAddTransient<KeyCloakAuthDelegatingHandler>();
 
         services.AddHttpClient<KeyCloakClient>((serviceProvider, httpClient) =>
         {
@@ -64,7 +64,7 @@ public static class UsersModule
         })
         .AddStandardResilienceHandler();
 
-        services.AddTransient<IIdentityProviderService, IdentityProviderService>();
+        services.TryAddTransient<IIdentityProviderService, IdentityProviderService>();
         
         services.AddDbContext<UsersDbContext>((sp, options) => 
             options.UseNpgsql(configuration.GetConnectionStringOrThrow("Database"),
@@ -73,16 +73,16 @@ public static class UsersModule
                 .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
                 .UseSnakeCaseNamingConvention());
 
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.TryAddScoped<IUserRepository, UserRepository>();
 
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
+        services.TryAddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
 
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
         
         services.Configure<InboxOptions>(configuration.GetSection(InboxOptions.ConfigurationSection));
         
-        services.AddScoped<IOutboxProcessor, OutboxProcessor>();
-        services.AddScoped<IInboxProcessor, InboxProcessor>();
+        services.TryAddScoped<IOutboxProcessor, OutboxProcessor>();
+        services.TryAddScoped<IInboxProcessor, InboxProcessor>();
     }
 
     private static void AddDomainEventHandlers(this IServiceCollection services)
