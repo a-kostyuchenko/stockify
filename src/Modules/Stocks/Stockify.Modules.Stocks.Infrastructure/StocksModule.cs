@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
+using Refit;
 using Stockify.Common.Application.EventBus;
 using Stockify.Common.Application.Messaging;
 using Stockify.Common.Infrastructure.Configuration;
@@ -13,6 +15,7 @@ using Stockify.Modules.Stocks.Infrastructure.Database;
 using Stockify.Modules.Stocks.Infrastructure.Database.Constants;
 using Stockify.Modules.Stocks.Infrastructure.Inbox;
 using Stockify.Modules.Stocks.Infrastructure.Outbox;
+using Stockify.Modules.Stocks.Infrastructure.Stocks;
 
 namespace Stockify.Modules.Stocks.Infrastructure;
 
@@ -46,7 +49,20 @@ public static class StocksModule
         
         services.TryAddScoped<IOutboxProcessor, OutboxProcessor>();
         services.TryAddScoped<IInboxProcessor, InboxProcessor>();
+
+        services.Configure<AlphavantageOptions>(configuration.GetSection(AlphavantageOptions.ConfigurationSection));
         
+        services.TryAddTransient<AlphavantageAuthDelegateHandler>();
+
+        services.AddRefitClient<IAlphavantageClient>()
+            .ConfigureHttpClient((sp, httpClient) =>
+            {
+                AlphavantageOptions options = sp.GetRequiredService<IOptions<AlphavantageOptions>>().Value;
+                
+                httpClient.BaseAddress = new Uri(options.BaseUrl);
+            })
+            .AddHttpMessageHandler<AlphavantageAuthDelegateHandler>()
+            .AddStandardResilienceHandler();
     }
     
     private static void AddDomainEventHandlers(this IServiceCollection services)
