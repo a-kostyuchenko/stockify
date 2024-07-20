@@ -28,6 +28,8 @@
       <PackageReference Include="OpenTelemetry.Instrumentation.Hangfire" Version="1.6.0-beta.1" />
       <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
       <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.15" />
+      <PackageReference Include="Refit" Version="7.1.2" />
+      <PackageReference Include="Refit.HttpClientFactory" Version="7.1.2" />
       <PackageReference Include="Scrutor" Version="4.2.2" />
       <PackageReference Include="StackExchange.Redis" Version="2.8.0" />
       <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.6" />
