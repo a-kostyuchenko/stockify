@@ -106,3 +106,5 @@ app.UseAuthorization();
 app.MapEndpoints(versionedGroup);
 
 app.Run();
+
+public partial class Program;

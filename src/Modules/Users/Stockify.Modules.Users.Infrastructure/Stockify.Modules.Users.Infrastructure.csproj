@@ -13,4 +13,8 @@
       <ProjectReference Include="..\Stockify.Modules.Users.Presentation\Stockify.Modules.Users.Presentation.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="Stockify.IntegrationTests" />
+    </ItemGroup>
+
 </Project>

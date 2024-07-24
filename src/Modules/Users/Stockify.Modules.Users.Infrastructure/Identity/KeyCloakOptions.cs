@@ -4,13 +4,13 @@ internal sealed class KeyCloakOptions
 {
     public const string ConfigurationSection = "Users:KeyCloak";
     
-    public string AdminUrl { get; init; }
+    public string AdminUrl { get; set; }
 
-    public string TokenUrl { get; init; }
+    public string TokenUrl { get; set; }
 
-    public string ConfidentialClientId { get; init; }
+    public string ConfidentialClientId { get; set; }
 
-    public string ConfidentialClientSecret { get; init; }
+    public string ConfidentialClientSecret { get; set; }
 
-    public string PublicClientId { get; init; }
+    public string PublicClientId { get; set; }
 }
