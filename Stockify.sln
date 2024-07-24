@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Stocks.Pre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.Modules.Stocks.IntegrationEvents", "src\Modules\Stocks\Stockify.Modules.Stocks.IntegrationEvents\Stockify.Modules.Stocks.IntegrationEvents.csproj", "{9F6D8107-68C5-40DB-8446-98935632D6B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stockify.ArchitectureTests", "tests\Stockify.ArchitectureTests\Stockify.ArchitectureTests.csproj", "{FDA8F4E0-5DD4-4940-A979-6E9036BCE4B1}"
+EndProject
 Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9A29C85-3576-4A6E-A5C4-F62DDBAF2E72}
@@ -167,6 +169,10 @@ Global
 		{9F6D8107-68C5-40DB-8446-98935632D6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F6D8107-68C5-40DB-8446-98935632D6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F6D8107-68C5-40DB-8446-98935632D6B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA8F4E0-5DD4-4940-A979-6E9036BCE4B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA8F4E0-5DD4-4940-A979-6E9036BCE4B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA8F4E0-5DD4-4940-A979-6E9036BCE4B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA8F4E0-5DD4-4940-A979-6E9036BCE4B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{79B0C265-DF2D-4330-9899-F31666C5EE81} = {7FA6DDDF-6B67-4972-96D7-9DFB60305BAF}
@@ -197,6 +203,7 @@ Global
 		{A80F3CEB-15C8-4905-AB79-1E6008A63DFF} = {D727D4F1-7A14-420C-981D-D48E0F605B1B}
 		{13BA1F87-B292-4815-A082-2C3EC314EA8E} = {D727D4F1-7A14-420C-981D-D48E0F605B1B}
 		{9F6D8107-68C5-40DB-8446-98935632D6B8} = {D727D4F1-7A14-420C-981D-D48E0F605B1B}
+		{FDA8F4E0-5DD4-4940-A979-6E9036BCE4B1} = {19414345-B845-4197-BCB9-2AEE5CA411A4}
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
