@@ -1,6 +1,3 @@
-Here's a more detailed and advanced README file for your Stockify project:
-
-```markdown
 # Stockify
 
 Stockify is a modular monolith application designed for stock analysis using .NET. This project aims to provide a comprehensive platform for analyzing stock market data, facilitating both retrieval and processing of stock information.
@@ -104,6 +101,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 
 For any inquiries, please contact [kosttchka@gmail.com](mailto:kosttchka@gmail.com).
-```
 
 Feel free to adjust the content to fit your specific project details and any additional information you would like to include.
