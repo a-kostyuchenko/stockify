@@ -28,17 +28,24 @@ Stockify is a modular monolith application designed for stock analysis using .NE
 
 - **C#**
 - **.NET**
-- **Docker**
-- **Entity Framework Core** for database operations
-- **XUnit** for testing
+- **XUnit:** Testing framework for unit tests.
+- **Docker Compose:** Configuration for running the application using Docker.
+- **Database:** PostgreSQL for data storage.
+- **ORM:** Entity Framework Core for object-relational mapping.
+- **Messaging:** RabbitMQ for messaging between modules.
+- **Logging:** Serilog for logging.
+- **Caching:** Redis for caching.
+- **Monitoring:** Jaeger for distributed tracing.
+- **CI/CD:** GitHub Actions for continuous integration and deployment.
+- **Security:** KeyCloak for authentication and authorization.
 
 ## Architecture
 
 Stockify follows a modular monolith architecture, which includes:
 
-- **Core Module:** Contains the core functionalities and business logic.
-- **Data Module:** Manages data access and database operations.
-- **API Module:** Exposes RESTful APIs for interacting with the system.
+- **API Layer:** Exposes endpoints for communication with the application.
+- **Modules:** Contains the business logic, application, infrastructure, presentation, and integration events for each module.
+- **Tests:** Includes test projects for the application.
 
 ## Getting Started
 
@@ -84,10 +91,14 @@ dotnet test
 ## Project Structure
 
 - `src/`
-  - `Stockify.Api/` - API layer of the application
-  - `Stockify.Core/` - Core business logic and entities
-  - `Stockify.Data/` - Data access layer using Entity Framework Core
-- `tests/` - Contains the test projects
+  - `API/Stockify.Api/` - API layer of the application
+  - `Modules/`
+    - `{ModuleName}/Stockify.Modules.{ModuleName}.Domain/` - Domain layer for business logic.
+    - `{ModuleName}/Stockify.Modules.{ModuleName}.Application/` - Application layer for use cases.
+    - `{ModuleName}/Stockify.Modules.{ModuleName}.Infrastructure/` - Infrastructure layer for data access, outbox and inbox messages, external services, etc.
+    - `{ModuleName}/Stockify.Modules.{ModuleName}.Presenation/` - Presentation layer for endpoints, controllers, etc.
+    - `{ModuleName}/Stockify.Modules.{ModuleName}.IntegrationEvents/` - Integration events for communication between modules.
+- `tests/` - Contains test projects for the application
 - `docker-compose.yml` - Docker Compose configuration
 
 ## Contributing
