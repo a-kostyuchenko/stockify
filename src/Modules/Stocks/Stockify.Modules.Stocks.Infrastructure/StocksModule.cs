@@ -11,6 +11,7 @@ using Stockify.Common.Infrastructure.Configuration;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Stocks.Application.Abstractions.Data;
+using Stockify.Modules.Stocks.Application.Abstractions.Stocks;
 using Stockify.Modules.Stocks.Infrastructure.Database;
 using Stockify.Modules.Stocks.Infrastructure.Database.Constants;
 using Stockify.Modules.Stocks.Infrastructure.Inbox;
@@ -63,6 +64,8 @@ public static class StocksModule
             })
             .AddHttpMessageHandler<AlphavantageAuthDelegateHandler>()
             .AddStandardResilienceHandler();
+        
+        services.TryAddScoped<IStocksService, StocksService>();
     }
     
     private static void AddDomainEventHandlers(this IServiceCollection services)
