@@ -1,3 +1,4 @@
+using System.Globalization;
 using Stockify.Common.Domain;
 using Stockify.Modules.Stocks.Application.Abstractions.Stocks;
 using Stockify.Modules.Stocks.Infrastructure.Stocks.Contracts;
@@ -19,14 +20,14 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
         
         return new QuoteResponse(
             quote.Data.Symbol,
-            quote.Data.Open,
-            quote.Data.High,
-            quote.Data.Low,
-            quote.Data.Price,
-            quote.Data.Volume,
-            quote.Data.LatestTradingDay,
-            quote.Data.PreviousClose,
-            quote.Data.Change,
+            decimal.Parse(quote.Data.Open, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.High, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.Low, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.Price, CultureInfo.InvariantCulture),
+            long.Parse(quote.Data.Volume, CultureInfo.InvariantCulture),
+            DateOnly.Parse(quote.Data.LatestTradingDay, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.PreviousClose, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.Change, CultureInfo.InvariantCulture),
             quote.Data.ChangePercent);
     }
 }
