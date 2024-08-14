@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Stockify.Modules.Stocks.Domain\Stockify.Modules.Stocks.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Stocks\Commands\" />
+    </ItemGroup>
+
 </Project>
