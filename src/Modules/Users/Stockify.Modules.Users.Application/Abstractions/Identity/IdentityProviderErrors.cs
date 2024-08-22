@@ -10,7 +10,7 @@ public static class IdentityProviderErrors
     
     public static readonly Error AuthenticationFailed = Error.Problem(
         "Identity.AuthenticationFailed",
-        "Failed to acquire access token do to authentication failure");
+        "Failed to acquire access token due to authentication failure");
     
     public static readonly Error TokenRefreshFailed = Error.Problem(
         "Identity.TokenRefreshFailed",

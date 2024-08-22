@@ -7,4 +7,6 @@ public interface IAlphavantageClient
 {
     [Get("/?function=GLOBAL_QUOTE")]
     Task<GlobalQuote?> GetQuoteAsync(string symbol);
+    [Get("/?function=MARKET_STATUS")]
+    Task<MarketStatusData> GetGlobalMarketStatusAsync();
 }

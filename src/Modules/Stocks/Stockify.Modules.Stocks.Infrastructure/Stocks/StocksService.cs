@@ -30,4 +30,28 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
             decimal.Parse(quote.Data.Change, CultureInfo.InvariantCulture),
             quote.Data.ChangePercent);
     }
+
+    public async Task<Result<List<MarketResponse>>> GetGlobalMarketStatusAsync(
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            MarketStatusData marketStatuses = await stocksClient.GetGlobalMarketStatusAsync();
+
+            return marketStatuses.Markets
+                .Select(m => new MarketResponse(
+                    m.MarketType,
+                    m.Region,
+                    m.PrimaryExchanges,
+                    m.LocalOpen,
+                    m.LocalClose,
+                    m.CurrentStatus,
+                    m.Notes))
+                .ToList();
+        }
+        catch
+        {
+            return Result.Failure<List<MarketResponse>>(StocksErrors.RequestFailed);
+        }
+    }
 }
