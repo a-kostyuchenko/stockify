@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Stockify.Common.Application.EventBus;
 using Stockify.Common.Application.Messaging;
 using Stockify.Common.Infrastructure.Configuration;
+using Stockify.Common.Infrastructure.Extensions;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Risks.Application.Abstractions.Authentication;
@@ -30,13 +31,15 @@ public static class RisksModule
     {
         services.AddInfrastructure(configuration);
         
-        services.AddDomain();
-        
         services.AddDomainEventHandlers();
         
         services.AddIntegrationEventHandlers();
         
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+        
+        services.AddScopedAsMatchingInterfaces(AssemblyReference.Assembly, typeof(Individual).Assembly);
+        services.AddTransientAsMatchingInterfaces(AssemblyReference.Assembly);
+        services.AddSingletonAsMatchingInterfaces(AssemblyReference.Assembly);
     }
     
     public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
@@ -53,25 +56,11 @@ public static class RisksModule
                 .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
                 .UseSnakeCaseNamingConvention());
         
-        services.TryAddScoped<IIndividualRepository, IndividualRepository>();
-        services.TryAddScoped<IQuestionRepository, QuestionRepository>();
-        services.TryAddScoped<ISessionRepository, SessionRepository>();
-        
         services.TryAddScoped<IUnitOfWork>(sp => sp.GetRequiredService<RisksDbContext>());
         
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
         
         services.Configure<InboxOptions>(configuration.GetSection(InboxOptions.ConfigurationSection));
-        
-        services.TryAddScoped<IOutboxProcessor, OutboxProcessor>();
-        services.TryAddScoped<IInboxProcessor, InboxProcessor>();
-        
-        services.TryAddScoped<IIndividualContext, IndividualContext>();
-    }
-
-    private static void AddDomain(this IServiceCollection services)
-    {
-        services.TryAddScoped<ISessionFactory, SessionFactory>();
     }
     
     private static void AddDomainEventHandlers(this IServiceCollection services)

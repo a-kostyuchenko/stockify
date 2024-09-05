@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Stockify.Common.Application.ServiceLifetimes;
 using Stockify.Modules.Risks.Domain.Sessions;
 
 namespace Stockify.Modules.Risks.Infrastructure.Database.Repositories;
 
-internal sealed class SessionRepository(RisksDbContext dbContext) : ISessionRepository
+internal sealed class SessionRepository(RisksDbContext dbContext) : ISessionRepository, IScoped
 {
     public async Task<Session?> GetAsync(SessionId id, CancellationToken cancellationToken = default) => 
         await dbContext.Sessions

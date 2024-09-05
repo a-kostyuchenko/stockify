@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Stockify.Common.Application.ServiceLifetimes;
 using Stockify.Modules.Risks.Domain.Questions;
 
 namespace Stockify.Modules.Risks.Infrastructure.Database.Repositories;
 
-internal sealed class QuestionRepository(RisksDbContext dbContext) : IQuestionRepository
+internal sealed class QuestionRepository(RisksDbContext dbContext) : IQuestionRepository, IScoped
 {
     public async Task<Question?> GetAsync(QuestionId id, CancellationToken cancellationToken = default) => 
         await dbContext.Questions
