@@ -8,6 +8,7 @@ using Stockify.Common.Application.Authorization;
 using Stockify.Common.Application.EventBus;
 using Stockify.Common.Application.Messaging;
 using Stockify.Common.Infrastructure.Configuration;
+using Stockify.Common.Infrastructure.Extensions;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Users.Application.Abstractions.Data;
@@ -35,12 +36,14 @@ public static class UsersModule
         services.AddIntegrationEventHandlers();
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
+        services.AddScopedAsMatchingInterfaces(AssemblyReference.Assembly);
+        services.AddTransientAsMatchingInterfaces(AssemblyReference.Assembly);
+        services.AddSingletonAsMatchingInterfaces(AssemblyReference.Assembly);
     }
     
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.TryAddScoped<IPermissionService, PermissionService>();
-        
         services.Configure<KeyCloakOptions>(configuration.GetSection(KeyCloakOptions.ConfigurationSection));
 
         services.TryAddTransient<KeyCloakAuthDelegatingHandler>();
@@ -63,8 +66,6 @@ public static class UsersModule
             httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
         })
         .AddStandardResilienceHandler();
-
-        services.TryAddTransient<IIdentityProviderService, IdentityProviderService>();
         
         services.AddDbContext<UsersDbContext>((sp, options) => 
             options.UseNpgsql(configuration.GetConnectionStringOrThrow("Database"),
@@ -72,17 +73,12 @@ public static class UsersModule
                     .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
                 .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
                 .UseSnakeCaseNamingConvention());
-
-        services.TryAddScoped<IUserRepository, UserRepository>();
-
+        
         services.TryAddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
 
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
         
         services.Configure<InboxOptions>(configuration.GetSection(InboxOptions.ConfigurationSection));
-        
-        services.TryAddScoped<IOutboxProcessor, OutboxProcessor>();
-        services.TryAddScoped<IInboxProcessor, InboxProcessor>();
     }
 
     private static void AddDomainEventHandlers(this IServiceCollection services)

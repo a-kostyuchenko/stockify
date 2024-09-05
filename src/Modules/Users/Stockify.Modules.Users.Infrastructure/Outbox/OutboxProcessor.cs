@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Stockify.Common.Application.Clock;
 using Stockify.Common.Application.Data;
 using Stockify.Common.Application.Messaging;
+using Stockify.Common.Application.ServiceLifetimes;
 using Stockify.Common.Domain;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Infrastructure.Serialization;
@@ -19,7 +20,7 @@ internal sealed class OutboxProcessor(
     IServiceScopeFactory serviceScopeFactory,
     IDateTimeProvider dateTimeProvider,
     IOptions<OutboxOptions> outboxOptions,
-    ILogger<OutboxProcessor> logger) : IOutboxProcessor
+    ILogger<OutboxProcessor> logger) : IOutboxProcessor, IScoped
 {
     private const string ModuleName = "Users";
     

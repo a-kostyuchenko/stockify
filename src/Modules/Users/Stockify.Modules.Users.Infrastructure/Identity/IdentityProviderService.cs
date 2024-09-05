@@ -1,5 +1,6 @@
 using System.Net;
 using Microsoft.Extensions.Logging;
+using Stockify.Common.Application.ServiceLifetimes;
 using Stockify.Common.Domain;
 using Stockify.Modules.Users.Application.Abstractions.Identity;
 using Stockify.Modules.Users.Infrastructure.Authentication;
@@ -9,7 +10,7 @@ namespace Stockify.Modules.Users.Infrastructure.Identity;
 internal sealed class IdentityProviderService(
     KeyCloakClient keyCloakClient,
     JwtProvider jwtProvider,
-    ILogger<IdentityProviderService> logger) : IIdentityProviderService
+    ILogger<IdentityProviderService> logger) : IIdentityProviderService, ITransient
 {
     private const string PasswordCredentialType = "password";
     
