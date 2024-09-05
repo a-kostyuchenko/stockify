@@ -2,6 +2,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\Stockify.Common.Presentation\Stockify.Common.Presentation.csproj" />
+      <ProjectReference Include="..\..\Users\Stockify.Modules.Users.IntegrationEvents\Stockify.Modules.Users.IntegrationEvents.csproj" />
       <ProjectReference Include="..\Stockify.Modules.Stocks.Application\Stockify.Modules.Stocks.Application.csproj" />
     </ItemGroup>
 

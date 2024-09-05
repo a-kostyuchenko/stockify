@@ -48,7 +48,7 @@ string queueConnection = builder.Configuration.GetConnectionStringOrThrow("Queue
 
 builder.Services.AddInfrastructure(
     DiagnosticConfig.ServiceName,
-    [RisksModule.ConfigureConsumers],
+    [RisksModule.ConfigureConsumers, StocksModule.ConfigureConsumers],
     databaseConnection,
     redisConnection,
     queueConnection);

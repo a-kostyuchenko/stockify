@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ using Stockify.Modules.Stocks.Infrastructure.Database.Constants;
 using Stockify.Modules.Stocks.Infrastructure.Inbox;
 using Stockify.Modules.Stocks.Infrastructure.Outbox;
 using Stockify.Modules.Stocks.Infrastructure.Stocks;
+using Stockify.Modules.Users.IntegrationEvents;
 
 namespace Stockify.Modules.Stocks.Infrastructure;
 
@@ -66,6 +68,11 @@ public static class StocksModule
             })
             .AddHttpMessageHandler<AlphavantageAuthDelegateHandler>()
             .AddStandardResilienceHandler();
+    }
+    
+    public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
+    {
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
     }
     
     private static void AddDomainEventHandlers(this IServiceCollection services)

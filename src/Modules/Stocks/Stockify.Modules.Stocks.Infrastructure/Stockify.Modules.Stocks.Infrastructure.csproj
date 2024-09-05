@@ -6,9 +6,4 @@
       <ProjectReference Include="..\Stockify.Modules.Stocks.Presentation\Stockify.Modules.Stocks.Presentation.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Database\Configurations\" />
-      <Folder Include="Database\Repositories\" />
-    </ItemGroup>
-
 </Project>
