@@ -1,11 +1,12 @@
 using System.Globalization;
+using Stockify.Common.Application.ServiceLifetimes;
 using Stockify.Common.Domain;
 using Stockify.Modules.Stocks.Application.Abstractions.Stocks;
 using Stockify.Modules.Stocks.Infrastructure.Stocks.Contracts;
 
 namespace Stockify.Modules.Stocks.Infrastructure.Stocks;
 
-internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksService
+internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksService, IScoped
 {
     public async Task<Result<QuoteResponse>> GetQuoteAsync(
         string symbol,

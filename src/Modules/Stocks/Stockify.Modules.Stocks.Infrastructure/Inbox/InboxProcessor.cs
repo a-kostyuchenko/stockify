@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Stockify.Common.Application.Clock;
 using Stockify.Common.Application.Data;
 using Stockify.Common.Application.EventBus;
+using Stockify.Common.Application.ServiceLifetimes;
 using Stockify.Common.Infrastructure.Inbox;
 using Stockify.Common.Infrastructure.Serialization;
 
@@ -18,7 +19,7 @@ internal sealed class InboxProcessor(
     IServiceScopeFactory serviceScopeFactory,
     IDateTimeProvider dateTimeProvider,
     IOptions<InboxOptions> inboxOptions,
-    ILogger<InboxProcessor> logger) : IInboxProcessor
+    ILogger<InboxProcessor> logger) : IInboxProcessor, IScoped
 {
     private const string ModuleName = "Stocks";
     

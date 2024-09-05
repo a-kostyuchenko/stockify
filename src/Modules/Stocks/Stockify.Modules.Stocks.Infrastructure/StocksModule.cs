@@ -8,6 +8,7 @@ using Refit;
 using Stockify.Common.Application.EventBus;
 using Stockify.Common.Application.Messaging;
 using Stockify.Common.Infrastructure.Configuration;
+using Stockify.Common.Infrastructure.Extensions;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Stocks.Application.Abstractions.Data;
@@ -31,6 +32,10 @@ public static class StocksModule
         services.AddIntegrationEventHandlers();
         
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+        
+        services.AddScopedAsMatchingInterfaces(AssemblyReference.Assembly);
+        services.AddTransientAsMatchingInterfaces(AssemblyReference.Assembly);
+        services.AddSingletonAsMatchingInterfaces(AssemblyReference.Assembly);
     }
     
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -47,9 +52,6 @@ public static class StocksModule
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
         
         services.Configure<InboxOptions>(configuration.GetSection(InboxOptions.ConfigurationSection));
-        
-        services.TryAddScoped<IOutboxProcessor, OutboxProcessor>();
-        services.TryAddScoped<IInboxProcessor, InboxProcessor>();
 
         services.Configure<AlphavantageOptions>(configuration.GetSection(AlphavantageOptions.ConfigurationSection));
         
@@ -64,8 +66,6 @@ public static class StocksModule
             })
             .AddHttpMessageHandler<AlphavantageAuthDelegateHandler>()
             .AddStandardResilienceHandler();
-        
-        services.TryAddScoped<IStocksService, StocksService>();
     }
     
     private static void AddDomainEventHandlers(this IServiceCollection services)
