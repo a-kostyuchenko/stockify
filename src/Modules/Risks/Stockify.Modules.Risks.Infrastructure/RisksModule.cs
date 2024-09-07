@@ -37,7 +37,7 @@ public static class RisksModule
         
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
         
-        services.AddScopedAsMatchingInterfaces(AssemblyReference.Assembly, typeof(Individual).Assembly);
+        services.AddScopedAsMatchingInterfaces(AssemblyReference.Assembly);
         services.AddTransientAsMatchingInterfaces(AssemblyReference.Assembly);
         services.AddSingletonAsMatchingInterfaces(AssemblyReference.Assembly);
     }
@@ -57,6 +57,8 @@ public static class RisksModule
                 .UseSnakeCaseNamingConvention());
         
         services.TryAddScoped<IUnitOfWork>(sp => sp.GetRequiredService<RisksDbContext>());
+        
+        services.TryAddScoped<ISessionFactory, SessionFactory>();
         
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
         
