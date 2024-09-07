@@ -8,5 +8,6 @@ internal static class Routes
         
         internal const string GetGlobalQuote = $"{BaseUri}/quote/{{symbol:alpha}}";
         internal const string GetMarketStatus = $"{BaseUri}/market-status";
+        internal const string GetStocksData = $"{BaseUri}/{{symbol:alpha}}";
     }
 }
