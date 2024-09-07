@@ -21,14 +21,14 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
         
         return new QuoteResponse(
             quote.Data.Symbol,
-            decimal.Parse(quote.Data.Open, CultureInfo.InvariantCulture),
-            decimal.Parse(quote.Data.High, CultureInfo.InvariantCulture),
-            decimal.Parse(quote.Data.Low, CultureInfo.InvariantCulture),
-            decimal.Parse(quote.Data.Price, CultureInfo.InvariantCulture),
-            long.Parse(quote.Data.Volume, CultureInfo.InvariantCulture),
-            DateOnly.Parse(quote.Data.LatestTradingDay, CultureInfo.InvariantCulture),
-            decimal.Parse(quote.Data.PreviousClose, CultureInfo.InvariantCulture),
-            decimal.Parse(quote.Data.Change, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.Open, CultureInfo.CurrentCulture),
+            decimal.Parse(quote.Data.High, CultureInfo.CurrentCulture),
+            decimal.Parse(quote.Data.Low, CultureInfo.CurrentCulture),
+            decimal.Parse(quote.Data.Price, CultureInfo.CurrentCulture),
+            long.Parse(quote.Data.Volume, CultureInfo.CurrentCulture),
+            DateOnly.Parse(quote.Data.LatestTradingDay, CultureInfo.CurrentCulture),
+            decimal.Parse(quote.Data.PreviousClose, CultureInfo.CurrentCulture),
+            decimal.Parse(quote.Data.Change, CultureInfo.CurrentCulture),
             quote.Data.ChangePercent);
     }
 
@@ -53,6 +53,33 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
         catch
         {
             return Result.Failure<List<MarketResponse>>(StocksErrors.RequestFailed);
+        }
+    }
+
+    public async Task<Result<List<TimeSeriesResponse>>> GetStocksData(
+        string symbol,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            TimeSeriesIntraday intradayData = await stocksClient.GetStocksDataAsync(symbol);
+
+            return intradayData.TimeSeries.Select(pair =>
+                {
+                    (string? key, TimeSeriesData? value) = pair;
+                    return new TimeSeriesResponse(
+                        DateTime.Parse(key, CultureInfo.CurrentCulture),
+                        decimal.Parse(value.Open, CultureInfo.CurrentCulture),
+                        decimal.Parse(value.High, CultureInfo.CurrentCulture),
+                        decimal.Parse(value.Low, CultureInfo.CurrentCulture),
+                        decimal.Parse(value.Close, CultureInfo.CurrentCulture),
+                        long.Parse(value.Volume, CultureInfo.CurrentCulture));
+                })
+                .ToList();
+        }
+        catch
+        {
+            return Result.Failure<List<TimeSeriesResponse>>(StocksErrors.RequestFailed);
         }
     }
 }

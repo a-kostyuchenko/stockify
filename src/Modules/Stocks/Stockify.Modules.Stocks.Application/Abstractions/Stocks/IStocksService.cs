@@ -9,4 +9,8 @@ public interface IStocksService
         CancellationToken cancellationToken = default);
     Task<Result<List<MarketResponse>>> GetGlobalMarketStatusAsync(
         CancellationToken cancellationToken = default);
+
+    Task<Result<List<TimeSeriesResponse>>> GetStocksData(
+        string symbol,
+        CancellationToken cancellationToken = default);
 }
