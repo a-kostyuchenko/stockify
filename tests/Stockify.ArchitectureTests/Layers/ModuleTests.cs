@@ -2,6 +2,7 @@ using System.Reflection;
 using NetArchTest.Rules;
 using Stockify.ArchitectureTests.Abstractions;
 using Stockify.Modules.Risks.Domain.Individuals;
+using Stockify.Modules.Stocks.Domain.Stockholders;
 using Stockify.Modules.Users.Domain.Users;
 using Xunit;
 
@@ -69,7 +70,7 @@ public class ModuleTests : BaseTest
 
         List<Assembly> stocksAssemblies =
         [
-            // typeof(Stock).Assembly,
+            typeof(Stockholder).Assembly,
             Modules.Stocks.Application.AssemblyReference.Assembly,
             Modules.Stocks.Presentation.AssemblyReference.Assembly,
             Modules.Stocks.Infrastructure.AssemblyReference.Assembly,
