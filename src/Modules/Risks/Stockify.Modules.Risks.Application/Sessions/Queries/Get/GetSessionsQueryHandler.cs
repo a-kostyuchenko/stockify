@@ -56,9 +56,9 @@ internal sealed class GetSessionsQueryHandler(IDbConnectionFactory dbConnectionF
              SELECT
                  id AS {nameof(SessionResponse.Id)},
                  individual_id AS {nameof(SessionResponse.IndividualId)},
-                 status AS {nameof(SessionResponse.Status)},
                  started_at_utc AS {nameof(SessionResponse.StartedAtUtc)},
-                 completed_at_utc AS {nameof(SessionResponse.CompletedAtUtc)}
+                 completed_at_utc AS {nameof(SessionResponse.CompletedAtUtc)},
+                 status AS {nameof(SessionResponse.Status)}
              FROM risks.sessions
              WHERE
                  individual_id = @IndividualId AND
