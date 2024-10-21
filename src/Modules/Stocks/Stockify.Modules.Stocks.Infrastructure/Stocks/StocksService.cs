@@ -21,14 +21,14 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
         
         return new QuoteResponse(
             quote.Data.Symbol,
-            decimal.Parse(quote.Data.Open, CultureInfo.CurrentCulture),
-            decimal.Parse(quote.Data.High, CultureInfo.CurrentCulture),
-            decimal.Parse(quote.Data.Low, CultureInfo.CurrentCulture),
-            decimal.Parse(quote.Data.Price, CultureInfo.CurrentCulture),
-            long.Parse(quote.Data.Volume, CultureInfo.CurrentCulture),
-            DateOnly.Parse(quote.Data.LatestTradingDay, CultureInfo.CurrentCulture),
-            decimal.Parse(quote.Data.PreviousClose, CultureInfo.CurrentCulture),
-            decimal.Parse(quote.Data.Change, CultureInfo.CurrentCulture),
+            decimal.Parse(quote.Data.Open, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.High, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.Low, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.Price, CultureInfo.InvariantCulture),
+            long.Parse(quote.Data.Volume, CultureInfo.InvariantCulture),
+            DateOnly.Parse(quote.Data.LatestTradingDay, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.PreviousClose, CultureInfo.InvariantCulture),
+            decimal.Parse(quote.Data.Change, CultureInfo.InvariantCulture),
             quote.Data.ChangePercent);
     }
 
@@ -68,12 +68,12 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
                 {
                     (string? key, TimeSeriesEntry? value) = pair;
                     return new TimeSeriesResponse(
-                        DateTime.Parse(key, CultureInfo.CurrentCulture),
-                        decimal.Parse(value.Open, CultureInfo.CurrentCulture),
-                        decimal.Parse(value.High, CultureInfo.CurrentCulture),
-                        decimal.Parse(value.Low, CultureInfo.CurrentCulture),
-                        decimal.Parse(value.Close, CultureInfo.CurrentCulture),
-                        long.Parse(value.Volume, CultureInfo.CurrentCulture));
+                        DateTime.Parse(key, CultureInfo.InvariantCulture),
+                        decimal.Parse(value.Open, CultureInfo.InvariantCulture),
+                        decimal.Parse(value.High, CultureInfo.InvariantCulture),
+                        decimal.Parse(value.Low, CultureInfo.InvariantCulture),
+                        decimal.Parse(value.Close, CultureInfo.InvariantCulture),
+                        long.Parse(value.Volume, CultureInfo.InvariantCulture));
                 })
                 .ToList();
         }
