@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Stockify.Modules.Stocks.Infrastructure.Stocks.Contracts;
 
-public sealed class TimeSeriesData
+public sealed class TimeSeriesEntry
 {
     [JsonPropertyName("1. open")]
     public string Open { get; set; }

@@ -8,5 +8,5 @@ public sealed class TimeSeriesIntraday
     public MetaData MetaData { get; set; }
 
     [JsonPropertyName("Time Series (5min)")]
-    public Dictionary<string, TimeSeriesData> TimeSeries { get; set; }
+    public Dictionary<string, TimeSeriesEntry> TimeSeries { get; set; }
 }

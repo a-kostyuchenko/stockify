@@ -66,7 +66,7 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
 
             return intradayData.TimeSeries.Select(pair =>
                 {
-                    (string? key, TimeSeriesData? value) = pair;
+                    (string? key, TimeSeriesEntry? value) = pair;
                     return new TimeSeriesResponse(
                         DateTime.Parse(key, CultureInfo.CurrentCulture),
                         decimal.Parse(value.Open, CultureInfo.CurrentCulture),

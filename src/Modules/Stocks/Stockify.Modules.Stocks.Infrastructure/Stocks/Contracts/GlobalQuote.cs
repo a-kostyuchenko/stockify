@@ -5,5 +5,5 @@ namespace Stockify.Modules.Stocks.Infrastructure.Stocks.Contracts;
 public sealed class GlobalQuote
 {
     [JsonPropertyName("Global Quote")]
-    public GlobalQuoteData? Data { get; init; }
+    public GlobalQuoteEntry? Data { get; init; }
 }

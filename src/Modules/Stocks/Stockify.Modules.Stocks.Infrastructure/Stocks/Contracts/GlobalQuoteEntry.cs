@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Stockify.Modules.Stocks.Infrastructure.Stocks.Contracts;
 
-public sealed class GlobalQuoteData
+public sealed class GlobalQuoteEntry
 {
     [JsonPropertyName("01. symbol")]
     public string Symbol { get; init; }
