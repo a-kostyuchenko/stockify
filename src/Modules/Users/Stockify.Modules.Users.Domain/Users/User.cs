@@ -8,10 +8,9 @@ public class User : Entity<UserId>
 {
     private readonly List<Role> _roles = [];
 
-    private User() : base(UserId.New())
-    {
-    }
-    
+    private User()
+        : base(UserId.New()) { }
+
     public string Email { get; private set; }
 
     public string FirstName { get; private set; }
@@ -19,9 +18,9 @@ public class User : Entity<UserId>
     public string LastName { get; private set; }
 
     public string IdentityId { get; private set; }
-    
-    public IReadOnlyCollection<Role> Roles => _roles.ToList();
-    
+
+    public IReadOnlyCollection<Role> Roles => [.. _roles];
+
     public static User Create(string email, string firstName, string lastName, string identityId)
     {
         var user = new User
@@ -29,7 +28,7 @@ public class User : Entity<UserId>
             Email = email,
             FirstName = firstName,
             LastName = lastName,
-            IdentityId = identityId
+            IdentityId = identityId,
         };
 
         user._roles.Add(Role.User);

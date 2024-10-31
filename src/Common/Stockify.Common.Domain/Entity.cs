@@ -1,21 +1,22 @@
 namespace Stockify.Common.Domain;
 
-public abstract class Entity<TEntityId> : IEntity 
+public abstract class Entity<TEntityId> : IEntity
     where TEntityId : IEntityId<TEntityId>
 {
     private readonly List<IDomainEvent> _domainEvents = [];
 
-    protected Entity(TEntityId id) : this() => 
-        Id = id ?? throw new ArgumentNullException(nameof(id));
-
-    protected Entity()
+    protected Entity(TEntityId id)
+        : this()
     {
+        Id = id ?? throw new ArgumentNullException(nameof(id));
     }
-    
+
+    protected Entity() { }
+
     public TEntityId Id { get; protected init; }
 
-    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.ToList();
-    
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => [.. _domainEvents];
+
     public void ClearDomainEvents()
     {
         _domainEvents.Clear();

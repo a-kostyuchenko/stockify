@@ -1,14 +1,14 @@
 using System.Reflection;
 
 namespace Stockify.Common.Domain;
+
 public abstract class Enumeration<TEnum>() : IEquatable<Enumeration<TEnum>>
     where TEnum : Enumeration<TEnum>
 {
-
     private static readonly Lazy<Dictionary<int, TEnum>> EnumerationsDictionary =
         new(() => CreateEnumerationDictionary(typeof(TEnum)));
-    
-    protected Enumeration(int id, string name) 
+
+    protected Enumeration(int id, string name)
         : this()
     {
         Id = id;
@@ -35,7 +35,7 @@ public abstract class Enumeration<TEnum>() : IEquatable<Enumeration<TEnum>>
 
     public static bool operator !=(Enumeration<TEnum>? first, Enumeration<TEnum>? second) =>
         !(first == second);
-    
+
     public bool Equals(Enumeration<TEnum>? other)
     {
         if (other is null)
@@ -61,21 +61,21 @@ public abstract class Enumeration<TEnum>() : IEquatable<Enumeration<TEnum>>
         return obj is Enumeration<TEnum> other && other.Id.Equals(Id);
     }
 
-    public override int GetHashCode() =>
-        Id.GetHashCode() * 37;
+    public override int GetHashCode() => Id.GetHashCode() * 37;
 
     private static Dictionary<int, TEnum> CreateEnumerationDictionary(Type enumType) =>
         GetFieldsForType(enumType).ToDictionary(t => t.Id);
 
     private static IEnumerable<TEnum> GetFieldsForType(Type enumType) =>
-        enumType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+        enumType
+            .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
             .Where(fieldInfo => enumType.IsAssignableFrom(fieldInfo.FieldType))
             .Select(fieldInfo => (TEnum)fieldInfo.GetValue(default)!);
 
-    public static IReadOnlyCollection<TEnum> GetValues() => EnumerationsDictionary.Value.Values.ToList();
+    public static IReadOnlyCollection<TEnum> GetValues() =>
+        [.. EnumerationsDictionary.Value.Values];
 
-    public static TEnum? FromId(int id) =>
-        EnumerationsDictionary.Value.GetValueOrDefault(id);
+    public static TEnum? FromId(int id) => EnumerationsDictionary.Value.GetValueOrDefault(id);
 
     public static TEnum? FromName(string name) =>
         EnumerationsDictionary.Value.Values.SingleOrDefault(x => x.Name == name);

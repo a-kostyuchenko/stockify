@@ -7,10 +7,9 @@ namespace Stockify.Modules.Risks.Domain.Sessions;
 
 public class Session : Entity<SessionId>
 {
-    private Session() : base(SessionId.New())
-    {
-    }
-    
+    private Session()
+        : base(SessionId.New()) { }
+
     public const int MaxQuestionsCount = 100;
     public const int MinQuestionsCount = 20;
 
@@ -23,23 +22,19 @@ public class Session : Entity<SessionId>
     public SessionStatus Status { get; private set; }
     public int TotalPoints { get; private set; }
     public int MaxPoints { get; private set; }
-    
-    public IReadOnlyCollection<Question> Questions => _questions.ToList();
-    public IReadOnlyCollection<Submission> Submissions => _submissions.ToList();
+
+    public IReadOnlyCollection<Question> Questions => [.. _questions];
+    public IReadOnlyCollection<Submission> Submissions => [.. _submissions];
 
     internal static Session Create(IndividualId individualId)
     {
-        var session = new Session
-        {
-            IndividualId = individualId,
-            Status = SessionStatus.Draft
-        };
-        
+        var session = new Session { IndividualId = individualId, Status = SessionStatus.Draft };
+
         session.Raise(new SessionCreatedDomainEvent(session.Id));
 
         return session;
     }
-    
+
     internal Result AddQuestion(Question question)
     {
         if (_questions.Count >= MaxQuestionsCount)
@@ -56,12 +51,12 @@ public class Session : Entity<SessionId>
         {
             return Result.Failure(SessionErrors.InvalidStatus);
         }
-        
+
         _questions.Add(question);
-        
+
         return Result.Success();
     }
-    
+
     public Result Start(DateTime utcNow)
     {
         if (Status != SessionStatus.Draft)
@@ -82,12 +77,12 @@ public class Session : Entity<SessionId>
         StartedAtUtc = utcNow;
         Status = SessionStatus.Active;
         MaxPoints = _questions.Select(q => q.Answers.Max(a => a.Points)).Sum();
-        
+
         Raise(new SessionStartedDomainEvent(Id));
 
         return Result.Success();
     }
-    
+
     public Result SubmitAnswer(QuestionId questionId, AnswerId answerId)
     {
         if (Status != SessionStatus.Active)
@@ -101,9 +96,9 @@ public class Session : Entity<SessionId>
         {
             return Result.Failure(QuestionErrors.NotFound);
         }
-        
+
         Answer? answer = question.Answers.FirstOrDefault(a => a.Id == answerId);
-        
+
         if (answer is null)
         {
             return Result.Failure(AnswerErrors.NotFound);
@@ -111,17 +106,17 @@ public class Session : Entity<SessionId>
 
         var submission = Submission.Submit(this, question, answer);
         _submissions.Add(submission);
-        
+
         return Result.Success();
     }
-    
+
     public Result Complete(DateTime utcNow)
     {
         if (Status != SessionStatus.Active)
         {
             return Result.Failure(SessionErrors.InvalidStatus);
         }
-        
+
         if (!AllQuestionsAnswered())
         {
             return Result.Failure(SessionErrors.IncompleteSubmissions);
@@ -130,12 +125,12 @@ public class Session : Entity<SessionId>
         Status = SessionStatus.Completed;
         CompletedAtUtc = utcNow;
         TotalPoints = _submissions.Sum(s => s.Points);
-        
+
         Raise(new SessionCompletedDomainEvent(Id));
 
         return Result.Success();
     }
-    
+
     private bool AllQuestionsAnswered()
     {
         var submittedQuestionIds = new HashSet<QuestionId>(_submissions.Select(s => s.QuestionId));
