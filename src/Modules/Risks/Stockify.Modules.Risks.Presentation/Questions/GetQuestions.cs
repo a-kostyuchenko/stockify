@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Stockify.Common.Application.Pagination;
 using Stockify.Common.Domain;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Common.Presentation.Results;
@@ -13,19 +14,18 @@ internal sealed class GetQuestions : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(Routes.Questions.Get, async (
-            ISender sender,
-            string? searchTerm,
-            int page = 1,
-            int pageSize = 15) =>
-        {
-            var query = new GetQuestionsQuery(searchTerm, page, pageSize);
-            
-            Result<GetQuestionsResponse> result = await sender.Send(query);
+        app.MapGet(
+                Routes.Questions.Get,
+                async (ISender sender, string? searchTerm, int page = 1, int pageSize = 15) =>
+                {
+                    var query = new GetQuestionsQuery(searchTerm, page, pageSize);
 
-            return result.Match(Results.Ok, ApiResults.Problem);
-        })
-        .RequireAuthorization(Permissions.GetQuestions)
-        .WithTags(Tags.Questions);
+                    Result<PagedResponse<QuestionResponse>> result = await sender.Send(query);
+
+                    return result.Match(Results.Ok, ApiResults.Problem);
+                }
+            )
+            .RequireAuthorization(Permissions.GetQuestions)
+            .WithTags(Tags.Questions);
     }
 }

@@ -1,4 +1,5 @@
 using Stockify.Common.Application.Messaging;
+using Stockify.Common.Application.Pagination;
 using Stockify.Modules.Risks.Domain.Individuals;
 using Stockify.Modules.Risks.Domain.Sessions;
 
@@ -8,4 +9,5 @@ public sealed record GetSessionQuestionsQuery(
     SessionId SessionId,
     IndividualId IndividualId,
     int Page,
-    int PageSize) : IQuery<GetSessionQuestionsResponse>;
+    int PageSize
+) : IQuery<PagedResponse<QuestionResponse>>;
