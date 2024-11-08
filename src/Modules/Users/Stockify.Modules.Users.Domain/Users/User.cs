@@ -37,4 +37,17 @@ public class User : Entity<UserId>
 
         return user;
     }
+
+    public void Update(string firstName, string lastName)
+    {
+        if (FirstName == firstName && LastName == lastName)
+        {
+            return;
+        }
+
+        FirstName = firstName;
+        LastName = lastName;
+
+        Raise(new UserUpdatedDomainEvent(Id));
+    }
 }
