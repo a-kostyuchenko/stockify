@@ -15,7 +15,7 @@ jobs:
     
     defaults: 
       run:
-        working-directory: Stockify
+        working-directory: .
       
     steps:
       - uses: actions/checkout@v4
