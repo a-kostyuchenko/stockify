@@ -1,1 +1,39 @@
+name: Build
 
+on:
+  workflow_dispatch: 
+  push:
+    branches:
+      - master
+          
+env:
+  DOTNET_VERSION: "8.x"
+  
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    
+    defaults: 
+      run:
+        working-directory: Stockify
+      
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          
+      - name: Install dependencies
+        run: dotnet restore Stockify.sln
+        
+      - name: Build
+        run: dotnet build Stockify.sln --configuration Release --no-restore
+        
+      - name: Test
+        run: dotnet test Stockify.sln --configuration Release --no-restore --no-build
+        
+      - name: Publish
+        run: dotnet publish Stockify.sln --configuration Release --no-restore --no-build
+        
