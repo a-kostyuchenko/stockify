@@ -28,13 +28,13 @@ Stockify is a modular monolith application designed for stock analysis using .NE
 
 - **C#**
 - **.NET**
-- **XUnit:** Testing framework for unit tests.
+- **Testing:** xUnit testing framework for unit tests.
 - **Docker Compose:** Configuration for running the application using Docker.
 - **Database:** PostgreSQL for data storage.
-- **ORM:** Entity Framework Core for object-relational mapping.
+- **ORM:** Entity Framework Core.
 - **Messaging:** RabbitMQ for messaging between modules.
-- **Logging:** Serilog for logging.
-- **Caching:** Redis for caching.
+- **Logging:** Serilog + Seq.
+- **Caching:** Redis.
 - **Monitoring:** Jaeger for distributed tracing.
 - **CI/CD:** GitHub Actions for continuous integration and deployment.
 - **Security:** KeyCloak for authentication and authorization.
