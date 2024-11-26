@@ -5,7 +5,7 @@ namespace Stockify.Modules.Stocks.Infrastructure.Stocks.Contracts;
 public sealed class GlobalQuoteEntry
 {
     [JsonPropertyName("01. symbol")]
-    public string Symbol { get; init; }
+    public string Ticker { get; init; }
 
     [JsonPropertyName("02. open")]
     public string Open { get; init; }

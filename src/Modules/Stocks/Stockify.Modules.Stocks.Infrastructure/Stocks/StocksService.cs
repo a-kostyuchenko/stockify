@@ -9,10 +9,10 @@ namespace Stockify.Modules.Stocks.Infrastructure.Stocks;
 internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksService, IScoped
 {
     public async Task<Result<QuoteResponse>> GetQuoteAsync(
-        string symbol,
+        string ticker,
         CancellationToken cancellationToken = default)
     {
-        GlobalQuote? quote = await stocksClient.GetQuoteAsync(symbol);
+        GlobalQuote? quote = await stocksClient.GetQuoteAsync(ticker);
 
         if (quote?.Data is null)
         {
@@ -20,7 +20,7 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
         }
         
         return new QuoteResponse(
-            quote.Data.Symbol,
+            quote.Data.Ticker,
             decimal.Parse(quote.Data.Open, CultureInfo.InvariantCulture),
             decimal.Parse(quote.Data.High, CultureInfo.InvariantCulture),
             decimal.Parse(quote.Data.Low, CultureInfo.InvariantCulture),
@@ -57,12 +57,12 @@ internal sealed class StocksService(IAlphavantageClient stocksClient) : IStocksS
     }
 
     public async Task<Result<List<TimeSeriesResponse>>> GetStocksData(
-        string symbol,
+        string ticker,
         CancellationToken cancellationToken = default)
     {
         try
         {
-            TimeSeriesIntraday intradayData = await stocksClient.GetStocksDataAsync(symbol);
+            TimeSeriesIntraday intradayData = await stocksClient.GetStocksDataAsync(ticker);
 
             return intradayData.TimeSeries.Select(pair =>
                 {

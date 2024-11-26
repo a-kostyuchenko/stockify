@@ -1,7 +1,7 @@
 namespace Stockify.Modules.Stocks.Application.Abstractions.Stocks;
 
 public sealed record QuoteResponse(
-    string Symbol,
+    string Ticker,
     decimal Open,
     decimal High,
     decimal Low,

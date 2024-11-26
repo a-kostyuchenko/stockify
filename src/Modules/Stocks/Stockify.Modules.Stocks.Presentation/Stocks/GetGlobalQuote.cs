@@ -14,9 +14,9 @@ internal sealed class GetGlobalQuote : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(Routes.Stocks.GetGlobalQuote, async (string symbol, ISender sender) =>
+        app.MapGet(Routes.Stocks.GetGlobalQuote, async (string ticker, ISender sender) =>
         {
-            var query = new GetGlobalQuoteQuery(symbol);
+            var query = new GetGlobalQuoteQuery(ticker);
 
             Result<QuoteResponse> result = await sender.Send(query);
 

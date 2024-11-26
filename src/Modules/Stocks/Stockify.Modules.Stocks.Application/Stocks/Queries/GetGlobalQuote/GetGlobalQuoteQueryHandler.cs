@@ -10,5 +10,5 @@ internal sealed class GetGlobalQuoteQueryHandler(IStocksService stocksService)
     public async Task<Result<QuoteResponse>> Handle(
         GetGlobalQuoteQuery request,
         CancellationToken cancellationToken) =>
-        await stocksService.GetQuoteAsync(request.Symbol, cancellationToken);
+        await stocksService.GetQuoteAsync(request.Ticker, cancellationToken);
 }

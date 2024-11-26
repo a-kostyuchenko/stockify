@@ -10,5 +10,5 @@ internal sealed class GetStocksDataQueryHandler(IStocksService stocksService)
     public async Task<Result<List<TimeSeriesResponse>>> Handle(
         GetStocksDataQuery request,
         CancellationToken cancellationToken) =>
-        await stocksService.GetStocksData(request.Symbol, cancellationToken);
+        await stocksService.GetStocksData(request.Ticker, cancellationToken);
 }

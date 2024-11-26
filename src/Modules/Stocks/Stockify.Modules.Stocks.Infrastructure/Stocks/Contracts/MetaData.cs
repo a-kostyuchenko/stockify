@@ -8,7 +8,7 @@ public sealed class MetaData
     public string Information { get; set; }
 
     [JsonPropertyName("2. Symbol")]
-    public string Symbol { get; set; }
+    public string Ticker { get; set; }
 
     [JsonPropertyName("3. Last Refreshed")]
     public string LastRefreshed { get; set; }

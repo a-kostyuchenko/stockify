@@ -14,9 +14,9 @@ internal sealed class GetStocksData : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(Routes.Stocks.GetStocksData, async (string symbol, ISender sender) =>
+        app.MapGet(Routes.Stocks.GetStocksData, async (string ticker, ISender sender) =>
             {
-                var query = new GetStocksDataQuery(symbol);
+                var query = new GetStocksDataQuery(ticker);
 
                 Result<List<TimeSeriesResponse>> result = await sender.Send(query);
 
