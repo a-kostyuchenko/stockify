@@ -13,7 +13,7 @@ public sealed record RiskAttitude
     
     public decimal Coefficient { get; private init; }
 
-    public RiskAttitudeType Type => RiskAttitudeType.FromCoefficient(Coefficient);
+    public AttitudeType Type => AttitudeType.FromCoefficient(Coefficient);
     
     internal static Result<RiskAttitude> Estimate(int totalPoints, int maxPoints)
     {
