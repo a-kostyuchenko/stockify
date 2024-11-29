@@ -2,7 +2,8 @@
   "Risks": {
     "Outbox": {
       "BatchSize": 20,
-      "Schedule": "0/15 * * * * *"
+      "Schedule": "0/15 * * * * *",
+      "MaxRetries": 3
     },
     "Inbox": {
       "BatchSize": 20,

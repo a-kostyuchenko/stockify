@@ -9,7 +9,8 @@
     },
     "Outbox": {
       "BatchSize": 0,
-      "Schedule": ""
+      "Schedule": "",
+      "MaxRetries": 0
     },
     "Inbox": {
       "BatchSize": 0,

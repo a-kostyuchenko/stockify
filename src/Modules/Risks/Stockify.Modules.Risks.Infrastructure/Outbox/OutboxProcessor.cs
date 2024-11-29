@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Polly;
+using Polly.Retry;
 using Stockify.Common.Application.Clock;
 using Stockify.Common.Application.Data;
 using Stockify.Common.Application.Messaging;
@@ -23,6 +25,10 @@ internal sealed class OutboxProcessor(
     ILogger<OutboxProcessor> logger) : IOutboxProcessor, IScoped
 {
     private const string ModuleName = "Risks";
+    private readonly AsyncRetryPolicy _retryPolicy = Policy
+        .Handle<Exception>()
+        .WaitAndRetryAsync(outboxOptions.Value.MaxRetries,
+            attempt => TimeSpan.FromMilliseconds(50 * attempt));
     
     public async Task ProcessAsync()
     {
@@ -37,34 +43,36 @@ internal sealed class OutboxProcessor(
         foreach (OutboxMessageResponse outboxMessage in outboxMessages)
         {
             Exception? exception = null;
-
-            try
+            
+            IDomainEvent domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(
+                outboxMessage.Content,
+                SerializerSettings.Instance)!;
+            
+            using IServiceScope scope = serviceScopeFactory.CreateScope();
+            
+            IEnumerable<IDomainEventHandler> handlers = DomainEventHandlersFactory.GetHandlers(
+                domainEvent.GetType(),
+                scope.ServiceProvider,
+                Application.AssemblyReference.Assembly);
+            
+            // Idempotent consumers allows us to retry processing the same message multiple times
+            PolicyResult result = await _retryPolicy.ExecuteAndCaptureAsync(async () =>
             {
-                IDomainEvent domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(
-                    outboxMessage.Content,
-                    SerializerSettings.Instance)!;
-                
-                using IServiceScope scope = serviceScopeFactory.CreateScope();
-                
-                IEnumerable<IDomainEventHandler> handlers = DomainEventHandlersFactory.GetHandlers(
-                    domainEvent.GetType(),
-                    scope.ServiceProvider,
-                    Application.AssemblyReference.Assembly);
-                
                 foreach (IDomainEventHandler handler in handlers)
                 {
                     await handler.Handle(domainEvent);
                 }
-            }
-            catch (Exception caughtException)
+            });
+
+            if (result.FinalException is not null)
             {
                 logger.LogError(
-                    caughtException,
+                    result.FinalException,
                     "{Module} - Exception while processing outbox message {MessageId}",
                     ModuleName,
                     outboxMessage.Id);
 
-                exception = caughtException;
+                exception = result.FinalException;
             }
             
             await UpdateOutboxMessageAsync(connection, transaction, outboxMessage, exception);

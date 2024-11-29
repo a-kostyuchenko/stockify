@@ -6,4 +6,5 @@ internal sealed class OutboxOptions
     
     public string Schedule { get; init; }
     public int BatchSize { get; set; }
+    public int MaxRetries { get; set; }
 }
