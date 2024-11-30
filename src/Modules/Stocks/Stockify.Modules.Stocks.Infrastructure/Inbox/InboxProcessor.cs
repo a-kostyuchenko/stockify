@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Polly;
+using Polly.Retry;
 using Stockify.Common.Application.Clock;
 using Stockify.Common.Application.Data;
 using Stockify.Common.Application.EventBus;
@@ -22,6 +24,10 @@ internal sealed class InboxProcessor(
     ILogger<InboxProcessor> logger) : IInboxProcessor, IScoped
 {
     private const string ModuleName = "Stocks";
+    private readonly AsyncRetryPolicy _retryPolicy = Policy
+        .Handle<Exception>()
+        .WaitAndRetryAsync(inboxOptions.Value.MaxRetries,
+            attempt => TimeSpan.FromMilliseconds(50 * attempt));
     
     public async Task ProcessAsync()
     {
@@ -36,34 +42,36 @@ internal sealed class InboxProcessor(
         foreach (InboxMessageResponse inboxMessage in inboxMessages)
         {
             Exception? exception = null;
+            
+            IIntegrationEvent integrationEvent = JsonConvert.DeserializeObject<IIntegrationEvent>(
+                inboxMessage.Content,
+                SerializerSettings.Instance)!;
 
-            try
+            using IServiceScope scope = serviceScopeFactory.CreateScope();
+
+            IEnumerable<IIntegrationEventHandler> handlers = IntegrationEventHandlersFactory.GetHandlers(
+                integrationEvent.GetType(),
+                scope.ServiceProvider,
+                Presentation.AssemblyReference.Assembly);
+
+            // Idempotent consumers allows us to retry processing the same message multiple times
+            PolicyResult result = await _retryPolicy.ExecuteAndCaptureAsync(async () =>
             {
-                IIntegrationEvent integrationEvent = JsonConvert.DeserializeObject<IIntegrationEvent>(
-                    inboxMessage.Content,
-                    SerializerSettings.Instance)!;
-
-                using IServiceScope scope = serviceScopeFactory.CreateScope();
-
-                IEnumerable<IIntegrationEventHandler> handlers = IntegrationEventHandlersFactory.GetHandlers(
-                    integrationEvent.GetType(),
-                    scope.ServiceProvider,
-                    Presentation.AssemblyReference.Assembly);
-
-                foreach (IIntegrationEventHandler integrationEventHandler in handlers)
+                foreach (IIntegrationEventHandler handler in handlers)
                 {
-                    await integrationEventHandler.Handle(integrationEvent);
+                    await handler.Handle(integrationEvent);
                 }
-            }
-            catch (Exception caughtException)
+            });
+    
+            if (result.FinalException is not null)
             {
                 logger.LogError(
-                    caughtException,
+                    result.FinalException,
                     "{Module} - Exception while processing inbox message {MessageId}",
                     ModuleName,
                     inboxMessage.Id);
 
-                exception = caughtException;
+                exception = result.FinalException;
             }
 
             await UpdateInboxMessageAsync(connection, transaction, inboxMessage, exception);
