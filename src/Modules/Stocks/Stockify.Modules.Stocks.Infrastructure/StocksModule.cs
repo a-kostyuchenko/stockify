@@ -13,7 +13,6 @@ using Stockify.Common.Infrastructure.Extensions;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Stocks.Application.Abstractions.Data;
-using Stockify.Modules.Stocks.Application.Abstractions.Stocks;
 using Stockify.Modules.Stocks.Infrastructure.Database;
 using Stockify.Modules.Stocks.Infrastructure.Database.Constants;
 using Stockify.Modules.Stocks.Infrastructure.Inbox;
