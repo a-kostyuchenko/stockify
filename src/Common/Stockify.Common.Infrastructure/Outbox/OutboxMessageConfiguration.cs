@@ -14,5 +14,9 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
         builder.Property(o => o.Content)
             .HasMaxLength(2000)
             .HasColumnType("jsonb");
+
+        builder.HasIndex(o => new { o.OccurredOnUtc, o.ProcessedOnUtc })
+            .IncludeProperties(o => new { o.Id, o.Type, o.Content })
+            .HasFilter("processed_on_utc IS NULL");
     }
 }
