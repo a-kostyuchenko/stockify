@@ -18,5 +18,8 @@ internal sealed class SwaggerUIOptionsSetup(IApiVersionDescriptionProvider descr
 
             options.SwaggerEndpoint(url, name);
         }
+        
+        options.EnableTryItOutByDefault();
+        options.EnablePersistAuthorization();
     }
 }
