@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Stockify.Common.Domain;
 using Stockify.Common.Presentation.Endpoints;
+using Stockify.Common.Presentation.Filters.Idempotency;
 using Stockify.Common.Presentation.Results;
 using Stockify.Modules.Users.Application.Users.Commands.Register;
 
@@ -28,7 +29,8 @@ internal sealed class RegisterUser : IEndpoint
                 ApiResults.Problem);
         })
         .AllowAnonymous()
-        .WithTags(Tags.Users);
+        .WithTags(Tags.Users)
+        .AddEndpointFilter<IdempotencyFilter>();
     }
     
     internal sealed record Request

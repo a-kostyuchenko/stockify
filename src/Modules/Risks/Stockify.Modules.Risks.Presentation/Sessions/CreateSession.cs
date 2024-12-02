@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Stockify.Common.Domain;
 using Stockify.Common.Presentation.Endpoints;
+using Stockify.Common.Presentation.Filters.Idempotency;
 using Stockify.Common.Presentation.Results;
 using Stockify.Modules.Risks.Application.Abstractions.Authentication;
 using Stockify.Modules.Risks.Application.Sessions.Commands.Create;
@@ -28,7 +29,8 @@ internal sealed class CreateSession : IEndpoint
                 ApiResults.Problem);
         })
         .RequireAuthorization(Permissions.ModifySessions)
-        .WithTags(Tags.Sessions);
+        .WithTags(Tags.Sessions)
+        .AddEndpointFilter<IdempotencyFilter>();
     }
 
     internal sealed record Request
