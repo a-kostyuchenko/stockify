@@ -5,6 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Stockify.Common.Application\Stockify.Common.Application.csproj" />
         <ProjectReference Include="..\Stockify.Common.Domain\Stockify.Common.Domain.csproj" />
     </ItemGroup>
 
