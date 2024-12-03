@@ -18,7 +18,7 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("users")
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -101,6 +101,12 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
                     b.HasKey("Id")
                         .HasName("pk_inbox_messages");
 
+                    b.HasIndex("OccurredOnUtc", "ProcessedOnUtc")
+                        .HasDatabaseName("ix_inbox_messages_occurred_on_utc_processed_on_utc")
+                        .HasFilter("processed_on_utc IS NULL");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("OccurredOnUtc", "ProcessedOnUtc"), new[] { "Id", "Type", "Content" });
+
                     b.ToTable("inbox_messages", "users");
                 });
 
@@ -153,6 +159,12 @@ namespace Stockify.Modules.Users.Infrastructure.Database.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_outbox_messages");
+
+                    b.HasIndex("OccurredOnUtc", "ProcessedOnUtc")
+                        .HasDatabaseName("ix_outbox_messages_occurred_on_utc_processed_on_utc")
+                        .HasFilter("processed_on_utc IS NULL");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("OccurredOnUtc", "ProcessedOnUtc"), new[] { "Id", "Type", "Content" });
 
                     b.ToTable("outbox_messages", "users");
                 });

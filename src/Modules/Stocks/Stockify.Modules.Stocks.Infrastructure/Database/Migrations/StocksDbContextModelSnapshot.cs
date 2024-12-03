@@ -56,6 +56,12 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                     b.HasKey("Id")
                         .HasName("pk_inbox_messages");
 
+                    b.HasIndex("OccurredOnUtc", "ProcessedOnUtc")
+                        .HasDatabaseName("ix_inbox_messages_occurred_on_utc_processed_on_utc")
+                        .HasFilter("processed_on_utc IS NULL");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("OccurredOnUtc", "ProcessedOnUtc"), new[] { "Id", "Type", "Content" });
+
                     b.ToTable("inbox_messages", "stocks");
                 });
 
@@ -109,6 +115,12 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                     b.HasKey("Id")
                         .HasName("pk_outbox_messages");
 
+                    b.HasIndex("OccurredOnUtc", "ProcessedOnUtc")
+                        .HasDatabaseName("ix_outbox_messages_occurred_on_utc_processed_on_utc")
+                        .HasFilter("processed_on_utc IS NULL");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("OccurredOnUtc", "ProcessedOnUtc"), new[] { "Id", "Type", "Content" });
+
                     b.ToTable("outbox_messages", "stocks");
                 });
 
@@ -161,6 +173,34 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                         .HasDatabaseName("ix_stockholders_email");
 
                     b.ToTable("stockholders", "stocks");
+                });
+
+            modelBuilder.Entity("Stockify.Modules.Stocks.Domain.TickerTypes.TickerType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("code");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("description");
+
+                    b.HasKey("Id")
+                        .HasName("pk_ticker_types");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasDatabaseName("ix_ticker_types_code");
+
+                    b.ToTable("ticker_types", "stocks");
                 });
 #pragma warning restore 612, 618
         }
