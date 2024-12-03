@@ -10,4 +10,11 @@ internal static class Routes
         internal const string GetMarketStatus = $"{BaseUri}/market-status";
         internal const string GetStocksData = $"{BaseUri}/{{ticker:alpha}}";
     }
+
+    internal static class TickerTypes
+    {
+        private const string BaseUri = "ticker-types";
+        
+        internal const string Create = BaseUri;
+    }
 }

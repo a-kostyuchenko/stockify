@@ -11,4 +11,10 @@ internal sealed class TickerTypeRepository(StocksDbContext context) : ITickerTyp
 
     public void Insert(TickerType tickerType) => 
         context.TickerTypes.Add(tickerType);
+
+    public async Task<bool> IsCodeUniqueAsync(string code, CancellationToken cancellationToken = default)
+    {
+        return !await context.TickerTypes
+            .AnyAsync(t => t.Code == code, cancellationToken);
+    }
 }

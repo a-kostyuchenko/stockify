@@ -7,6 +7,7 @@
 
     <ItemGroup>
       <Folder Include="Stocks\Commands\" />
+      <Folder Include="TickerTypes\Queries\" />
     </ItemGroup>
 
 </Project>
