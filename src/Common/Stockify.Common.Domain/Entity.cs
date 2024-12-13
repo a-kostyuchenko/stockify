@@ -13,7 +13,7 @@ public abstract class Entity<TEntityId> : IEntity
 
     protected Entity() { }
 
-    public TEntityId Id { get; protected init; }
+    public TEntityId Id { get; protected init; } = TEntityId.New();
 
     public IReadOnlyCollection<IDomainEvent> DomainEvents => [.. _domainEvents];
 
