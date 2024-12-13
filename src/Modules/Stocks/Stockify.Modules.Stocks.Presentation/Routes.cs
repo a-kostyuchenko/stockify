@@ -17,4 +17,11 @@ internal static class Routes
         
         internal const string Create = BaseUri;
     }
+
+    internal static class Tickers
+    {
+        private const string BaseUri = "tickers";
+        
+        internal const string Create = BaseUri;
+    } 
 }
