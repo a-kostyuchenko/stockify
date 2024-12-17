@@ -7,7 +7,6 @@
 
     <ItemGroup>
       <Folder Include="Stocks\Commands\" />
-      <Folder Include="Tickers\Queries\" />
       <Folder Include="TickerTypes\Queries\" />
     </ItemGroup>
 
