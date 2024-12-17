@@ -29,6 +29,10 @@ internal sealed class TickerConfiguration : IEntityTypeConfiguration<Ticker>
         
         builder.HasIndex(t => t.Cik).IsUnique();
         
+        builder.HasIndex(t => new { t.Symbol, t.Name, t.Description })
+            .HasMethod("GIN")
+            .IsTsVectorExpressionIndex("english");
+        
         builder.HasOne<TickerType>()
             .WithMany()
             .HasForeignKey(t => t.TickerTypeId)
