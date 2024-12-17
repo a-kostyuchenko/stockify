@@ -22,6 +22,7 @@ internal static class Routes
     {
         private const string BaseUri = "tickers";
         
+        internal const string Get = BaseUri;
         internal const string Create = BaseUri;
     } 
 }
