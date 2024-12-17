@@ -39,11 +39,10 @@ internal sealed class GetTickersQueryHandler(IDbConnectionFactory dbConnectionFa
                                 t.name AS {nameof(TickerResponse.Name)},
                                 t.description AS {nameof(TickerResponse.Description)},
                                 t.cik AS {nameof(TickerResponse.Cik)},
-                                tt.name AS {nameof(TickerResponse.Type)}
+                                tt.code AS {nameof(TickerResponse.Type)}
                             FROM stocks.tickers t
                             JOIN stocks.ticker_types tt ON t.ticker_type_id = tt.id
-                            WHERE to_tsvector('english', t.symbol || ' ' || t.name || ' ' t.description) @@ phraseto_tsquery('english', @SearchTerm)
-                            ORDER BY ts_rank(to_tsvector('english', t.symbol || ' ' || t.name || ' ' t.description), phraseto_tsquery('english', @SearchTerm)) DESC
+                            WHERE to_tsvector('english', t.symbol || ' ' || t.name || ' ' || t.description) @@ phraseto_tsquery('english', @SearchTerm)
                             OFFSET @Skip
                             LIMIT @Take
                             """;

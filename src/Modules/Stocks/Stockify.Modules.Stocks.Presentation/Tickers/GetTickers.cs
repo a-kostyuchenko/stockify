@@ -14,7 +14,7 @@ internal sealed class GetTickers : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost(Routes.Tickers.Get, async (
+        app.MapGet(Routes.Tickers.Get, async (
                 ISender sender,
                 string? searchTerm,
                 int page = 1,
