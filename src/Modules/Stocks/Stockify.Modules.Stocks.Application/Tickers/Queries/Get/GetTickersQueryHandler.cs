@@ -42,7 +42,8 @@ internal sealed class GetTickersQueryHandler(IDbConnectionFactory dbConnectionFa
                                 tt.code AS {nameof(TickerResponse.Type)}
                             FROM stocks.tickers t
                             JOIN stocks.ticker_types tt ON t.ticker_type_id = tt.id
-                            WHERE to_tsvector('english', t.symbol || ' ' || t.name || ' ' || t.description) @@ phraseto_tsquery('english', @SearchTerm)
+                            WHERE to_tsvector('english', t.symbol || ' ' || t.name || ' ' || t.description) @@ phraseto_tsquery('english', 'auto')
+                            ORDER BY ts_rank(to_tsvector('english', t.symbol || ' ' || t.name || ' ' || t.description), phraseto_tsquery('english', 'auto')) DESC
                             OFFSET @Skip
                             LIMIT @Take
                             """;
@@ -62,7 +63,7 @@ internal sealed class GetTickersQueryHandler(IDbConnectionFactory dbConnectionFa
         const string sql = """
                            SELECT COUNT(*)
                            FROM stocks.tickers t
-                           WHERE to_tsvector('english', t.symbol || ' ' || t.name || ' ' t.description) @@ phraseto_tsquery('english', @SearchTerm)
+                           WHERE to_tsvector('english', t.symbol || ' ' || t.name || ' ' || t.description) @@ phraseto_tsquery('english', 'auto')
                            """;
 
         int totalCount = await connection.ExecuteScalarAsync<int>(sql, parameters);
