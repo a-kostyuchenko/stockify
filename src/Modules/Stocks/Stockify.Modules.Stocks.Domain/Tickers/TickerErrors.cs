@@ -11,4 +11,8 @@ public static class TickerErrors
     public static readonly Error IsNotUnique = Error.Conflict(
         "Ticker.IsNotUnique",
         "The ticker with the specified symbol or CIK already exists.");
+    
+    public static readonly Error IsDeactivated = Error.Problem(
+        "Ticker.IsDeactivated",
+        "The ticker with the specified identifier is deactivated.");
 }
