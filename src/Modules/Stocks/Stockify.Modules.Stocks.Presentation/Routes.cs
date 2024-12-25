@@ -24,5 +24,6 @@ internal static class Routes
         
         internal const string Get = BaseUri;
         internal const string Create = BaseUri;
+        internal const string Deactivate = $"{BaseUri}/{{tickerId:guid}}";
     } 
 }

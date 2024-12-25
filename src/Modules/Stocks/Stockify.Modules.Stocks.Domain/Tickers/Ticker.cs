@@ -37,6 +37,11 @@ public sealed class Ticker : Entity<TickerId>
     
     public void Deactivate()
     {
+        if (!Active)
+        {
+            return;
+        }
+        
         Active = false;
         
         Raise(new TickerDelistedDomainEvent(Id));
