@@ -13,7 +13,7 @@ internal sealed class PermissionAuthorizationHandler : AuthorizationHandler<Perm
         HashSet<string> permissions = context.User.GetPermissions();
 
         if (permissions.Any(p => p == requirement.Permission ||
-                                 p == IPermissionService.AccessEverything))
+                                 p == PermissionDefaults.AccessEverything))
         {
             context.Succeed(requirement);
         }
