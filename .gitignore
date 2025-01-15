@@ -5,3 +5,5 @@ riderModule.iml
 /_ReSharper.Caches/
 .idea/
 .containers/
+.vs/
+Stockify.sln.DotSettings.user
