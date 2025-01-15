@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://stockify.prometheus:9090
+    # url: http://host.docker.internal:9090 # Access mode - proxy (server in the UI) or direct (browser in the UI). Using for Aspire.
+    # isDefault: true
+    # editable: true
+    uid: 4E7B5C8D9FA341A8B

@@ -106,6 +106,8 @@ app.MapHealthChecks("health", new HealthCheckOptions
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
+app.MapPrometheusScrapingEndpoint();
+
 app.UseBackgroundJobs();
 
 app.UseLogContextTraceLogging();

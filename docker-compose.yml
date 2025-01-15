@@ -63,6 +63,25 @@ services:
       - 4317:4317
       - 4318:4318
       - 16686:16686
+        
+  stockify.prometheus:
+    image: prom/prometheus:latest
+    container_name: Stockify.Prometheus
+    volumes:
+      - ./monitoring/prometheus/:/etc/prometheus/
+    ports:
+      - "9090:9090"
+
+  stockify.grafana:
+    image: grafana/grafana-oss:latest
+    container_name: Stockify.Grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./monitoring/grafana/config/:/etc/grafana/
+      - ./monitoring/grafana/dashboards/:/var/lib/grafana/dashboards/
+    depends_on:
+      - stockify.prometheus
   
   stockify.queue:
     image: rabbitmq:management-alpine
