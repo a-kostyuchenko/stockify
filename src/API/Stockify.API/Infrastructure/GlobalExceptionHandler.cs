@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Stockify.API.Infrastructure;
 
-internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) 
+internal sealed class GlobalExceptionHandler(
+    ILogger<GlobalExceptionHandler> logger,
+    IProblemDetailsService problemDetailsService) 
     : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
@@ -13,17 +15,25 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
     {
         logger.LogError(exception, "Unhandled exception occurred");
         
-        var problemDetails = new ProblemDetails
+        int status = exception switch
         {
-            Status = StatusCodes.Status500InternalServerError,
-            Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
-            Title = "Server failure"
+            ArgumentException => StatusCodes.Status400BadRequest,
+            _ => StatusCodes.Status500InternalServerError
         };
         
-        httpContext.Response.StatusCode = problemDetails.Status.Value;
+        var problemDetails = new ProblemDetails
+        {
+            Status = status,
+            Type = exception.GetType().Name,
+            Title = "An error occurred while processing request",
+            Detail = exception.Message
+        };
 
-        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-
-        return true;
+        return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+        {
+            HttpContext = httpContext,
+            ProblemDetails = problemDetails,
+            Exception = exception
+        });
     }
 }
