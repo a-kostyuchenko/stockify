@@ -15,10 +15,8 @@ public sealed record RiskAttitude
 
     public AttitudeType Type => AttitudeType.FromCoefficient(Coefficient);
     
-    internal static Result<RiskAttitude> Estimate(int totalPoints, int maxPoints)
+    internal static Result<RiskAttitude> Determine(decimal coefficient)
     {
-        decimal coefficient = CalculateCoefficient(totalPoints, maxPoints);
-        
         if (coefficient is < MinCoefficient or > MaxCoefficient)
         {
             return Result.Failure<RiskAttitude>(RiskAttitudeErrors.CoefficientOutOfRange);
@@ -29,10 +27,6 @@ public sealed record RiskAttitude
             Coefficient = coefficient
         };
     }
-    
-    // Provide formula for calculating coefficient
-    private static decimal CalculateCoefficient(int totalPoints, int maxPoints) => 
-        (decimal)totalPoints / maxPoints * 5;
 
     public static RiskAttitude Unspecified => new() { Coefficient = 0 };
 }

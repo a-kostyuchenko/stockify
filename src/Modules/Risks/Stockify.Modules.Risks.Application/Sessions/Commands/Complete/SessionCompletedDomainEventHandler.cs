@@ -11,7 +11,8 @@ namespace Stockify.Modules.Risks.Application.Sessions.Commands.Complete;
 internal sealed class SessionCompletedDomainEventHandler(
     ISessionRepository sessionRepository,
     IIndividualRepository individualRepository,
-    IUnitOfWork unitOfWork) : DomainEventHandler<SessionCompletedDomainEvent>
+    IUnitOfWork unitOfWork,
+    ICalculator calculator) : DomainEventHandler<SessionCompletedDomainEvent>
 {
     public override async Task Handle(
         SessionCompletedDomainEvent domainEvent,
@@ -31,12 +32,14 @@ internal sealed class SessionCompletedDomainEventHandler(
             throw new StockifyException(nameof(SessionCompletedDomainEvent), IndividualErrors.NotFound);
         }
         
-        Result result = individual.EstimateRiskAttitude(session);
+        Result<RiskAttitude> attitudeResult = calculator.Calculate(session, null!);
 
-        if (result.IsFailure)
+        if (attitudeResult.IsFailure)
         {
-            throw new StockifyException(nameof(SessionCompletedDomainEvent), result.Error);
+            throw new StockifyException(nameof(SessionCompletedDomainEvent), attitudeResult.Error);
         }
+        
+        individual.SpecifyAttitude(attitudeResult.Value);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
