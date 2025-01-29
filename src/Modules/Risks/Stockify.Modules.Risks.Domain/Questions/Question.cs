@@ -27,7 +27,7 @@ public class Question : Entity<QuestionId>
         return new Question { Content = content, Category = category, Weight = weight };
     }
 
-    public Result AddAnswer(string content, int points, string explanation)
+    public Result AddAnswer(string content, int points, string? explanation = null)
     {
         if (_answers.Count >= MaxAnswersPerQuestion)
         {

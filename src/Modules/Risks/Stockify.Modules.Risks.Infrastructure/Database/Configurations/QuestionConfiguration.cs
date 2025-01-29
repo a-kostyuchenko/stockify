@@ -9,7 +9,14 @@ internal sealed class QuestionConfiguration : IEntityTypeConfiguration<Question>
 {
     public void Configure(EntityTypeBuilder<Question> builder)
     {
-        builder.ToTable(TableNames.Questions);
+        builder.ToTable(
+            TableNames.Questions,
+            tableBuilder =>
+            {
+                tableBuilder.HasCheckConstraint(
+                    "CK_Questions_Weight",
+                    sql: "weight > 0");
+            });
 
         builder.HasKey(q => q.Id);
         
@@ -20,6 +27,13 @@ internal sealed class QuestionConfiguration : IEntityTypeConfiguration<Question>
             );
 
         builder.Property(q => q.Content).HasMaxLength(500);
+        
+        builder.Property(q => q.Category)
+            .HasConversion(
+                category => category.Name,
+                value => QuestionCategory.FromName(value)
+            )
+            .HasMaxLength(100);
 
         builder.HasMany(q => q.Answers)
             .WithOne()

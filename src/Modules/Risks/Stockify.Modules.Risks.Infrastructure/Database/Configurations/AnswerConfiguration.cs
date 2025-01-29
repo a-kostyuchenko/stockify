@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Stockify.Common.Infrastructure.Data.Converters;
 using Stockify.Modules.Risks.Domain.Questions;
 using Stockify.Modules.Risks.Infrastructure.Database.Constants;
 
@@ -27,5 +28,9 @@ internal sealed class AnswerConfiguration : IEntityTypeConfiguration<Answer>
             );
 
         builder.Property(a => a.Content).HasMaxLength(500);
+
+        builder.Property(a => a.Explanation)
+            .HasMaxLength(500)
+            .HasConversion(new NullableStringConverter());
     }
 }

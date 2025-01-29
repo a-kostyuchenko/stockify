@@ -39,6 +39,6 @@ internal sealed class AddAnswer : IEndpoint
     {
         public string Content { get; init; }
         public int Points { get; init; }
-        public string Explanation { get; init; }
+        public string? Explanation { get; init; }
     }
 }

@@ -22,7 +22,6 @@ internal sealed class AddAnswerCommandValidator : AbstractValidator<AddAnswerCom
             .GreaterThanOrEqualTo(0);
 
         RuleFor(a => a.Explanation)
-            .NotEmpty()
             .MaximumLength(500);
     }
 }
