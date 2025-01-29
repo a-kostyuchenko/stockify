@@ -42,7 +42,7 @@ public class Session : Entity<SessionId>
             return Result.Failure(SessionErrors.MaxQuestionsExceeded);
         }
 
-        if (question.Answers.Count < Question.MinAnswersCount)
+        if (question.Answers.Count < Question.MinAnswersPerQuestion)
         {
             return Result.Failure(QuestionErrors.NotEnoughAnswers);
         }

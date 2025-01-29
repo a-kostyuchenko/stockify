@@ -11,4 +11,8 @@ public static class QuestionErrors
     public static readonly Error NotEnoughAnswers = Error.Problem(
         "Question.NotEnoughAnswers",
         "Not enough answers provided");
+
+    public static readonly Error TooManyAnswers = Error.Problem(
+        "Question.TooManyAnswers",
+        "Too many answers provided");
 }
