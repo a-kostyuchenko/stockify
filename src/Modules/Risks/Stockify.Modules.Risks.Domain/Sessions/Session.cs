@@ -10,8 +10,9 @@ public class Session : Entity<SessionId>
     private Session()
         : base(SessionId.New()) { }
 
-    public const int MaxQuestionsCount = 100;
-    public const int MinQuestionsCount = 20;
+    public const int MinQuestionsCount = 10;
+    public const int MaxQuestionsCount = 30;
+    public const int RequiredCategoryCount = 4;
 
     private readonly HashSet<Question> _questions = [];
     private readonly HashSet<Submission> _submissions = [];
@@ -22,6 +23,7 @@ public class Session : Entity<SessionId>
     public SessionStatus Status { get; private set; }
     public int TotalPoints { get; private set; }
     public int MaxPoints { get; private set; }
+    public decimal CompletionPercentage => _submissions.Count * 100m / _questions.Count;
 
     public IReadOnlyCollection<Question> Questions => [.. _questions];
     public IReadOnlyCollection<Submission> Submissions => [.. _submissions];
@@ -33,6 +35,18 @@ public class Session : Entity<SessionId>
         session.Raise(new SessionCreatedDomainEvent(session.Id));
 
         return session;
+    }
+
+    public IDictionary<QuestionCategory, (int Total, int Max)> GetScoresByCategory()
+    {
+        return _submissions
+            .GroupBy(s => _questions.First(q => q.Id == s.QuestionId).Category)
+            .ToDictionary(
+                g => g.Key,
+                g => (
+                    Total: g.Sum(s => s.Points),
+                    Max: g.Sum(s => _questions.First(q => q.Id == s.QuestionId).GetMaxPoints()))
+                );
     }
 
     internal Result AddQuestion(Question question)

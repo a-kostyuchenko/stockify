@@ -1,4 +1,5 @@
 using Stockify.Common.Domain;
+using Stockify.Modules.Risks.Domain.Questions;
 
 namespace Stockify.Modules.Risks.Domain.Sessions;
 
@@ -39,4 +40,16 @@ public static class SessionErrors
     public static readonly Error IndividualMismatch = Error.Problem(
         "Session.IndividualMismatch",
         "Session does not belong to the individual");
+    
+    public static readonly Error InsufficientCategories = Error.Problem(
+        "Session.InsufficientCategories",
+        "Not enough categories provided for the session");
+    
+    public static Error IncorrectCategoryDistribution(QuestionCategory category) => Error.Problem(
+        "Session.IncorrectCategoryDistribution",
+        $"Category {category.Name} does not have enough questions");
+    
+    public static readonly Error TimeoutExceeded = Error.Problem(
+        "Session.TimeoutExceeded",
+        "Session has exceeded the allowed time limit");
 }
