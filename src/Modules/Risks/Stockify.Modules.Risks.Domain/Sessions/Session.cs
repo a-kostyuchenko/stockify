@@ -10,10 +10,6 @@ public class Session : Entity<SessionId>
     private Session()
         : base(SessionId.New()) { }
 
-    public const int MinQuestionsCount = 10;
-    public const int MaxQuestionsCount = 30;
-    public const int RequiredCategoryCount = 4;
-
     private readonly HashSet<Question> _questions = [];
     private readonly HashSet<Submission> _submissions = [];
 
@@ -37,21 +33,9 @@ public class Session : Entity<SessionId>
         return session;
     }
 
-    public IDictionary<QuestionCategory, (int Total, int Max)> GetScoresByCategory()
+    internal Result AddQuestion(Question question, SessionPolicy policy)
     {
-        return _submissions
-            .GroupBy(s => _questions.First(q => q.Id == s.QuestionId).Category)
-            .ToDictionary(
-                g => g.Key,
-                g => (
-                    Total: g.Sum(s => s.Points),
-                    Max: g.Sum(s => _questions.First(q => q.Id == s.QuestionId).GetMaxPoints()))
-                );
-    }
-
-    internal Result AddQuestion(Question question)
-    {
-        if (_questions.Count >= MaxQuestionsCount)
+        if (_questions.Count >= policy.MaxQuestionsCount)
         {
             return Result.Failure(SessionErrors.MaxQuestionsExceeded);
         }
@@ -65,6 +49,8 @@ public class Session : Entity<SessionId>
         {
             return Result.Failure(SessionErrors.InvalidStatus);
         }
+
+        MaxPoints += question.GetMaxPoints();
 
         _questions.Add(question);
 
@@ -83,14 +69,8 @@ public class Session : Entity<SessionId>
             return Result.Failure(SessionErrors.AlreadyStarted);
         }
 
-        if (_questions.Count < MinQuestionsCount)
-        {
-            return Result.Failure(SessionErrors.NotEnoughQuestions);
-        }
-
         StartedAtUtc = utcNow;
         Status = SessionStatus.Active;
-        MaxPoints = _questions.Select(q => q.Answers.Max(a => a.Points)).Sum();
 
         Raise(new SessionStartedDomainEvent(Id));
 
@@ -124,7 +104,7 @@ public class Session : Entity<SessionId>
         return Result.Success();
     }
 
-    public Result Complete(DateTime utcNow)
+    public Result Complete(DateTime utcNow, SessionPolicy policy)
     {
         if (Status != SessionStatus.Active)
         {
@@ -134,6 +114,13 @@ public class Session : Entity<SessionId>
         if (!AllQuestionsAnswered())
         {
             return Result.Failure(SessionErrors.IncompleteSubmissions);
+        }
+        
+        TimeSpan duration = utcNow - StartedAtUtc!.Value;
+        
+        if (duration > policy.MaxDuration)
+        {
+            return Result.Failure(SessionErrors.TimeoutExceeded);
         }
 
         Status = SessionStatus.Completed;
@@ -145,9 +132,23 @@ public class Session : Entity<SessionId>
         return Result.Success();
     }
 
-    private bool AllQuestionsAnswered()
+    private bool AllQuestionsAnswered() => 
+        _questions.All(q => _submissions.Any(s => s.QuestionId == q.Id));
+    
+    public IDictionary<QuestionCategory, (int Total, int Max)> GetScoresByCategory()
     {
-        var submittedQuestionIds = new HashSet<QuestionId>(_submissions.Select(s => s.QuestionId));
-        return _questions.All(q => submittedQuestionIds.Contains(q.Id));
+        return _submissions
+            .GroupBy(s => _questions.First(q => q.Id == s.QuestionId).Category)
+            .ToDictionary(
+                g => g.Key,
+                g => (
+                    Total: g.Sum(s => s.Points),
+                    Max: g.Sum(s => _questions.First(q => q.Id == s.QuestionId).GetMaxPoints()))
+            );
     }
+    
+    public IDictionary<QuestionCategory, int> GetQuestionDistribution() =>
+        _questions
+            .GroupBy(q => q.Category)
+            .ToDictionary(g => g.Key, g => g.Count());
 }

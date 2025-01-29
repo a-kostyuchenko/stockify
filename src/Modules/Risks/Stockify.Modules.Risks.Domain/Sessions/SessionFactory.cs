@@ -31,7 +31,7 @@ public sealed class SessionFactory(IQuestionRepository questionRepository) : ISe
             return Result.Failure<Session>(SessionErrors.NotEnoughQuestions);
         }
 
-        var results = questions.Select(session.AddQuestion).ToList();
+        var results = questions.Select(q => session.AddQuestion(q, policy)).ToList();
 
         if (results.Any(r => r.IsFailure))
         {
