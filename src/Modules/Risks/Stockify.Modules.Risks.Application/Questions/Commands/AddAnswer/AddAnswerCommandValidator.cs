@@ -20,5 +20,9 @@ internal sealed class AddAnswerCommandValidator : AbstractValidator<AddAnswerCom
         RuleFor(a => a.Points)
             .NotEmpty()
             .GreaterThanOrEqualTo(0);
+
+        RuleFor(a => a.Explanation)
+            .NotEmpty()
+            .MaximumLength(500);
     }
 }

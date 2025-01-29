@@ -9,5 +9,12 @@ internal sealed class CreateQuestionCommandValidator : AbstractValidator<CreateQ
         RuleFor(x => x.Content)
             .NotEmpty()
             .MaximumLength(500);
+
+        RuleFor(x => x.Category)
+            .NotEmpty()
+            .MaximumLength(100);
+
+        RuleFor(x => x.Weight)
+            .GreaterThan(0);
     }
 }

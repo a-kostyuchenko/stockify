@@ -20,7 +20,7 @@ internal sealed class CompleteSessionCommandHandler(
             return Result.Failure(SessionErrors.NotFound);
         }
         
-        Result result = session.Complete(dateTimeProvider.UtcNow);
+        Result result = session.Complete(dateTimeProvider.UtcNow, SessionPolicy.Default);
 
         if (result.IsFailure)
         {

@@ -10,6 +10,5 @@ internal sealed class CreateSessionCommandValidator : AbstractValidator<CreateSe
     {
         RuleFor(x => x.IndividualId).NotEmpty();
         RuleFor(x => x.IndividualId).NotEqual(IndividualId.Empty);
-        RuleFor(x => x.QuestionsCount).InclusiveBetween(Session.MinQuestionsCount, Session.MaxQuestionsCount);
     }
 }

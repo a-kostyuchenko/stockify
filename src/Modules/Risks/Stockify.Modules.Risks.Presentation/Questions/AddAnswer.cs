@@ -23,7 +23,8 @@ internal sealed class AddAnswer : IEndpoint
             var command = new AddAnswerCommand(
                 QuestionId.From(questionId),
                 request.Content,
-                request.Points);
+                request.Points,
+                request.Explanation);
 
             Result result = await sender.Send(command);
 
@@ -38,5 +39,6 @@ internal sealed class AddAnswer : IEndpoint
     {
         public string Content { get; init; }
         public int Points { get; init; }
+        public string Explanation { get; init; }
     }
 }

@@ -16,7 +16,7 @@ internal sealed class CreateQuestion : IEndpoint
     {
         app.MapPost(Routes.Questions.Create, async (Request request, ISender sender) =>
         {
-            var command = new CreateQuestionCommand(request.Content);
+            var command = new CreateQuestionCommand(request.Content, request.Category, request.Weight);
 
             Result<Guid> result = await sender.Send(command);
 
@@ -32,5 +32,7 @@ internal sealed class CreateQuestion : IEndpoint
     internal sealed record Request
     {
         public string Content { get; init; }
+        public string Category { get; init; }
+        public int Weight { get; init; }
     }
 }

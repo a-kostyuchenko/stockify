@@ -18,7 +18,7 @@ internal sealed class AddAnswerCommandHandler(
             return Result.Failure(QuestionErrors.NotFound);
         }
 
-        Result result = question.AddAnswer(request.Content, request.Points);
+        Result result = question.AddAnswer(request.Content, request.Points, request.Explanation);
 
         if (result.IsFailure)
         {

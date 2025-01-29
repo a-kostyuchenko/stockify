@@ -11,7 +11,10 @@ internal sealed class CreateQuestionCommandHandler(
 {
     public async Task<Result<Guid>> Handle(CreateQuestionCommand request, CancellationToken cancellationToken)
     {
-        var question = Question.Create(request.Content);
+        var question = Question.Create(
+            request.Content,
+            QuestionCategory.FromName(request.Category)!,
+            request.Weight);
         
         questionRepository.Insert(question);
 
