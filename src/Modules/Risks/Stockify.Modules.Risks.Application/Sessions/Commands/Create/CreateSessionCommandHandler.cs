@@ -15,6 +15,7 @@ internal sealed class CreateSessionCommandHandler(
         Result<Session> sessionResult = await sessionFactory.CreateAsync(
             request.IndividualId,
             request.QuestionsCount,
+            SessionPolicy.Default,
             cancellationToken);
 
         if (sessionResult.IsFailure)

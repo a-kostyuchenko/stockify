@@ -9,18 +9,20 @@ public sealed class SessionFactory(IQuestionRepository questionRepository) : ISe
     public async Task<Result<Session>> CreateAsync(
         IndividualId individualId,
         int questionsCount,
+        SessionPolicy policy,
         CancellationToken cancellationToken = default
     )
     {
-        if (questionsCount is < Session.MinQuestionsCount or > Session.MaxQuestionsCount)
+        if (questionsCount < policy.MinQuestionsCount || questionsCount > policy.MaxQuestionsCount)
         {
             return Result.Failure<Session>(SessionErrors.InvalidQuestionsCount);
         }
 
         var session = Session.Create(individualId);
 
-        List<Question> questions = await questionRepository.GetRandomAsync(
+        List<Question> questions = await questionRepository.GetDistributedAsync(
             questionsCount,
+            policy,
             cancellationToken
         );
 
@@ -34,6 +36,13 @@ public sealed class SessionFactory(IQuestionRepository questionRepository) : ISe
         if (results.Any(r => r.IsFailure))
         {
             return Result.Failure<Session>(ValidationError.FromResults(results));
+        }
+        
+        Result validationResult = policy.Validate(session);
+        
+        if (validationResult.IsFailure)
+        {
+            return Result.Failure<Session>(validationResult.Error);
         }
 
         return session;

@@ -8,5 +8,6 @@ public interface ISessionFactory
     Task<Result<Session>> CreateAsync(
         IndividualId individualId,
         int questionsCount,
+        SessionPolicy policy,
         CancellationToken cancellationToken = default);
 }
