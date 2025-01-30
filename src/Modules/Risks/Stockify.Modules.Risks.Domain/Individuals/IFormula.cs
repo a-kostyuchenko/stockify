@@ -1,8 +1,11 @@
 using Stockify.Common.Domain;
+using Stockify.Modules.Risks.Domain.Sessions;
 
 namespace Stockify.Modules.Risks.Domain.Individuals;
 
 public interface IFormula
 {
-    Result<decimal> Calculate(int totalPoints, int maxPoints);
+    string Name { get; }
+    string Description { get; }
+    Result<decimal> Calculate(SessionScores scores);
 }
