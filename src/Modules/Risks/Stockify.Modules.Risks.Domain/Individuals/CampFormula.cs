@@ -8,6 +8,8 @@ public sealed class CampFormula : IFormula
 {
     public string Name => "Capital Asset Pricing Model";
     public string Description => "Uses Capital Asset Pricing Model principles for risk assessment";
+    public FormulaType Type => FormulaType.Camp;
+
     public Result<decimal> Calculate(SessionScores scores)
     {
         decimal riskTolerance = scores.GetCategoryCoefficient(QuestionCategory.RiskTolerance);

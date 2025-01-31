@@ -8,6 +8,8 @@ public sealed class VaRFormula : IFormula
 {
     public string Name => "Value at Risk";
     public string Description => "Calculates risk aversion using Value at Risk principles";
+    public FormulaType Type => FormulaType.VaR;
+
     public Result<decimal> Calculate(SessionScores scores)
     {
         decimal riskTolerance = scores.GetCategoryCoefficient(QuestionCategory.RiskTolerance);

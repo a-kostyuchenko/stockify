@@ -7,5 +7,6 @@ public interface IFormula
 {
     string Name { get; }
     string Description { get; }
+    FormulaType Type { get; }
     Result<decimal> Calculate(SessionScores scores);
 }

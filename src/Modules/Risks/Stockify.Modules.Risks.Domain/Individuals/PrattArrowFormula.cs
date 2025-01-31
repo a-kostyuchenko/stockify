@@ -8,6 +8,7 @@ public sealed class PrattArrowFormula : IFormula
 {
     public string Name => "Pratt-Arrow RRA";
     public string Description => "Calculates risk aversion using Pratt-Arrow Relative Risk Aversion measure";
+    public FormulaType Type => FormulaType.PrattArrow;
 
     public Result<decimal> Calculate(SessionScores scores)
     {

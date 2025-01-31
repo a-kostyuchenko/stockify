@@ -8,6 +8,7 @@ public sealed class BlackScholesFormula : IFormula
 {
     public string Name => "Black-Scholes Based";
     public string Description => "Uses option pricing theory for risk assessment";
+    public FormulaType Type => FormulaType.BlackScholes;
 
     public Result<decimal> Calculate(SessionScores scores)
     {
