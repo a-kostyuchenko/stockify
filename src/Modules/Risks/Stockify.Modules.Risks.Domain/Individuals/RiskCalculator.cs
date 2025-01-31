@@ -4,21 +4,41 @@ using Stockify.Modules.Risks.Domain.Sessions;
 
 namespace Stockify.Modules.Risks.Domain.Individuals;
 
-public sealed class RiskCalculator : ICalculator
+public sealed class RiskCalculator(IFormulaSelector formulaSelector) : ICalculator
 {
-    public Result<RiskAttitude> Calculate(Session session, IFormula formula)
+    public Result<CalculationResult> Calculate(Session session)
     {
-        IDictionary<QuestionCategory, (int Total, int Max)> categoryScores = session.GetScoresByCategory();
+        var scores = new SessionScores(session.GetScoresByCategory());
+        IReadOnlySet<QuestionCategory> availableCategories = scores.GetAvailableCategories();
 
-        var scores = new SessionScores(categoryScores);
+        Result<IFormula> formulaResult = formulaSelector.Select(availableCategories);
+
+        if (formulaResult.IsFailure)
+        {
+            return Result.Failure<CalculationResult>(formulaResult.Error);
+        }
+        
+        IFormula formula = formulaResult.Value;
+        
+        // Log usage of basic formula as warning
         
         Result<decimal> result = formula.Calculate(scores);
 
         if (result.IsFailure)
         {
-            return Result.Failure<RiskAttitude>(result.Error);
+            return Result.Failure<CalculationResult>(result.Error);
         }
 
-        return RiskAttitude.Determine(result.Value);
+        Result<RiskAttitude> attitudeResult = RiskAttitude.Determine(result.Value);
+
+        if (attitudeResult.IsFailure)
+        {
+            return Result.Failure<CalculationResult>(attitudeResult.Error);
+        }
+
+        return new CalculationResult(
+            attitudeResult.Value,
+            formula.Type,
+            [.. availableCategories]);
     }
 }

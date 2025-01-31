@@ -32,14 +32,14 @@ internal sealed class SessionCompletedDomainEventHandler(
             throw new StockifyException(nameof(SessionCompletedDomainEvent), IndividualErrors.NotFound);
         }
         
-        Result<RiskAttitude> attitudeResult = calculator.Calculate(session, null!);
+        Result<CalculationResult> calculationResult = calculator.Calculate(session);
 
-        if (attitudeResult.IsFailure)
+        if (calculationResult.IsFailure)
         {
-            throw new StockifyException(nameof(SessionCompletedDomainEvent), attitudeResult.Error);
+            throw new StockifyException(nameof(SessionCompletedDomainEvent), calculationResult.Error);
         }
         
-        individual.SpecifyAttitude(attitudeResult.Value);
+        individual.SpecifyAttitude(calculationResult.Value.Attitude);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

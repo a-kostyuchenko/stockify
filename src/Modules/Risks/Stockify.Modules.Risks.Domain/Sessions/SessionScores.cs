@@ -19,4 +19,7 @@ public sealed record SessionScores
         (int total, int max) = GetCategoryScore(category);
         return max > 0 ? (decimal)total / max : 0;
     }
+
+    public IReadOnlySet<QuestionCategory> GetAvailableCategories() => 
+        _categoryScores.Keys.ToHashSet();
 }

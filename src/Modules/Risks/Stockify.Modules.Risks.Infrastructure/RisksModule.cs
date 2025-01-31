@@ -11,6 +11,7 @@ using Stockify.Common.Infrastructure.Extensions;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
 using Stockify.Modules.Risks.Application.Abstractions.Data;
+using Stockify.Modules.Risks.Domain.Individuals;
 using Stockify.Modules.Risks.Domain.Sessions;
 using Stockify.Modules.Risks.Infrastructure.Database;
 using Stockify.Modules.Risks.Infrastructure.Database.Constants;
@@ -31,6 +32,8 @@ public static class RisksModule
         services.AddIntegrationEventHandlers();
         
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+        
+        services.AddDomainServices();
         
         services.AddScopedAsMatchingInterfaces(AssemblyReference.Assembly);
         services.AddTransientAsMatchingInterfaces(AssemblyReference.Assembly);
@@ -53,11 +56,18 @@ public static class RisksModule
         
         services.TryAddScoped<IUnitOfWork>(sp => sp.GetRequiredService<RisksDbContext>());
         
-        services.TryAddScoped<ISessionFactory, SessionFactory>();
-        
         services.Configure<OutboxOptions>(configuration.GetSection(OutboxOptions.ConfigurationSection));
         
         services.Configure<InboxOptions>(configuration.GetSection(InboxOptions.ConfigurationSection));
+    }
+
+    private static void AddDomainServices(this IServiceCollection services)
+    {
+        services.TryAddScoped<ISessionFactory, SessionFactory>();
+        
+        services.TryAddScoped<ICalculator, RiskCalculator>();
+        
+        services.TryAddSingleton<IFormulaSelector, FormulaSelector>();
     }
     
     private static void AddDomainEventHandlers(this IServiceCollection services)
