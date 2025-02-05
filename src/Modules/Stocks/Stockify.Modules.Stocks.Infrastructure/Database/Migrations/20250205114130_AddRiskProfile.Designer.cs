@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Stockify.Modules.Stocks.Infrastructure.Database;
@@ -12,9 +13,11 @@ using Stockify.Modules.Stocks.Infrastructure.Database;
 namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(StocksDbContext))]
-    partial class StocksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250205114130_AddRiskProfile")]
+    partial class AddRiskProfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
