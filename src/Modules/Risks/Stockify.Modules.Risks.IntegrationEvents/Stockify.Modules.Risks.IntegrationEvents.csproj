@@ -1,3 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Stockify.Common.Application\Stockify.Common.Application.csproj" />
+  </ItemGroup>
 </Project>
