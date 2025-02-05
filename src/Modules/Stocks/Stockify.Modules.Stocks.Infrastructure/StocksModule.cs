@@ -12,6 +12,7 @@ using Stockify.Common.Infrastructure.Configuration;
 using Stockify.Common.Infrastructure.Extensions;
 using Stockify.Common.Infrastructure.Outbox;
 using Stockify.Common.Presentation.Endpoints;
+using Stockify.Modules.Risks.IntegrationEvents;
 using Stockify.Modules.Stocks.Application.Abstractions.Data;
 using Stockify.Modules.Stocks.Infrastructure.Database;
 using Stockify.Modules.Stocks.Infrastructure.Database.Constants;
@@ -72,6 +73,8 @@ public static class StocksModule
     public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
     {
         registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
+        
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<RiskAttitudeEstimatedIntegrationEvent>>();
     }
     
     private static void AddDomainEventHandlers(this IServiceCollection services)
