@@ -3,4 +3,4 @@ using Stockify.Modules.Stocks.Domain.Tickers;
 
 namespace Stockify.Modules.Stocks.Application.Tickers.Commands.Deactivate;
 
-public sealed record DeactivateTickerCommand(TickerId TickerId) : ICommand;
+public sealed record DeactivateTickerCommand(Symbol Symbol) : ICommand;

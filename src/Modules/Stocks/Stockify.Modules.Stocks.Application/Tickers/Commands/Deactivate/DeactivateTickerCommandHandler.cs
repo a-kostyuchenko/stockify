@@ -11,7 +11,7 @@ internal sealed class DeactivateTickerCommandHandler(
 {
     public async Task<Result> Handle(DeactivateTickerCommand request, CancellationToken cancellationToken)
     {
-        Ticker? ticker = await tickerRepository.GetAsync(request.TickerId, cancellationToken);
+        Ticker? ticker = await tickerRepository.GetAsync(request.Symbol, cancellationToken);
 
         if (ticker is null)
         {

@@ -1,7 +1,7 @@
 namespace Stockify.Common.Domain;
 
 public abstract class Entity<TEntityId> : IEntity
-    where TEntityId : IEntityId<TEntityId>
+    where TEntityId : IEntityId
 {
     private readonly List<IDomainEvent> _domainEvents = [];
 
@@ -13,7 +13,7 @@ public abstract class Entity<TEntityId> : IEntity
 
     protected Entity() { }
 
-    public TEntityId Id { get; protected init; } = TEntityId.New();
+    public TEntityId Id { get; protected init; }
 
     public IReadOnlyCollection<IDomainEvent> DomainEvents => [.. _domainEvents];
 

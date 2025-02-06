@@ -18,19 +18,19 @@ internal sealed class TickerSubscriptionConfiguration : IEntityTypeConfiguration
         builder.Property(t => t.Id)
             .HasConversion(subscriptionId => subscriptionId.Value, value => TickerSubscriptionId.From(value));
         
-        builder.Property(t => t.TickerId)
-            .HasConversion(tickerId => tickerId.Value, value => TickerId.From(value));
+        builder.Property(t => t.Symbol)
+            .HasConversion(symbol => symbol.Value, value => Symbol.From(value));
         
         builder.Property(t => t.StockholderId)
             .HasConversion(stockholderId => stockholderId.Value, value => StockholderId.From(value));
         
-        builder.HasIndex(t => new { t.TickerId, t.StockholderId })
+        builder.HasIndex(t => new { t.Symbol, t.StockholderId })
             .HasFilter("active = true")
             .IsUnique();
 
         builder.HasOne<Ticker>()
             .WithMany()
-            .HasForeignKey(t => t.TickerId)
+            .HasForeignKey(t => t.Symbol)
             .IsRequired();
 
         builder.HasOne<Stockholder>()

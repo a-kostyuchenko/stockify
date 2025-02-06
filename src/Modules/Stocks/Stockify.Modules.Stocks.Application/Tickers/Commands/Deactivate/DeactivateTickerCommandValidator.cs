@@ -6,6 +6,6 @@ internal sealed class DeactivateTickerCommandValidator : AbstractValidator<Deact
 {
     public DeactivateTickerCommandValidator()
     {
-        RuleFor(c => c.TickerId).NotEmpty();
+        RuleFor(c => c.Symbol).NotEmpty();
     }
 }

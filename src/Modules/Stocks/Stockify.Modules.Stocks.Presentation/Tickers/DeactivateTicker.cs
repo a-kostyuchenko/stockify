@@ -14,9 +14,9 @@ internal sealed class DeactivateTicker : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete(Routes.Tickers.Deactivate, async (Guid tickerId, ISender sender) =>
+        app.MapDelete(Routes.Tickers.Deactivate, async (string symbol, ISender sender) =>
             {
-                var command = new DeactivateTickerCommand(TickerId.From(tickerId));
+                var command = new DeactivateTickerCommand(Symbol.From(symbol));
 
                 Result result = await sender.Send(command);
 

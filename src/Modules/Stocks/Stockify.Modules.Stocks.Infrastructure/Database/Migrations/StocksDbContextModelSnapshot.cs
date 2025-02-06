@@ -213,9 +213,10 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("stockholder_id");
 
-                    b.Property<Guid>("TickerId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("ticker_id");
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("symbol");
 
                     b.HasKey("Id")
                         .HasName("pk_ticker_subscriptions");
@@ -223,9 +224,9 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                     b.HasIndex("StockholderId")
                         .HasDatabaseName("ix_ticker_subscriptions_stockholder_id");
 
-                    b.HasIndex("TickerId", "StockholderId")
+                    b.HasIndex("Symbol", "StockholderId")
                         .IsUnique()
-                        .HasDatabaseName("ix_ticker_subscriptions_ticker_id_stockholder_id")
+                        .HasDatabaseName("ix_ticker_subscriptions_symbol_stockholder_id")
                         .HasFilter("active = true");
 
                     b.ToTable("ticker_subscriptions", "stocks");
@@ -261,9 +262,10 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Stockify.Modules.Stocks.Domain.Tickers.Ticker", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("symbol");
 
                     b.Property<bool>("Active")
                         .HasColumnType("boolean")
@@ -287,12 +289,6 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                         .HasColumnType("character varying(200)")
                         .HasColumnName("name");
 
-                    b.Property<string>("Symbol")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("character varying(5)")
-                        .HasColumnName("symbol");
-
                     b.Property<Guid>("TickerTypeId")
                         .HasColumnType("uuid")
                         .HasColumnName("ticker_type_id");
@@ -304,18 +300,14 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_tickers_cik");
 
-                    b.HasIndex("Symbol")
-                        .IsUnique()
-                        .HasDatabaseName("ix_tickers_symbol");
-
                     b.HasIndex("TickerTypeId")
                         .HasDatabaseName("ix_tickers_ticker_type_id");
 
-                    b.HasIndex("Symbol", "Name", "Description")
-                        .HasDatabaseName("ix_tickers_symbol_name_description")
+                    b.HasIndex("Name", "Description")
+                        .HasDatabaseName("ix_tickers_name_description")
                         .HasAnnotation("Npgsql:TsVectorConfig", "english");
 
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Symbol", "Name", "Description"), "GIN");
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Name", "Description"), "GIN");
 
                     b.ToTable("tickers", "stocks");
                 });
@@ -331,10 +323,10 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
 
                     b.HasOne("Stockify.Modules.Stocks.Domain.Tickers.Ticker", null)
                         .WithMany()
-                        .HasForeignKey("TickerId")
+                        .HasForeignKey("Symbol")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_ticker_subscriptions_tickers_ticker_id");
+                        .HasConstraintName("fk_ticker_subscriptions_tickers_symbol");
                 });
 
             modelBuilder.Entity("Stockify.Modules.Stocks.Domain.Tickers.Ticker", b =>

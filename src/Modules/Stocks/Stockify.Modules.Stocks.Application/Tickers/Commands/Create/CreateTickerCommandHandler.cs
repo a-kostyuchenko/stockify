@@ -11,9 +11,9 @@ namespace Stockify.Modules.Stocks.Application.Tickers.Commands.Create;
 internal sealed class CreateTickerCommandHandler(
     ITickerRepository tickerRepository,
     ITickerTypeRepository tickerTypeRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<CreateTickerCommand, Guid>
+    IUnitOfWork unitOfWork) : ICommandHandler<CreateTickerCommand, string>
 {
-    public async Task<Result<Guid>> Handle(CreateTickerCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateTickerCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -21,7 +21,7 @@ internal sealed class CreateTickerCommandHandler(
 
             if (tickerType is null)
             {
-                return Result.Failure<Guid>(TickerTypeErrors.NotFound);
+                return Result.Failure<string>(TickerTypeErrors.NotFound);
             }
 
             var ticker = Ticker.Create(request.Symbol, request.Name, request.Description, request.Cik, tickerType);
@@ -35,7 +35,7 @@ internal sealed class CreateTickerCommandHandler(
         catch (DbUpdateException ex) 
             when (ex.InnerException is NpgsqlException { SqlState: PostgresErrorCodes.UniqueViolation })
         {
-            return Result.Failure<Guid>(TickerErrors.IsNotUnique);
+            return Result.Failure<string>(TickerErrors.IsNotUnique);
         }
     }
 }

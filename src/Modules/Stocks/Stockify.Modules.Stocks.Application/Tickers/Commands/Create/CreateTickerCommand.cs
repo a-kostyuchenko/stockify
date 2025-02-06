@@ -8,4 +8,4 @@ public sealed record CreateTickerCommand(
     string Name,
     string Description,
     string Cik,
-    TickerTypeId TickerTypeId) : ICommand<Guid>;
+    TickerTypeId TickerTypeId) : ICommand<string>;

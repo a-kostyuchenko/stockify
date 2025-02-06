@@ -4,14 +4,13 @@ using Stockify.Modules.Stocks.Domain.TickerTypes;
 
 namespace Stockify.Modules.Stocks.Domain.Tickers;
 
-public sealed class Ticker : Entity<TickerId>
+public sealed class Ticker : Entity<Symbol>
 {
-    private Ticker() : base(TickerId.New())
+    private Ticker()
     {
     }
     
-    public string Symbol { get; private set; }
-    public string Name { get; set; }
+    public string Name { get; private set; }
     public string Description { get; private set; }
     public string Cik { get; private set; }
     public bool Active { get; private set; }
@@ -26,7 +25,7 @@ public sealed class Ticker : Entity<TickerId>
     {
         return new Ticker
         {
-            Symbol = symbol,
+            Id = Symbol.From(symbol),
             Name = name,
             Description = description,
             Cik = cik,

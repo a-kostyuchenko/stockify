@@ -10,7 +10,7 @@ public sealed class TickerSubscription : Entity<TickerSubscriptionId>
     {
     }
     
-    public TickerId TickerId { get; private set; }
+    public Symbol Symbol { get; private set; }
     public StockholderId StockholderId { get; private set; }
     public DateTime CreatedAtUtc { get; private set; }
     public bool Active { get; private set; }
@@ -24,7 +24,7 @@ public sealed class TickerSubscription : Entity<TickerSubscriptionId>
         
         var subscription = new TickerSubscription
         {
-            TickerId = ticker.Id,
+            Symbol = ticker.Id,
             StockholderId = stockholder.Id,
             CreatedAtUtc = DateTime.UtcNow,
             Active = true

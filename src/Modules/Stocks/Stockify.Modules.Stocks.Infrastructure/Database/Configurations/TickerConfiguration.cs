@@ -15,21 +15,19 @@ internal sealed class TickerConfiguration : IEntityTypeConfiguration<Ticker>
         builder.HasKey(t => t.Id);
         
         builder.Property(t => t.Id)
-            .HasConversion(tickerId => tickerId.Value, value => TickerId.From(value));
-        
-        builder.Property(t => t.Symbol).HasMaxLength(5);
+            .HasConversion(symbol => symbol.Value, value => Symbol.From(value))
+            .HasColumnName("symbol")
+            .HasMaxLength(20);
         
         builder.Property(t => t.Name).HasMaxLength(200);
 
         builder.Property(t => t.Description).HasMaxLength(500);
         
         builder.Property(t => t.Cik).HasMaxLength(10);
-
-        builder.HasIndex(t => t.Symbol).IsUnique();
         
         builder.HasIndex(t => t.Cik).IsUnique();
         
-        builder.HasIndex(t => new { t.Symbol, t.Name, t.Description })
+        builder.HasIndex(t => new { t.Name, t.Description })
             .HasMethod("GIN")
             .IsTsVectorExpressionIndex("english");
         

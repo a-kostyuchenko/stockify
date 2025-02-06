@@ -35,15 +35,15 @@ internal sealed class GetTickersQueryHandler(IDbConnectionFactory dbConnectionFa
     {
         const string sql = $"""
                             SELECT
-                                t.symbol AS {nameof(TickerResponse.Symbol)},
+                                t.id AS {nameof(TickerResponse.Symbol)},
                                 t.name AS {nameof(TickerResponse.Name)},
                                 t.description AS {nameof(TickerResponse.Description)},
                                 t.cik AS {nameof(TickerResponse.Cik)},
                                 tt.code AS {nameof(TickerResponse.Type)}
                             FROM stocks.tickers t
                             JOIN stocks.ticker_types tt ON t.ticker_type_id = tt.id
-                            WHERE to_tsvector('english', t.symbol || ' ' || t.name || ' ' || t.description) @@ phraseto_tsquery('english', 'auto')
-                            ORDER BY ts_rank(to_tsvector('english', t.symbol || ' ' || t.name || ' ' || t.description), phraseto_tsquery('english', 'auto')) DESC
+                            WHERE to_tsvector('english', t.name || ' ' || t.description) @@ phraseto_tsquery('english', @SearchTerm)
+                            ORDER BY ts_rank(to_tsvector('english', t.name || ' ' || t.description), phraseto_tsquery('english', @SearchTerm)) DESC
                             OFFSET @Skip
                             LIMIT @Take
                             """;
@@ -63,7 +63,7 @@ internal sealed class GetTickersQueryHandler(IDbConnectionFactory dbConnectionFa
         const string sql = """
                            SELECT COUNT(*)
                            FROM stocks.tickers t
-                           WHERE to_tsvector('english', t.symbol || ' ' || t.name || ' ' || t.description) @@ phraseto_tsquery('english', 'auto')
+                           WHERE to_tsvector('english', t.name || ' ' || t.description) @@ phraseto_tsquery('english', @SearchTerm)
                            """;
 
         int totalCount = await connection.ExecuteScalarAsync<int>(sql, parameters);

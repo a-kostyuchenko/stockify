@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -83,7 +83,10 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     first_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     last_name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    email = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false)
+                    email = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
+                    attitude_type = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    risk_coefficient = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
+                    risk_profile_updated_at_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,6 +105,60 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_ticker_types", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tickers",
+                schema: "stocks",
+                columns: table => new
+                {
+                    symbol = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    cik = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    active = table.Column<bool>(type: "boolean", nullable: false),
+                    ticker_type_id = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_tickers", x => x.symbol);
+                    table.ForeignKey(
+                        name: "fk_tickers_ticker_types_ticker_type_id",
+                        column: x => x.ticker_type_id,
+                        principalSchema: "stocks",
+                        principalTable: "ticker_types",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ticker_subscriptions",
+                schema: "stocks",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    symbol = table.Column<string>(type: "character varying(20)", nullable: false),
+                    stockholder_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    created_at_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    active = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_ticker_subscriptions", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_ticker_subscriptions_stockholders_stockholder_id",
+                        column: x => x.stockholder_id,
+                        principalSchema: "stocks",
+                        principalTable: "stockholders",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_ticker_subscriptions_tickers_symbol",
+                        column: x => x.symbol,
+                        principalSchema: "stocks",
+                        principalTable: "tickers",
+                        principalColumn: "symbol",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -128,11 +185,46 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "ix_ticker_subscriptions_stockholder_id",
+                schema: "stocks",
+                table: "ticker_subscriptions",
+                column: "stockholder_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_ticker_subscriptions_symbol_stockholder_id",
+                schema: "stocks",
+                table: "ticker_subscriptions",
+                columns: new[] { "symbol", "stockholder_id" },
+                unique: true,
+                filter: "active = true");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_ticker_types_code",
                 schema: "stocks",
                 table: "ticker_types",
                 column: "code",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_tickers_cik",
+                schema: "stocks",
+                table: "tickers",
+                column: "cik",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_tickers_name_description",
+                schema: "stocks",
+                table: "tickers",
+                columns: new[] { "name", "description" })
+                .Annotation("Npgsql:IndexMethod", "GIN")
+                .Annotation("Npgsql:TsVectorConfig", "english");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_tickers_ticker_type_id",
+                schema: "stocks",
+                table: "tickers",
+                column: "ticker_type_id");
         }
 
         /// <inheritdoc />
@@ -155,7 +247,15 @@ namespace Stockify.Modules.Stocks.Infrastructure.Database.Migrations
                 schema: "stocks");
 
             migrationBuilder.DropTable(
+                name: "ticker_subscriptions",
+                schema: "stocks");
+
+            migrationBuilder.DropTable(
                 name: "stockholders",
+                schema: "stocks");
+
+            migrationBuilder.DropTable(
+                name: "tickers",
                 schema: "stocks");
 
             migrationBuilder.DropTable(

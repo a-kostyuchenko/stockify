@@ -24,7 +24,7 @@ internal sealed class CreateTicker : IEndpoint
                 request.Cik,
                 TickerTypeId.From(request.TickerTypeId));
 
-            Result<Guid> result = await sender.Send(command);
+            Result<string> result = await sender.Send(command);
 
             return result.Match(Results.Created, ApiResults.Problem);
         })

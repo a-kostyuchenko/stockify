@@ -39,8 +39,6 @@ internal sealed class QuestionConfiguration : IEntityTypeConfiguration<Question>
             .WithOne()
             .HasForeignKey(a => a.QuestionId)
             .IsRequired();
-        
-        builder.HasData(CreateQuestions());
     }
     
     private static List<Question> CreateQuestions()
