@@ -6,4 +6,8 @@
       <ProjectReference Include="..\Stockify.Modules.Stocks.Presentation\Stockify.Modules.Stocks.Presentation.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Google.OrTools" />
+    </ItemGroup>
+
 </Project>

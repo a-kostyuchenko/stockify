@@ -1,7 +1,7 @@
 using Stockify.Modules.Stocks.Domain.Portfolios;
 using Stockify.Modules.Stocks.Domain.Tickers;
 
-namespace Stockify.Modules.Stocks.Application.Abstractions.Stocks;
+namespace Stockify.Modules.Stocks.Application.Abstractions.Portfolios;
 
 public interface IMarketDataProvider
 {
