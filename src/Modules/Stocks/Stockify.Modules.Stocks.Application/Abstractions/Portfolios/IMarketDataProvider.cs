@@ -5,7 +5,7 @@ namespace Stockify.Modules.Stocks.Application.Abstractions.Portfolios;
 
 public interface IMarketDataProvider
 {
-    Task<IReadOnlyCollection<AssetMetrics>> GetAssetsMetricsAsync(
+    Task<IReadOnlyList<AssetMetrics>> GetAssetsMetricsAsync(
         IEnumerable<Symbol> tickerIds,
         CancellationToken cancellationToken = default);
 }

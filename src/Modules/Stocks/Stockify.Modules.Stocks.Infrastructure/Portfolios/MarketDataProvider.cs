@@ -10,7 +10,7 @@ namespace Stockify.Modules.Stocks.Infrastructure.Portfolios;
 internal sealed class MarketDataProvider(
     IStocksService stocksService) : IMarketDataProvider, IScoped
 {
-    public async Task<IReadOnlyCollection<AssetMetrics>> GetAssetsMetricsAsync(
+    public async Task<IReadOnlyList<AssetMetrics>> GetAssetsMetricsAsync(
         IEnumerable<Symbol> tickerIds,
         CancellationToken cancellationToken = default)
     {
