@@ -66,7 +66,7 @@ csharp_style_expression_bodied_operators = true:error
 csharp_style_expression_bodied_properties = true:error
 csharp_style_expression_bodied_indexers = true:error
 csharp_style_expression_bodied_accessors = true:error
-csharp_style_expression_bodied_lambdas = true:error
+csharp_style_expression_bodied_lambdas = true:none
 csharp_style_expression_bodied_local_functions = true:error
 
 [*.{cs,vb}]
@@ -138,8 +138,8 @@ csharp_using_directive_placement = outside_namespace:error
 csharp_new_line_before_catch =true
 csharp_new_line_before_else =true
 csharp_new_line_before_finally =true
-csharp_new_line_before_members_in_anonymous_types = false,
-csharp_new_line_before_members_in_object_initializers = false,
+csharp_new_line_before_members_in_anonymous_types = false
+csharp_new_line_before_members_in_object_initializers = false
 csharp_new_line_before_open_brace = all
 csharp_new_line_between_query_expression_clauses = true
 
@@ -258,6 +258,9 @@ dotnet_diagnostic.CA1040.severity = none
 # CA1051: Do not declare visible instance fields
 dotnet_diagnostic.CA1051.severity = none
 
+# CA1054: URI-like parameters should not be strings
+dotnet_diagnostic.CA1054.severity = none
+
 # CA1056: URI-like properties should not be strings
 dotnet_diagnostic.CA1056.severity = none
 
@@ -267,11 +270,23 @@ dotnet_diagnostic.CA1062.severity = none
 # CA1063: Implement IDisposable Correctly
 dotnet_diagnostic.CA1063.severity = none
 
+# CA1304: Specify CultureInfo
+dotnet_diagnostic.CA1304.severity = none
+
 # CA1307: Specify StringComparison for clarity
 dotnet_diagnostic.CA1307.severity = none
 
 # CA1308: Normalize strings to uppercase
 dotnet_diagnostic.CA1308.severity = none
+
+# CA1309: Use ordinal string comparison
+dotnet_diagnostic.CA1309.severity = none
+
+# CA1311: Specify a culture or use an invariant version
+dotnet_diagnostic.CA1311.severity = none
+
+# CA1515: Consider making public types internal
+dotnet_diagnostic.CA1515.severity = none
 
 # CA1700: Do not name enum values 'Reserved'
 dotnet_diagnostic.CA1700.severity = none
@@ -306,6 +321,9 @@ dotnet_diagnostic.CA1848.severity = none
 # CA1860: Avoid using 'Enumerable.Any()' extension method
 dotnet_diagnostic.CA1860.severity = none
 
+# CA1862: Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
+dotnet_diagnostic.CA1862.severity = none
+
 # CA2007: Consider calling ConfigureAwait on the awaited task
 dotnet_diagnostic.CA2007.severity = none
 
@@ -333,6 +351,12 @@ dotnet_diagnostic.CA2326.severity = none
 # CA2326: Do not use insecure JsonSerializerSettings
 dotnet_diagnostic.CA2327.severity = none
 
+# CA5394: Do not use insecure randomness
+dotnet_diagnostic.CA5394.severity = none
+
+# CA5401: Do not use CreateEncryptor with non-default IV
+dotnet_diagnostic.CA5401.severity = none
+
 # CS8600: Converting null literal or possible null value to non-nullable type.
 dotnet_diagnostic.CS8600.severity = none
 
@@ -344,11 +368,23 @@ dotnet_diagnostic.CS8618.severity = none
 
 # IDE Code Analyzers rules
 
+# IDE0005: Remove unnecessary using directives
+dotnet_diagnostic.IDE0005.severity = none
+
+# IDE0008: Use explicit type instead of 'var'
+dotnet_diagnostic.IDE0008.severity = none
+
+# IDE0022: Use expression body for methods
+dotnet_diagnostic.IDE0022.severity = none
+
 # IDE0046: Convert to conditional expression
 dotnet_diagnostic.IDE0046.severity = none
 
 # IDE0053: Use expression body for lambda expression
 dotnet_diagnostic.IDE0053.severity = none
+
+# IDE0055: Fix formatting
+dotnet_diagnostic.IDE0055.severity = none
 
 # IDE0270: Use coalesce expression
 dotnet_diagnostic.IDE0270.severity = none
@@ -356,10 +392,16 @@ dotnet_diagnostic.IDE0270.severity = none
 # IDE0290: Use primary constructor
 dotnet_diagnostic.IDE0290.severity = none
 
+# IDE0320: Make anonymous function static
+dotnet_diagnostic.IDE0320.severity = none
+
 # SonarAnalyzer.CSharp rules
 
 # S112: General or reserved exceptions should never be thrown
 dotnet_diagnostic.S112.severity = none
+
+# S125: Remove this commented out code
+dotnet_diagnostic.S125.severity = none
 
 # S1075: URIs should not be hardcoded
 dotnet_diagnostic.S1075.severity = none
@@ -373,6 +415,12 @@ dotnet_diagnostic.S1144.severity = none
 # S2094: Classes should not be empty
 dotnet_diagnostic.S2094.severity = none
 
+# S2139: Exceptions should be either logged or rethrown but not both
+dotnet_diagnostic.S2139.severity = none
+
+# S2325: Methods and properties that don't access instance data should be static
+dotnet_diagnostic.S2325.severity = none
+
 # S2365: Properties should not make collection or array copies
 dotnet_diagnostic.S2365.severity = none
 
@@ -382,14 +430,14 @@ dotnet_diagnostic.S3267.severity = none
 # S3881: "IDisposable" should be implemented correctly
 dotnet_diagnostic.S3881.severity = none
 
+# S4035: Classes implementing "IEquatable<T>" should be sealed
+dotnet_diagnostic.S4035.severity = none
+
 # S4136: Method overloads should be grouped together
 dotnet_diagnostic.S4136.severity = none
 
 # S6605: Collection-specific "Exists" method should be used instead of the "Any" extension
 dotnet_diagnostic.S6605.severity = none
 
-# S4035: Classes implementing "IEquatable<T>" should be sealed
-dotnet_diagnostic.S4035.severity = none
-
-dotnet_diagnostic.IDE0055.severity = none
-dotnet_diagnostic.IDE0022.severity = none
+# S6781: JWT secret keys should not be disclosed
+dotnet_diagnostic.S6781.severity = none

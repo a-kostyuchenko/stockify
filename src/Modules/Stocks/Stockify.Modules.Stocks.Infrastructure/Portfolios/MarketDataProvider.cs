@@ -53,7 +53,6 @@ internal sealed class MarketDataProvider(
         return result;
     }
     
-    // TODO: Extract calculations to separate class
     private static List<decimal> CalculateReturns(List<TimeSeriesResponse> timeSeries)
     {
         var returns = new List<decimal>();
