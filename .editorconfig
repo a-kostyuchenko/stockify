@@ -324,6 +324,9 @@ dotnet_diagnostic.CA1860.severity = none
 # CA1862: Use the 'StringComparison' method overloads to perform case-insensitive string comparisons
 dotnet_diagnostic.CA1862.severity = none
 
+# CA1873: Avoid potentially expensive logging
+dotnet_diagnostic.CA1873.severity = none
+
 # CA2007: Consider calling ConfigureAwait on the awaited task
 dotnet_diagnostic.CA2007.severity = none
 
@@ -368,9 +371,6 @@ dotnet_diagnostic.CS8618.severity = none
 
 # IDE Code Analyzers rules
 
-# IDE0005: Remove unnecessary using directives
-dotnet_diagnostic.IDE0005.severity = none
-
 # IDE0008: Use explicit type instead of 'var'
 dotnet_diagnostic.IDE0008.severity = none
 
@@ -385,15 +385,6 @@ dotnet_diagnostic.IDE0053.severity = none
 
 # IDE0055: Fix formatting
 dotnet_diagnostic.IDE0055.severity = none
-
-# IDE0270: Use coalesce expression
-dotnet_diagnostic.IDE0270.severity = none
-
-# IDE0290: Use primary constructor
-dotnet_diagnostic.IDE0290.severity = none
-
-# IDE0320: Make anonymous function static
-dotnet_diagnostic.IDE0320.severity = none
 
 # SonarAnalyzer.CSharp rules
 
