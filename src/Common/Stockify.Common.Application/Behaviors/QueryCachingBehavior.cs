@@ -31,7 +31,7 @@ internal sealed class QueryCachingBehavior<TRequest, TResponse>(
 
         logger.LogInformation("Cache miss for {RequestName}", requestName);
 
-        TResponse result = await next();
+        TResponse result = await next(cancellationToken);
 
         if (result.IsSuccess)
         {

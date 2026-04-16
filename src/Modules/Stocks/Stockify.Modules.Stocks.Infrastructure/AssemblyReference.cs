@@ -1,5 +1,7 @@
 using System.Reflection;
+using Dapper;
 
+[module: DapperAot(false)]
 namespace Stockify.Modules.Stocks.Infrastructure;
 
 public static class AssemblyReference
