@@ -4,7 +4,6 @@ using Asp.Versioning.Builder;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http.Features;
-using RabbitMQ.Client;
 using Serilog;
 using Stockify.API.Extensions;
 using Stockify.API.Infrastructure;

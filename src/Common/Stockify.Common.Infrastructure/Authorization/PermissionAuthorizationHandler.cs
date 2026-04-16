@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authorization;
-using Stockify.Common.Application.Authorization;
 using Stockify.Common.Infrastructure.Authentication;
 
 namespace Stockify.Common.Infrastructure.Authorization;
